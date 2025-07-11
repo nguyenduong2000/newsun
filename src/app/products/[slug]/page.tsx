@@ -18,12 +18,14 @@ import { Gift, ShieldCheck, Truck } from "lucide-react";
 
 export default function ProductDetailPage({ params }: { params: { slug: string } }) {
   const product = products.find((p) => p.slug === params.slug);
-  const [selectedImage, setSelectedImage] = useState(product?.image || "https://placehold.co/600x600.png");
-  const [selectedModel, setSelectedModel] = useState(product?.models?.[1] || null);
-
+  
   if (!product) {
     notFound();
   }
+  
+  const [selectedImage, setSelectedImage] = useState(product.image);
+  const [selectedModel, setSelectedModel] = useState(product.models?.[1] || null);
+
 
   const relatedProducts = products.filter(p => p.category === product.category && p.id !== product.id).slice(0, 4);
 
@@ -158,9 +160,9 @@ export default function ProductDetailPage({ params }: { params: { slug: string }
 
             {/* Right Column: Sidebar */}
             <div className="lg:col-span-1">
-              <div className="sticky top-24">
+              <div>
                 <div className="border rounded-lg bg-card">
-                  <h2 className="text-xl font-headline font-bold p-4 bg-muted/50 rounded-t-lg">
+                  <h2 className="text-xl font-headline font-bold p-4 bg-muted rounded-t-lg">
                     Thông số kỹ thuật
                   </h2>
                   <div className="p-4">
@@ -193,4 +195,3 @@ export default function ProductDetailPage({ params }: { params: { slug: string }
     </div>
   );
 }
-
