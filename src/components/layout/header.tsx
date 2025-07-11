@@ -130,7 +130,7 @@ const MegaMenu = () => {
                         Tất cả danh mục sản phẩm
                     </NavigationMenuTrigger>
                     <NavigationMenuContent>
-                        <div className="grid grid-cols-5 gap-4 p-4 md:w-[var(--radix-navigation-menu-viewport-width)] max-w-6xl">
+                        <div className="grid grid-cols-5 gap-4 p-4 w-[1000px] max-w-full">
                            <div className="col-span-1">
                              <ul className="space-y-1">
                                 {megaMenu.map(category => (
