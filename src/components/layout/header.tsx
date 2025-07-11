@@ -94,6 +94,8 @@ export function Header() {
 }
 
 const MegaMenu = () => {
+    const [activeCategory, setActiveCategory] = React.useState<MegaMenuCategory | null>(megaMenu[0] ?? null);
+
     return (
         <NavigationMenu>
             <NavigationMenuList>
@@ -107,9 +109,11 @@ const MegaMenu = () => {
                            <div className="col-span-1">
                              <ul className="space-y-1">
                                 {megaMenu.map(category => (
-                                    <li key={category.title}>
+                                    <li key={category.title} onMouseEnter={() => setActiveCategory(category)}>
                                         <NavigationMenuLink asChild>
-                                             <a href={category.href} className="flex items-center justify-between p-2 text-sm font-medium rounded-md hover:bg-accent focus:outline-none focus:bg-accent transition-colors group">
+                                             <a href={category.href} className={cn("flex items-center justify-between p-2 text-sm font-medium rounded-md hover:bg-accent focus:outline-none focus:bg-accent transition-colors group",
+                                                activeCategory?.title === category.title ? "bg-accent" : ""
+                                             )}>
                                                 <span>{category.title}</span>
                                                 <ChevronRight className="h-4 w-4 text-muted-foreground group-hover:text-foreground" />
                                             </a>
@@ -118,23 +122,25 @@ const MegaMenu = () => {
                                 ))}
                              </ul>
                            </div>
-                           <div className="col-span-4 p-4 bg-accent/50 rounded-md">
-                                <div className="grid grid-cols-4 gap-x-6 gap-y-4">
-                                    {megaMenu.flatMap(category => category.children).map(subCategory => (
-                                        <div key={subCategory.title}>
-                                            <h3 className="font-bold text-primary mb-2 text-sm">
-                                                <Link href={subCategory.href} className="hover:underline">{subCategory.title}</Link>
-                                            </h3>
-                                            <ul className="space-y-1.5">
-                                                {subCategory.children?.map(item => (
-                                                    <li key={item.title}>
-                                                        <Link href={item.href} className="text-sm hover:text-primary transition-colors text-muted-foreground hover:text-foreground">{item.title}</Link>
-                                                    </li>
-                                                ))}
-                                            </ul>
-                                        </div>
-                                    ))}
-                                </div>
+                           <div className="col-span-4 p-4 bg-accent/50 rounded-md min-h-[200px]">
+                                {activeCategory && activeCategory.children && activeCategory.children.length > 0 && (
+                                  <div className="grid grid-cols-4 gap-x-6 gap-y-4">
+                                      {activeCategory.children.map(subCategory => (
+                                          <div key={subCategory.title}>
+                                              <h3 className="font-bold text-primary mb-2 text-sm">
+                                                  <Link href={subCategory.href} className="hover:underline">{subCategory.title}</Link>
+                                              </h3>
+                                              <ul className="space-y-1.5">
+                                                  {subCategory.children?.map(item => (
+                                                      <li key={item.title}>
+                                                          <Link href={item.href} className="text-sm hover:text-primary transition-colors text-muted-foreground hover:text-foreground">{item.title}</Link>
+                                                      </li>
+                                                  ))}
+                                              </ul>
+                                          </div>
+                                      ))}
+                                  </div>
+                                )}
                            </div>
                         </div>
                     </NavigationMenuContent>
