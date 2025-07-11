@@ -45,7 +45,7 @@ export default function ProductDetailPage({ params }: { params: { slug: string }
   const relatedProducts = products.filter(p => p.category === product.category && p.id !== product.id).slice(0, 4);
 
   return (
-    <div className="py-8">
+    <div className="container-fluid mx-auto px-4 sm:px-6 lg:px-8 py-8 max-w-6xl">
       <div className="grid md:grid-cols-5 gap-8 lg:gap-12">
         {/* Left Column: Image Gallery */}
         <div className="md:col-span-2">
