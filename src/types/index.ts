@@ -13,6 +13,7 @@ export interface Product {
   reviews?: number;
   sold?: number;
   featuresImage?: string;
+  models?: string[];
 }
 
 export interface Category {

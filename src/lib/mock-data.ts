@@ -19,7 +19,7 @@ export const products: Product[] = [
     description: "Nồi nấu phở bằng điện dung tích 20 lít, chất liệu inox 304 cao cấp, an toàn và bền bỉ. Giữ nhiệt tốt, tiết kiệm điện năng.",
     category: "noi-nau-pho",
     image: "https://placehold.co/400x400.png",
-    images: ["https://placehold.co/600x600.png", "https://placehold.co/600x600.png", "https://placehold.co/600x600.png"],
+    images: ["https://placehold.co/600x600.png?1", "https://placehold.co/600x600.png?2", "https://placehold.co/600x600.png?3", "https://placehold.co/600x600.png?4", "https://placehold.co/600x600.png?5"],
     specs: {
       "Dung tích": "20 Lít",
       "Chất liệu": "Inox 304",
@@ -29,7 +29,8 @@ export const products: Product[] = [
     rating: 5,
     reviews: 85,
     sold: 548,
-    featuresImage: "https://placehold.co/300x300.png"
+    featuresImage: "https://placehold.co/300x300.png",
+    models: ["20L", "30L", "50L", "80L", "100L", "120L"]
   },
   {
     id: "2",
@@ -112,7 +113,8 @@ export const products: Product[] = [
     rating: 5,
     reviews: 734,
     sold: 978,
-    featuresImage: "https://placehold.co/300x300.png"
+    featuresImage: "https://placehold.co/300x300.png",
+    models: ["SS-70", "SS-80", "SS-90", "SS-100"]
   },
   {
     id: "6",
