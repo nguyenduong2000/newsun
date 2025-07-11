@@ -35,7 +35,7 @@ export function HeroSection() {
   );
 
   return (
-    <section>
+    <section className="relative">
       <Carousel
         plugins={[plugin.current]}
         className="w-full"
@@ -61,12 +61,8 @@ export function HeroSection() {
             </CarouselItem>
           ))}
         </CarouselContent>
-        <div className="absolute left-1/2 -translate-x-1/2 bottom-4 w-full max-w-6xl px-4 sm:px-6 lg:px-8">
-            <div className="relative">
-                <CarouselPrevious className="absolute left-0 top-1/2 -translate-y-1/2" />
-                <CarouselNext className="absolute right-0 top-1/2 -translate-y-1/2" />
-            </div>
-        </div>
+        <CarouselPrevious className="absolute left-4 sm:left-8 top-1/2 -translate-y-1/2" />
+        <CarouselNext className="absolute right-4 sm:right-8 top-1/2 -translate-y-1/2" />
       </Carousel>
     </section>
   );
