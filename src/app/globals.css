@@ -67,3 +67,12 @@
     @apply bg-background text-foreground;
   }
 }
+
+@layer components {
+  .specs-table tr:nth-child(odd) {
+    @apply bg-muted/50;
+  }
+  .specs-table td {
+    @apply p-3;
+  }
+}
