@@ -31,20 +31,19 @@ export default function Home() {
             Danh mục sản phẩm
           </h2>
         </div>
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {featuredCategories.map((category) => (
             <Link href={`/products?category=${category.slug}`} key={category.id} className="block group">
               <Card className="overflow-hidden transition-all duration-300 hover:shadow-lg hover:-translate-y-1 rounded-lg">
                 <CardContent className="p-4">
                   <div className="flex items-center gap-4">
-                    <div className="relative w-20 h-20 flex-shrink-0">
-                       <div className="absolute inset-0 bg-primary rounded-full"></div>
+                     <div className="relative w-20 h-20 flex-shrink-0">
                        <Image
                           src={category.image}
                           alt={category.name}
                           width={80}
                           height={80}
-                          className="object-contain relative z-10 p-2"
+                          className="object-contain rounded-full bg-gray-100 p-2"
                           data-ai-hint="kitchen appliance"
                         />
                     </div>
@@ -59,32 +58,28 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="bg-card rounded-lg shadow-lg overflow-hidden border">
-        <div className="bg-primary text-primary-foreground p-4">
-          <h2 className="text-2xl font-headline font-bold flex items-center">
-            <Flame className="mr-2 h-6 w-6"/>
-            Săn deal giá hời giao hàng tận nơi
-          </h2>
-        </div>
-        <div className="p-6">
-           <Carousel
-              opts={{
-                align: "start",
-                loop: true,
-              }}
-              className="w-full"
-            >
-              <CarouselContent className="-ml-4">
-                {dealProducts.map((product, index) => (
-                  <CarouselItem key={index} className="pl-4 md:basis-1/3 lg:basis-1/4 xl:basis-1/5">
-                    <DealProductCard product={product} />
-                  </CarouselItem>
-                ))}
-              </CarouselContent>
-              <CarouselPrevious className="absolute left-[-20px] top-1/2 -translate-y-1/2 hidden sm:flex" />
-              <CarouselNext className="absolute right-[-20px] top-1/2 -translate-y-1/2 hidden sm:flex" />
-            </Carousel>
-        </div>
+      <section className="bg-primary rounded-lg shadow-lg overflow-hidden border p-6">
+        <h2 className="text-2xl font-headline font-bold flex items-center text-primary-foreground mb-4">
+          <Flame className="mr-2 h-6 w-6"/>
+          Săn deal giá hời giao hàng tận nơi
+        </h2>
+        <Carousel
+          opts={{
+            align: "start",
+            loop: true,
+          }}
+          className="w-full"
+        >
+          <CarouselContent className="-ml-4">
+            {dealProducts.map((product, index) => (
+              <CarouselItem key={index} className="pl-4 md:basis-1/3 lg:basis-1/4 xl:basis-1/5">
+                <DealProductCard product={product} />
+              </CarouselItem>
+            ))}
+          </CarouselContent>
+          <CarouselPrevious className="absolute left-[-20px] top-1/2 -translate-y-1/2 hidden sm:flex bg-white/30 hover:bg-white/50 text-white border-none" />
+          <CarouselNext className="absolute right-[-20px] top-1/2 -translate-y-1/2 hidden sm:flex bg-white/30 hover:bg-white/50 text-white border-none" />
+        </Carousel>
       </section>
 
       <section>
