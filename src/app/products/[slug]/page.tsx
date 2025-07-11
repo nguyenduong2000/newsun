@@ -46,9 +46,9 @@ export default function ProductDetailPage({ params }: { params: { slug: string }
 
   return (
     <div className="py-8">
-      <div className="grid md:grid-cols-2 gap-8 lg:gap-12">
+      <div className="grid md:grid-cols-5 gap-8 lg:gap-12">
         {/* Left Column: Image Gallery */}
-        <div>
+        <div className="md:col-span-2">
           <div className="aspect-square relative bg-card rounded-lg overflow-hidden border mb-4">
             <Image
               src={mainImage}
@@ -86,7 +86,7 @@ export default function ProductDetailPage({ params }: { params: { slug: string }
         </div>
 
         {/* Right Column: Product Details */}
-        <div className="space-y-6">
+        <div className="space-y-6 md:col-span-3">
           <h1 className="text-3xl lg:text-4xl font-headline font-bold">{product.name}</h1>
           
           {product.models && product.models.length > 0 && selectedModel && (

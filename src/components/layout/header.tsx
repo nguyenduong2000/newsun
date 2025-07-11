@@ -42,7 +42,7 @@ export function Header() {
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="container-fluid mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl">
         <div className="flex h-20 items-center justify-between gap-4 md:gap-8">
           <div className="flex-shrink-0">
             <Logo />
@@ -83,7 +83,7 @@ export function Header() {
         </div>
       </div>
       <nav className="hidden lg:flex bg-primary text-primary-foreground">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 flex items-center">
+        <div className="container-fluid mx-auto px-4 sm:px-6 lg:px-8 flex items-center max-w-6xl">
             <MegaMenu />
             <div className="h-6 w-px bg-primary-foreground/30 mx-2"></div>
             <DesktopNavigation />
