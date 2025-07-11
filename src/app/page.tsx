@@ -34,23 +34,23 @@ export default function Home() {
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
           {featuredCategories.map((category) => (
             <Link href={`/products?category=${category.slug}`} key={category.id} className="block group">
-              <Card className="overflow-hidden transition-shadow hover:shadow-lg border-2 border-transparent hover:border-primary rounded-lg">
-                <CardContent className="p-0">
-                  <div className="flex items-center p-4">
-                    <div className="flex-grow">
-                      <h3 className="font-headline font-bold text-lg text-gray-800 group-hover:text-primary">{category.name}</h3>
-                      <p className="text-sm text-muted-foreground mt-1">Sản phẩm chính hãng</p>
+              <Card className="overflow-hidden transition-all duration-300 hover:shadow-lg hover:-translate-y-1 rounded-lg">
+                <CardContent className="p-4">
+                  <div className="flex items-center gap-4">
+                    <div className="relative w-20 h-20 flex-shrink-0">
+                       <div className="absolute inset-0 bg-primary rounded-full"></div>
+                       <Image
+                          src={category.image}
+                          alt={category.name}
+                          width={80}
+                          height={80}
+                          className="object-contain relative z-10 p-2"
+                          data-ai-hint="kitchen appliance"
+                        />
                     </div>
-                    <div className="flex-shrink-0 w-24 h-24 relative ml-4">
-                      <Image
-                        src={category.image}
-                        alt={category.name}
-                        width={96}
-                        height={96}
-                        className="object-contain transition-transform duration-300 group-hover:scale-110"
-                        data-ai-hint="kitchen appliance"
-                      />
-                    </div>
+                    <h3 className="font-semibold text-gray-800 group-hover:text-primary transition-colors">
+                        {category.name}
+                    </h3>
                   </div>
                 </CardContent>
               </Card>
