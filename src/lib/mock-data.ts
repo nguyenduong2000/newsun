@@ -19,7 +19,7 @@ export const products: Product[] = [
     description: "Nồi nấu phở bằng điện dung tích 20 lít, chất liệu inox 304 cao cấp, an toàn và bền bỉ. Giữ nhiệt tốt, tiết kiệm điện năng.",
     category: "noi-nau-pho",
     image: "https://placehold.co/400x400.png",
-    images: ["https://placehold.co/600x600.png?1", "https://placehold.co/600x600.png?2", "https://placehold.co/600x600.png?3", "https://placehold.co/600x600.png?4", "https://placehold.co/600x600.png?5"],
+    images: ["https://placehold.co/400x400.png?1", "https://placehold.co/400x400.png?2", "https://placehold.co/400x400.png?3", "https://placehold.co/400x400.png?4", "https://placehold.co/400x400.png?5"],
     specs: {
       "Dung tích": "20 Lít",
       "Chất liệu": "Inox 304",
@@ -41,7 +41,7 @@ export const products: Product[] = [
     description: "Máy xay giò chả công nghiệp 3KG/mẻ, motor công suất lớn, xay thịt nhuyễn mịn, không nóng. Phù hợp cho các cơ sở sản xuất.",
     category: "may-xay-gio-cha",
     image: "https://placehold.co/400x400.png",
-    images: ["https://placehold.co/600x600.png", "https://placehold.co/600x600.png"],
+    images: ["https://placehold.co/400x400.png", "https://placehold.co/400x400.png"],
     specs: {
       "Năng suất": "3 KG/mẻ",
       "Chất liệu": "Inox",
@@ -61,7 +61,7 @@ export const products: Product[] = [
     description: "Máy hút chân không công nghiệp cao cấp Kunba DZ400/2SA với 2 buồng hút, tăng năng suất, phù hợp cho nhà xưởng, xí nghiệp.",
     category: "may-hut-chan-khong",
     image: "https://placehold.co/400x400.png",
-    images: ["https://placehold.co/600x600.png"],
+    images: ["https://placehold.co/400x400.png"],
      specs: {
       "Model": "DZ400/2SA",
       "Loại": "2 buồng",
@@ -82,7 +82,7 @@ export const products: Product[] = [
     description: "Máy đùn xúc xích quay tay dung tích 3 lít, dễ sử dụng, phù hợp cho gia đình hoặc kinh doanh nhỏ.",
     category: "may-che-bien-thit",
     image: "https://placehold.co/400x400.png",
-    images: ["https://placehold.co/600x600.png"],
+    images: ["https://placehold.co/400x400.png"],
      specs: {
       "Dung tích": "3 Lít",
       "Chất liệu": "Inox",
@@ -103,7 +103,7 @@ export const products: Product[] = [
     description: "Máy thái thịt tươi sống mini, công suất 350W, thái nhanh và đều. Thích hợp cho các quán phở, bún chả.",
     category: "may-thai-thit",
     image: "https://placehold.co/400x400.png",
-    images: ["https://placehold.co/600x600.png"],
+    images: ["https://placehold.co/400x400.png"],
      specs: {
       "Công suất": "350W",
       "Năng suất": "30-40kg/giờ",
@@ -125,7 +125,7 @@ export const products: Product[] = [
     description: "Máy vặt lông gà, vịt phi 55cm, vặt sạch 95% chỉ trong 60 giây. Giúp tiết kiệm thời gian và nhân công.",
     category: "may-vat-long-ga",
     image: "https://placehold.co/400x400.png",
-    images: ["https://placehold.co/600x600.png"],
+    images: ["https://placehold.co/400x400.png"],
      specs: {
       "Đường kính lồng": "55 cm",
       "Năng suất": "2-3 con/mẻ",
@@ -145,7 +145,7 @@ export const products: Product[] = [
     description: "Máy hút chân không gia đình mini, nhỏ gọn, tiện lợi. Giúp bảo quản thực phẩm tươi lâu hơn.",
     category: "may-hut-chan-khong",
     image: "https://placehold.co/400x400.png",
-    images: ["https://placehold.co/600x600.png"],
+    images: ["https://placehold.co/400x400.png"],
      specs: {
       "Công suất hút": "-60-80Kpa",
       "Chất liệu": "Nhựa ABS",
@@ -165,7 +165,7 @@ export const products: Product[] = [
     description: "Máy xay giò chả công nghiệp 5KG/mẻ, motor công suất lớn, xay thịt nhuyễn mịn, không nóng. Phù hợp cho các cơ sở sản xuất vừa và nhỏ.",
     category: "may-xay-gio-cha",
     image: "https://placehold.co/400x400.png",
-    images: ["https://placehold.co/600x600.png", "https://placehold.co/600x600.png"],
+    images: ["https://placehold.co/400x400.png", "https://placehold.co/400x400.png"],
     specs: {
       "Năng suất": "5 KG/mẻ",
       "Chất liệu": "Inox",

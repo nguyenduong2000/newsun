@@ -62,21 +62,6 @@ export default function ProductDetailPage({ params }: { params: { slug: string }
             </div>
           </div>
           
-          <div className="grid grid-cols-3 gap-4 text-center text-sm text-muted-foreground">
-             <div className="flex flex-col items-center gap-1">
-                <Thermometer className="w-8 h-8 text-primary"/>
-                <span>2000W, 30-90°C</span>
-             </div>
-             <div className="flex flex-col items-center gap-1">
-                <Clock className="w-8 h-8 text-primary"/>
-                <span>0-24h</span>
-             </div>
-             <div className="flex flex-col items-center gap-1">
-                <ShieldCheck className="w-8 h-8 text-primary"/>
-                <span>2 lớp inox</span>
-             </div>
-          </div>
-
           <Carousel className="w-full mt-4" opts={{ align: 'start', slidesToScroll: 3 }}>
             <CarouselContent className="-ml-2">
               {product.images.map((img, index) => (
@@ -104,7 +89,7 @@ export default function ProductDetailPage({ params }: { params: { slug: string }
         <div className="space-y-6">
           <h1 className="text-3xl lg:text-4xl font-headline font-bold">{product.name}</h1>
           
-          {product.models && product.models.length > 0 && (
+          {product.models && product.models.length > 0 && selectedModel && (
             <div>
               <p className="text-sm mb-2">
                 Có <span className="font-bold">{product.models.length} Model</span>. Bạn đang chọn <span className="font-bold text-primary">{selectedModel}</span>
@@ -115,7 +100,6 @@ export default function ProductDetailPage({ params }: { params: { slug: string }
                     key={model} 
                     variant={selectedModel === model ? "destructive" : "outline"}
                     onClick={() => setSelectedModel(model)}
-                    className={cn(selectedModel === model ? "border-primary" : "border-gray-300")}
                   >
                     {model}
                   </Button>
