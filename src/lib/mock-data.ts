@@ -1,4 +1,4 @@
-import type { Product, Category, NavItem } from "@/types";
+import type { Product, Category, NavItem, MegaMenuCategory } from "@/types";
 
 export const categories: Category[] = [
   { id: "1", name: "Nồi nấu phở", slug: "noi-nau-pho", image: "https://placehold.co/80x80.png" },
@@ -143,53 +143,86 @@ export const products: Product[] = [
   }
 ];
 
-export const navItems: NavItem[] = [
+export const navItems: Omit<NavItem, 'children'>[] = [
   {
     title: "Trang chủ",
     href: "/",
   },
   {
-    title: "Sản phẩm",
-    href: "/products",
-    children: [
-      {
-        title: "Nồi nấu phở",
-        href: "/products?category=noi-nau-pho",
-        description: "Nồi điện nấu phở, hủ tiếu, bún.",
-      },
-      {
-        title: "Máy xay giò chả",
-        href: "/products?category=may-xay-gio-cha",
-        description: "Máy xay thịt làm giò, chả, xúc xích.",
-      },
-      {
-        title: "Tủ hấp công nghiệp",
-        href: "/products?category=tu-hap-cong-nghiep",
-        description: "Hấp bánh bao, hải sản, cơm số lượng lớn.",
-      },
-      {
-        title: "Bếp chiên công nghiệp",
-        href: "/products?category=bep-chien-cong-nghiep",
-        description: "Bếp chiên nhúng, chiên rán thực phẩm.",
-      },
-      {
-        title: "Máy ép mía",
-        href: "/products?category=may-ep-mia",
-        description: "Máy ép nước mía siêu sạch, siêu tạo bọt.",
-      },
-      {
-        title: "Thiết bị khác",
-        href: "/products",
-        description: "Xem tất cả các sản phẩm khác.",
-      },
-    ],
+    title: "Về chúng tôi",
+    href: "/about",
   },
   {
-    title: "Tin tức",
-    href: "/blog",
+    title: "Chi nhánh/Đại lý",
+    href: "/stores",
   },
   {
-    title: "Liên hệ",
+    title: "Hòm thư góp ý",
     href: "/contact",
   },
+    {
+    title: "Tin tức nổi bật",
+    href: "/blog",
+  },
 ];
+
+export const megaMenu: MegaMenuCategory[] = [
+    {
+        title: 'Thiết bị bếp nhà hàng',
+        href: '/products/restaurant-kitchen-equipment',
+        children: [
+            {
+                title: 'Nồi nấu phở',
+                href: '/products/category/noi-nau-pho',
+                children: [
+                    { title: 'Bộ nồi nấu phở bằng điện', href: '/products/product/bo-noi-nau-pho-bang-dien' },
+                    { title: 'Nồi nấu phở điện Việt Nam', href: '/products/product/noi-nau-pho-dien-viet-nam' },
+                    { title: 'Nồi nấu phở điện nhập khẩu', href: '/products/product/noi-nau-pho-dien-nhap-khau' },
+                    { title: 'Phụ kiện nồi nấu phở', href: '/products/product/phu-kien-noi-nau-pho' },
+                ]
+            },
+            {
+                title: 'Tủ nấu cơm công nghiệp',
+                href: '/products/category/tu-nau-com-cong-nghiep',
+                children: [
+                    { title: 'Tủ nấu cơm bằng điện', href: '/products/product/tu-nau-com-bang-dien' },
+                    { title: 'Tủ nấu cơm bằng gas', href: '/products/product/tu-nau-com-bang-gas' },
+                    { title: 'Tủ nấu cơm bằng điện và gas', href: '/products/product/tu-nau-com-bang-dien-va-gas' },
+                    { title: 'Phụ kiện tủ nấu cơm', href: '/products/product/phu-kien-tu-nau-com' },
+                ]
+            },
+        ]
+    },
+    {
+        title: 'Máy chế biến thực phẩm',
+        href: '/products/food-processing-machine',
+        children: [
+            {
+                title: 'Máy thái rau củ quả',
+                href: '/products/category/may-thai-rau-cu-qua',
+                children: [
+                    { title: 'Máy thái rau củ quả đa năng', href: '/products/product/may-thai-rau-cu-qua-da-nang' },
+                    { title: 'Máy thái lát củ quả', href: '/products/product/may-thai-lat-cu-qua' },
+                ]
+            },
+             {
+                title: 'Bếp chiên điện',
+                href: '/products/category/bep-chien-dien',
+                children: [
+                    { title: 'Bếp chiên công nghiệp', href: '/products/product/bep-chien-cong-nghiep' },
+                    { title: 'Bếp chiên tách dầu', href: '/products/product/bep-chien-tach-dau' },
+                ]
+            },
+        ]
+    },
+     {
+        title: 'Máy chế biến thịt',
+        href: '/products/meat-processing-machine',
+        children: []
+    },
+    {
+        title: 'Thiết bị làm bánh',
+        href: '/products/bakery-equipment',
+        children: []
+    }
+]

@@ -24,3 +24,9 @@ export interface NavItem {
   description?: string;
   children?: NavItem[];
 }
+
+export interface MegaMenuCategory {
+  title: string;
+  href: string;
+  children?: MegaMenuCategory[];
+}

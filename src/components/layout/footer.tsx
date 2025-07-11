@@ -2,16 +2,21 @@ import { Phone, Mail, MapPin } from "lucide-react";
 import Link from "next/link";
 
 const Logo = () => (
-    <Link href="/" className="font-headline text-3xl font-bold text-primary">
-      NEWSUN
-    </Link>
-  );
+    <Link href="/" className="block">
+        <div className="font-headline text-3xl font-bold text-primary tracking-tighter">
+        NEWSUN
+        </div>
+        <div className="text-xs text-muted-foreground font-semibold -mt-1">
+        CHUYÊN GIA MÁY THỰC PHẨM
+        </div>
+  </Link>
+);
 
 export function Footer() {
   return (
     <footer className="bg-card text-card-foreground border-t">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           <div className="space-y-4">
             <Logo />
             <p className="text-sm text-muted-foreground">
