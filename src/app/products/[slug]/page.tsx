@@ -15,6 +15,13 @@ import { ProductGrid } from "@/components/sections/product-grid";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Gift, ShieldCheck, Truck } from "lucide-react";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
 
 export default function ProductDetailPage({ params }: { params: { slug: string } }) {
   const product = products.find((p) => p.slug === params.slug);
@@ -50,23 +57,36 @@ export default function ProductDetailPage({ params }: { params: { slug: string }
               data-ai-hint="kitchen appliance"
             />
           </div>
-          <div className="grid grid-cols-5 gap-2">
-            {product.images.map((img, index) => (
-              <div
-                key={index}
-                className={`aspect-square relative w-full border rounded-md overflow-hidden cursor-pointer hover:border-primary ${selectedImage === img ? 'border-primary border-2' : ''}`}
-                onClick={() => setSelectedImage(img)}
-              >
-                <Image
-                  src={img}
-                  alt={`${product.name} thumbnail ${index + 1}`}
-                  fill
-                  className="object-contain"
-                  sizes="20vw"
-                   data-ai-hint="kitchen appliance"
-                />
-              </div>
-            ))}
+          <div className="relative">
+             <Carousel
+              opts={{
+                align: "start",
+                loop: false,
+              }}
+              className="w-full"
+            >
+              <CarouselContent className="-ml-2">
+                {product.images.map((img, index) => (
+                  <CarouselItem key={index} className="basis-1/5 pl-2">
+                     <div
+                      className={`aspect-square relative w-full border rounded-md overflow-hidden cursor-pointer hover:border-primary ${selectedImage === img ? 'border-primary border-2' : ''}`}
+                      onClick={() => setSelectedImage(img)}
+                    >
+                      <Image
+                        src={img}
+                        alt={`${product.name} thumbnail ${index + 1}`}
+                        fill
+                        className="object-contain"
+                        sizes="20vw"
+                        data-ai-hint="kitchen appliance"
+                      />
+                    </div>
+                  </CarouselItem>
+                ))}
+              </CarouselContent>
+              <CarouselPrevious className="absolute left-[-14px] top-1/2 -translate-y-1/2 h-8 w-8" />
+              <CarouselNext className="absolute right-[-14px] top-1/2 -translate-y-1/2 h-8 w-8" />
+            </Carousel>
           </div>
         </div>
 
