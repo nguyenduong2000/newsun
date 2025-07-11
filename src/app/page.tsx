@@ -18,7 +18,7 @@ import { DealProductCard } from "@/components/deal-product-card";
 
 export default function Home() {
   const featuredProducts = products.slice(0, 8);
-  const featuredCategories = categories.slice(0, 6);
+  const featuredCategories = categories.slice(0, 4);
   const dealProducts = products.slice(0, 5);
 
   return (
@@ -31,23 +31,28 @@ export default function Home() {
             Danh mục sản phẩm
           </h2>
         </div>
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4 md:gap-6">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
           {featuredCategories.map((category) => (
-             <Link href={`/products?category=${category.slug}`} key={category.id} className="block group">
-              <Card className="text-center p-4 hover:shadow-lg transition-shadow duration-300 h-full flex flex-col items-center justify-center group bg-white rounded-xl shadow-sm overflow-hidden hover:scale-105 hover:border-primary">
-                 <div className="flex-shrink-0 w-20 h-20 relative">
-                  <Image
-                    src={category.image}
-                    alt={category.name}
-                    width={80}
-                    height={80}
-                    className="rounded-full object-cover transition-transform duration-300 group-hover:scale-110"
-                    data-ai-hint="kitchen appliance"
-                  />
-                 </div>
-                 <div className="mt-4 text-center">
-                  <h3 className="font-semibold text-sm text-gray-800 group-hover:text-primary">{category.name}</h3>
-                 </div>
+            <Link href={`/products?category=${category.slug}`} key={category.id} className="block group">
+              <Card className="overflow-hidden transition-shadow hover:shadow-lg border-2 border-transparent hover:border-primary rounded-lg">
+                <CardContent className="p-0">
+                  <div className="flex items-center p-4">
+                    <div className="flex-grow">
+                      <h3 className="font-headline font-bold text-lg text-gray-800 group-hover:text-primary">{category.name}</h3>
+                      <p className="text-sm text-muted-foreground mt-1">Sản phẩm chính hãng</p>
+                    </div>
+                    <div className="flex-shrink-0 w-24 h-24 relative ml-4">
+                      <Image
+                        src={category.image}
+                        alt={category.name}
+                        width={96}
+                        height={96}
+                        className="object-contain transition-transform duration-300 group-hover:scale-110"
+                        data-ai-hint="kitchen appliance"
+                      />
+                    </div>
+                  </div>
+                </CardContent>
               </Card>
             </Link>
           ))}
