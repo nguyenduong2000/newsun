@@ -1,3 +1,4 @@
+
 "use client";
 
 import * as React from "react";
@@ -9,6 +10,7 @@ import {
   Phone,
   ChevronRight,
   ChevronDown,
+  ShoppingCart
 } from "lucide-react";
 
 import { cn } from "@/lib/utils";
@@ -25,6 +27,7 @@ import { Input } from "@/components/ui/input";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { navItems, megaMenu } from "@/lib/mock-data";
 import type { NavItem, MegaMenuCategory } from "@/types";
+import { useCart } from "@/context/cart-context";
 
 const Logo = () => (
   <Link href="/" className="block">
@@ -36,6 +39,26 @@ const Logo = () => (
     </div>
   </Link>
 );
+
+const CartIcon = () => {
+  const { getCartItemCount } = useCart();
+  const itemCount = getCartItemCount();
+
+  return (
+    <Button variant="ghost" asChild>
+      <Link href="/cart" className="relative">
+        <ShoppingCart className="h-6 w-6" />
+        {itemCount > 0 && (
+          <span className="absolute -top-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full bg-primary text-xs font-bold text-primary-foreground">
+            {itemCount}
+          </span>
+        )}
+        <span className="sr-only">Giỏ hàng</span>
+      </Link>
+    </Button>
+  );
+};
+
 
 export function Header() {
   const [open, setOpen] = React.useState(false);
@@ -59,6 +82,7 @@ export function Header() {
           </div>
          
           <div className="hidden lg:flex items-center space-x-4 flex-shrink-0">
+            <CartIcon />
             <MessageSquare className="w-8 h-8 text-primary"/>
             <div>
               <p className="text-sm font-semibold">Tư vấn bán hàng</p>
@@ -67,7 +91,8 @@ export function Header() {
             <Button>Tư vấn chọn mua</Button>
           </div>
           
-           <div className="lg:hidden">
+           <div className="lg:hidden flex items-center">
+            <CartIcon />
             <Sheet open={open} onOpenChange={setOpen}>
               <SheetTrigger asChild>
                 <Button variant="ghost" size="icon">

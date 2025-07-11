@@ -14,7 +14,7 @@ import {
 import { ProductGrid } from "@/components/sections/product-grid";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Gift, ShieldCheck, Truck } from "lucide-react";
+import { Gift, ShieldCheck, Truck, ShoppingCart } from "lucide-react";
 import {
   Carousel,
   CarouselContent,
@@ -22,10 +22,14 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
+import { useCart } from "@/context/cart-context";
+import { useToast } from "@/hooks/use-toast";
 
 export default function ProductDetailPage({ params }: { params: { slug: string } }) {
   const product = products.find((p) => p.slug === params.slug);
-  
+  const { addToCart } = useCart();
+  const { toast } = useToast();
+
   if (!product) {
     notFound();
   }
@@ -33,13 +37,20 @@ export default function ProductDetailPage({ params }: { params: { slug: string }
   const [selectedImage, setSelectedImage] = useState(product.image);
   const [selectedModel, setSelectedModel] = useState(product.models?.[1] || null);
 
-
   const relatedProducts = products.filter(p => p.category === product.category && p.id !== product.id).slice(0, 4);
 
   const formatPrice = (price: number) => {
     return new Intl.NumberFormat("vi-VN").format(price);
   };
   const displayPrice = product.price > 0 ? `${formatPrice(product.price)}đ` : "Liên Hệ";
+
+  const handleAddToCart = () => {
+    addToCart(product, 1);
+    toast({
+      title: "Thêm thành công",
+      description: `"${product.name}" đã được thêm vào giỏ hàng.`,
+    });
+  };
 
   return (
     <div className="container-fluid mx-auto px-4 sm:px-6 lg:px-8 py-8 max-w-6xl">
@@ -127,7 +138,9 @@ export default function ProductDetailPage({ params }: { params: { slug: string }
             </div>
           </div>
           
-          <Button size="lg" className="w-full text-lg h-14 font-bold">TƯ VẤN MIỄN PHÍ</Button>
+          <Button size="lg" className="w-full text-lg h-14 font-bold" onClick={handleAddToCart}>
+            <ShoppingCart className="mr-2"/> Thêm vào giỏ hàng
+          </Button>
           <div className="grid grid-cols-3 gap-4 text-center mt-4 text-sm">
             <div className="flex flex-col items-center">
                 <Truck className="w-8 h-8 text-primary mb-1"/>

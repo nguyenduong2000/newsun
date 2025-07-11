@@ -1,3 +1,6 @@
+
+'use client';
+
 import Image from "next/image";
 import Link from "next/link";
 import {
@@ -9,6 +12,8 @@ import { Button } from "@/components/ui/button";
 import type { Product } from "@/types";
 import { Star, ShoppingCart } from "lucide-react";
 import { Badge } from "./ui/badge";
+import { useCart } from "@/context/cart-context";
+import { useToast } from "@/hooks/use-toast";
 
 interface ProductCardProps {
   product: Product;
@@ -20,6 +25,16 @@ const formatPrice = (price: number) => {
 
 export function ProductCard({ product }: ProductCardProps) {
   const displayPrice = product.price > 0 ? `${formatPrice(product.price)}đ` : "Liên Hệ";
+  const { addToCart } = useCart();
+  const { toast } = useToast();
+
+  const handleAddToCart = () => {
+    addToCart(product, 1);
+    toast({
+      title: "Thêm thành công",
+      description: `"${product.name}" đã được thêm vào giỏ hàng.`,
+    });
+  };
 
   return (
     <Card className="flex flex-col h-full overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-1 border rounded-lg bg-white group">
@@ -71,8 +86,8 @@ export function ProductCard({ product }: ProductCardProps) {
                 </span>
             )}
         </div>
-        <Button size="sm" className="w-full">
-          Thêm vào giỏ
+        <Button size="sm" className="w-full" onClick={handleAddToCart}>
+          <ShoppingCart className="mr-2 h-4 w-4"/> Thêm vào giỏ
         </Button>
       </CardFooter>
     </Card>
