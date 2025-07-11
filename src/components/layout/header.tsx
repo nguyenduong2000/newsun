@@ -65,8 +65,8 @@ export function Header() {
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      <div className="container-fluid mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl">
-        <div className="flex h-20 items-center justify-between gap-4 md:gap-8">
+      <div className="container-fluid mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex h-20 items-center justify-between gap-4 md:gap-8 max-w-6xl mx-auto">
           <div className="flex-shrink-0">
             <Logo />
           </div>
@@ -130,7 +130,7 @@ const MegaMenu = () => {
                         Tất cả danh mục sản phẩm
                     </NavigationMenuTrigger>
                     <NavigationMenuContent>
-                        <div className="grid grid-cols-5 gap-4 p-4 w-full max-w-6xl">
+                        <div className="grid grid-cols-5 gap-4 p-4 md:w-[var(--radix-navigation-menu-viewport-width)] max-w-6xl">
                            <div className="col-span-1">
                              <ul className="space-y-1">
                                 {megaMenu.map(category => (
@@ -272,3 +272,5 @@ const MobileSubMenu = ({ item, setOpen, level }: { item: MegaMenuCategory, setOp
     </div>
   );
 };
+
+    
