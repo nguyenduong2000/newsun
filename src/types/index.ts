@@ -9,6 +9,10 @@ export interface Product {
   image: string;
   images: string[];
   specs: Record<string, string>;
+  rating?: number;
+  reviews?: number;
+  sold?: number;
+  featuresImage?: string;
 }
 
 export interface Category {

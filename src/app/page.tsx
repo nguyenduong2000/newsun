@@ -3,38 +3,77 @@ import { ProductGrid } from "@/components/sections/product-grid";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { products, categories } from "@/lib/mock-data";
-import { ArrowRight, Newspaper } from "lucide-react";
+import { ArrowRight, Newspaper, Flame, ShoppingCart } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel"
+import { DealProductCard } from "@/components/deal-product-card";
+
 
 export default function Home() {
   const featuredProducts = products.slice(0, 8);
-  const featuredCategories = categories.slice(0, 6);
+  const featuredCategories = categories.slice(0, 4);
+  const dealProducts = products.slice(0, 5);
 
   return (
     <div className="space-y-12 md:space-y-16 lg:space-y-20">
       <HeroSection />
 
       <section>
-        <h2 className="text-2xl md:text-3xl font-headline font-bold text-center mb-8">
-          Danh mục sản phẩm
-        </h2>
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
           {featuredCategories.map((category) => (
-            <Link href={`/products?category=${category.slug}`} key={category.id}>
-              <Card className="text-center p-4 hover:shadow-lg transition-shadow duration-300 h-full flex flex-col items-center justify-center">
-                <Image
-                  src={category.image}
-                  alt={category.name}
-                  width={80}
-                  height={80}
-                  className="mb-2"
-                  data-ai-hint="kitchen appliance"
-                />
-                <h3 className="font-semibold text-sm">{category.name}</h3>
+             <Link href={`/products?category=${category.slug}`} key={category.id}>
+              <Card className="text-center p-4 hover:shadow-lg transition-shadow duration-300 h-full flex items-center group bg-white rounded-xl shadow-md overflow-hidden hover:scale-105">
+                 <div className="flex-shrink-0">
+                  <Image
+                    src={category.image}
+                    alt={category.name}
+                    width={64}
+                    height={64}
+                    className="rounded-full object-cover"
+                    data-ai-hint="kitchen appliance"
+                  />
+                 </div>
+                 <div className="ml-4">
+                  <h3 className="font-semibold text-base text-gray-800 group-hover:text-primary">{category.name}</h3>
+                 </div>
               </Card>
             </Link>
           ))}
+        </div>
+      </section>
+
+      <section className="bg-white rounded-lg shadow-lg overflow-hidden">
+        <div className="bg-primary text-primary-foreground p-4">
+          <h2 className="text-2xl font-headline font-bold flex items-center">
+            <Flame className="mr-2 h-6 w-6"/>
+            Săn deal giá hời giao hàng tận nơi
+          </h2>
+        </div>
+        <div className="p-6">
+           <Carousel
+              opts={{
+                align: "start",
+                loop: true,
+              }}
+              className="w-full"
+            >
+              <CarouselContent className="-ml-4">
+                {dealProducts.map((product, index) => (
+                  <CarouselItem key={index} className="pl-4 md:basis-1/3 lg:basis-1/4 xl:basis-1/5">
+                    <DealProductCard product={product} />
+                  </CarouselItem>
+                ))}
+              </CarouselContent>
+              <CarouselPrevious className="absolute left-[-20px] top-1/2 -translate-y-1/2 hidden sm:flex" />
+              <CarouselNext className="absolute right-[-20px] top-1/2 -translate-y-1/2 hidden sm:flex" />
+            </Carousel>
         </div>
       </section>
 

@@ -2,9 +2,9 @@ import type { Product, Category, NavItem, MegaMenuCategory } from "@/types";
 
 export const categories: Category[] = [
   { id: "1", name: "Nồi nấu phở", slug: "noi-nau-pho", image: "https://placehold.co/80x80.png" },
-  { id: "2", name: "Máy xay giò chả", slug: "may-xay-gio-cha", image: "https://placehold.co/80x80.png" },
-  { id: "3", name: "Tủ hấp công nghiệp", slug: "tu-hap-cong-nghiep", image: "https://placehold.co/80x80.png" },
-  { id: "4", name: "Bếp chiên công nghiệp", slug: "bep-chien-cong-nghiep", image: "https://placehold.co/80x80.png" },
+  { id: "2", name: "Tủ nấu cơm", slug: "tu-nau-com", image: "https://placehold.co/80x80.png" },
+  { id: "3", name: "Máy hút chân không", slug: "may-hut-chan-khong", image: "https://placehold.co/80x80.png" },
+  { id: "4", name: "Máy thái thịt", slug: "may-thai-thit", image: "https://placehold.co/80x80.png" },
   { id: "5", name: "Máy ép mía", slug: "may-ep-mia", image: "https://placehold.co/80x80.png" },
   { id: "6", name: "Máy vặt lông gà", slug: "may-vat-long-ga", image: "https://placehold.co/80x80.png" },
 ];
@@ -12,85 +12,108 @@ export const categories: Category[] = [
 export const products: Product[] = [
   {
     id: "1",
-    name: "Nồi nấu phở bằng điện 50L",
-    slug: "noi-nau-pho-dien-50l",
-    price: 4500000,
-    originalPrice: 5000000,
-    description: "Nồi nấu phở bằng điện dung tích 50 lít, chất liệu inox 304 cao cấp, an toàn và bền bỉ. Giữ nhiệt tốt, tiết kiệm điện năng.",
+    name: "Nồi nấu phở bằng điện 20L",
+    slug: "noi-nau-pho-dien-20l",
+    price: 2500000,
+    originalPrice: 3500000,
+    description: "Nồi nấu phở bằng điện dung tích 20 lít, chất liệu inox 304 cao cấp, an toàn và bền bỉ. Giữ nhiệt tốt, tiết kiệm điện năng.",
     category: "noi-nau-pho",
     image: "https://placehold.co/400x400.png",
     images: ["https://placehold.co/600x600.png", "https://placehold.co/600x600.png", "https://placehold.co/600x600.png"],
     specs: {
-      "Dung tích": "50 Lít",
+      "Dung tích": "20 Lít",
       "Chất liệu": "Inox 304",
-      "Công suất": "4 kW",
+      "Công suất": "3 kW",
       "Bảo hành": "12 tháng"
-    }
+    },
+    rating: 5,
+    reviews: 85,
+    sold: 548,
+    featuresImage: "https://placehold.co/300x300.png"
   },
   {
     id: "2",
-    name: "Máy xay giò chả 5KG",
-    slug: "may-xay-gio-cha-5kg",
-    price: 7800000,
-    description: "Máy xay giò chả công nghiệp 5KG/mẻ, motor công suất lớn, xay thịt nhuyễn mịn, không nóng. Phù hợp cho các cơ sở sản xuất vừa và nhỏ.",
+    name: "Máy xay giò chả 3 kg/mẻ",
+    slug: "may-xay-gio-cha-3kg",
+    price: 7500000,
+    originalPrice: 10500000,
+    description: "Máy xay giò chả công nghiệp 3KG/mẻ, motor công suất lớn, xay thịt nhuyễn mịn, không nóng. Phù hợp cho các cơ sở sản xuất.",
     category: "may-xay-gio-cha",
     image: "https://placehold.co/400x400.png",
     images: ["https://placehold.co/600x600.png", "https://placehold.co/600x600.png"],
     specs: {
-      "Năng suất": "5 KG/mẻ",
+      "Năng suất": "3 KG/mẻ",
       "Chất liệu": "Inox",
-      "Công suất motor": "3 kW",
+      "Công suất motor": "3 kW (4HP)",
       "Bảo hành": "24 tháng"
-    }
+    },
+    rating: 5,
+    reviews: 2663,
+    sold: 6220,
+    featuresImage: "https://placehold.co/300x300.png"
   },
   {
     id: "3",
-    name: "Tủ hấp công nghiệp 8 khay",
-    slug: "tu-hap-cong-nghiep-8-khay",
-    price: 9200000,
-    originalPrice: 9800000,
-    description: "Tủ hấp công nghiệp 8 khay đa năng, dùng để hấp bánh bao, hải sản, cơm... Chín nhanh, đều và tiết kiệm thời gian.",
-    category: "tu-hap-cong-nghiep",
+    name: "Máy hút chân không gia đình DZ300B mini",
+    slug: "may-hut-chan-khong-dz300b-mini",
+    price: 1300000,
+    originalPrice: 1625000,
+    description: "Máy hút chân không gia đình mini, nhỏ gọn, tiện lợi. Giúp bảo quản thực phẩm tươi lâu hơn.",
+    category: "may-hut-chan-khong",
     image: "https://placehold.co/400x400.png",
     images: ["https://placehold.co/600x600.png"],
      specs: {
-      "Số khay": "8",
-      "Chất liệu": "Inox 201",
-      "Nguồn điện": "220V/380V",
+      "Công suất hút": "-60-80Kpa",
+      "Chất liệu": "Nhựa ABS",
+      "Nguồn điện": "220V",
       "Bảo hành": "12 tháng"
-    }
+    },
+    rating: 5,
+    reviews: 124,
+    sold: 241,
+    featuresImage: "https://placehold.co/300x300.png"
   },
   {
     id: "4",
-    name: "Bếp chiên nhúng điện đơn",
-    slug: "bep-chien-nhung-dien-don",
-    price: 1500000,
-    description: "Bếp chiên nhúng điện đơn dung tích 6 lít, thích hợp cho quán ăn vặt, nhà hàng nhỏ. Gia nhiệt nhanh, điều chỉnh nhiệt độ dễ dàng.",
-    category: "bep-chien-cong-nghiep",
+    name: "Máy đùn xúc xích 3 lít quay tay",
+    slug: "may-dun-xuc-xich-3-lit-quay-tay",
+    price: 2600000,
+    originalPrice: 3700000,
+    description: "Máy đùn xúc xích quay tay dung tích 3 lít, dễ sử dụng, phù hợp cho gia đình hoặc kinh doanh nhỏ.",
+    category: "may-che-bien-thit",
     image: "https://placehold.co/400x400.png",
     images: ["https://placehold.co/600x600.png"],
      specs: {
-      "Dung tích": "6 Lít",
+      "Dung tích": "3 Lít",
       "Chất liệu": "Inox",
-      "Công suất": "2.5 kW",
+      "Loại": "Quay tay",
       "Bảo hành": "6 tháng"
-    }
+    },
+    rating: 5,
+    reviews: 5526,
+    sold: 6235,
+    featuresImage: "https://placehold.co/300x300.png"
   },
   {
     id: "5",
-    name: "Máy ép mía siêu tạo bọt",
-    slug: "may-ep-mia-sieu-tao-bot",
-    price: 6300000,
-    description: "Máy ép mía để bàn, 3 lô ép kiệt nước 99% chỉ trong 1 lần ép. Thiết kế nhỏ gọn, an toàn cho người sử dụng.",
-    category: "may-ep-mia",
+    name: "Máy thái thịt tươi sống mini SS-90",
+    slug: "may-thai-thit-tuoi-song-mini-ss-90",
+    price: 3200000,
+    originalPrice: 4500000,
+    description: "Máy thái thịt tươi sống mini, công suất 350W, thái nhanh và đều. Thích hợp cho các quán phở, bún chả.",
+    category: "may-thai-thit",
     image: "https://placehold.co/400x400.png",
     images: ["https://placehold.co/600x600.png"],
      specs: {
-      "Số lô ép": "3",
-      "Công suất": "750W",
-      "Nguồn điện": "220V",
+      "Công suất": "350W",
+      "Năng suất": "30-40kg/giờ",
+      "Độ dày lát cắt": "2mm",
       "Bảo hành": "12 tháng"
-    }
+    },
+    rating: 5,
+    reviews: 734,
+    sold: 978,
+    featuresImage: "https://placehold.co/300x300.png"
   },
   {
     id: "6",
@@ -127,18 +150,18 @@ export const products: Product[] = [
   },
   {
     id: "8",
-    name: "Máy thái thịt tươi sống",
-    slug: "may-thai-thit-tuoi-song",
-    price: 4800000,
-    description: "Máy thái thịt tươi sống để bàn, cho ra những lát thịt đều, đẹp mắt. Lưỡi dao sắc bén, có thể thay thế.",
+    name: "Máy xay giò chả 5KG",
+    slug: "may-xay-gio-cha-5kg",
+    price: 7800000,
+    description: "Máy xay giò chả công nghiệp 5KG/mẻ, motor công suất lớn, xay thịt nhuyễn mịn, không nóng. Phù hợp cho các cơ sở sản xuất vừa và nhỏ.",
     category: "may-xay-gio-cha",
     image: "https://placehold.co/400x400.png",
-    images: ["https://placehold.co/600x600.png"],
+    images: ["https://placehold.co/600x600.png", "https://placehold.co/600x600.png"],
     specs: {
-      "Độ dày lát cắt": "2.5mm - 5mm",
-      "Năng suất": "150 kg/h",
-      "Công suất": "550W",
-      "Bảo hành": "12 tháng"
+      "Năng suất": "5 KG/mẻ",
+      "Chất liệu": "Inox",
+      "Công suất motor": "3 kW",
+      "Bảo hành": "24 tháng"
     }
   }
 ];
