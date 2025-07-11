@@ -54,23 +54,22 @@ export const products: Product[] = [
   },
   {
     id: "3",
-    name: "Máy hút chân không gia đình DZ300B mini",
-    slug: "may-hut-chan-khong-dz300b-mini",
-    price: 1300000,
-    originalPrice: 1625000,
-    description: "Máy hút chân không gia đình mini, nhỏ gọn, tiện lợi. Giúp bảo quản thực phẩm tươi lâu hơn.",
+    name: "Máy hút chân không cao cấp Kunba DZ400/2SA (2 buồng)",
+    slug: "may-hut-chan-khong-kunba-dz400-2sa",
+    price: 0,
+    description: "Máy hút chân không công nghiệp cao cấp Kunba DZ400/2SA với 2 buồng hút, tăng năng suất, phù hợp cho nhà xưởng, xí nghiệp.",
     category: "may-hut-chan-khong",
     image: "https://placehold.co/400x400.png",
     images: ["https://placehold.co/600x600.png"],
      specs: {
-      "Công suất hút": "-60-80Kpa",
-      "Chất liệu": "Nhựa ABS",
-      "Nguồn điện": "220V",
+      "Model": "DZ400/2SA",
+      "Loại": "2 buồng",
+      "Chất liệu": "Inox",
       "Bảo hành": "12 tháng"
     },
     rating: 5,
-    reviews: 124,
-    sold: 241,
+    reviews: 866,
+    sold: 1200,
     featuresImage: "https://placehold.co/300x300.png"
   },
   {
@@ -130,23 +129,31 @@ export const products: Product[] = [
       "Năng suất": "2-3 con/mẻ",
       "Tỷ lệ sạch": "95%",
       "Bảo hành": "12 tháng"
-    }
+    },
+    rating: 4,
+    reviews: 12,
+    sold: 45
   },
   {
     id: "7",
-    name: "Nồi tráng bánh cuốn",
-    slug: "noi-trang-banh-cuon",
-    price: 3200000,
-    description: "Nồi tráng bánh cuốn bằng điện, làm bánh nhanh, mỏng và đều. Thiết kế chuyên nghiệp cho các quán ăn, nhà hàng.",
-    category: "thiet-bi-khac",
+    name: "Máy hút chân không gia đình DZ300B mini",
+    slug: "may-hut-chan-khong-dz300b-mini",
+    price: 1300000,
+    originalPrice: 1625000,
+    description: "Máy hút chân không gia đình mini, nhỏ gọn, tiện lợi. Giúp bảo quản thực phẩm tươi lâu hơn.",
+    category: "may-hut-chan-khong",
     image: "https://placehold.co/400x400.png",
     images: ["https://placehold.co/600x600.png"],
-    specs: {
-      "Đường kính": "40 cm",
-      "Chất liệu": "Inox",
-      "Công suất": "3 kW",
+     specs: {
+      "Công suất hút": "-60-80Kpa",
+      "Chất liệu": "Nhựa ABS",
+      "Nguồn điện": "220V",
       "Bảo hành": "12 tháng"
-    }
+    },
+    rating: 5,
+    reviews: 124,
+    sold: 241,
+    featuresImage: "https://placehold.co/300x300.png"
   },
   {
     id: "8",
@@ -162,7 +169,10 @@ export const products: Product[] = [
       "Chất liệu": "Inox",
       "Công suất motor": "3 kW",
       "Bảo hành": "24 tháng"
-    }
+    },
+    rating: 5,
+    reviews: 320,
+    sold: 650
   }
 ];
 
