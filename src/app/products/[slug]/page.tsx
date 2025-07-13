@@ -2,7 +2,7 @@
 "use client";
 
 import { useState } from "react";
-import { notFound } from "next/navigation";
+import { notFound, useParams } from "next/navigation";
 import Image from "next/image";
 import { products } from "@/lib/mock-data";
 import {
@@ -116,15 +116,8 @@ function ConsultationForm({ setOpen }: { setOpen: (open: boolean) => void }) {
   );
 }
 
-
-export default function ProductDetailPage({ params }: { params: { slug: string } }) {
-  const product = products.find((p) => p.slug === params.slug);
+function ProductDetailView({ product }: { product: NonNullable<ReturnType<typeof getProduct>> }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
-
-  if (!product) {
-    notFound();
-  }
-  
   const [selectedImage, setSelectedImage] = useState(product.image);
   const [selectedModel, setSelectedModel] = useState(product.models?.[1] || null);
 
@@ -316,4 +309,20 @@ export default function ProductDetailPage({ params }: { params: { slug: string }
 
     </div>
   );
+}
+
+const getProduct = (slug: string) => {
+    return products.find((p) => p.slug === slug);
+}
+
+export default function ProductDetailPage() {
+  const params = useParams();
+  const slug = params.slug as string;
+  const product = getProduct(slug);
+
+  if (!product) {
+    notFound();
+  }
+
+  return <ProductDetailView product={product} />;
 }
