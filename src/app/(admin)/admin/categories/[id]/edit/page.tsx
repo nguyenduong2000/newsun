@@ -9,12 +9,14 @@ import { Form } from '@/components/ui/form';
 import { useToast } from '@/hooks/use-toast';
 import { ControlledInput } from '@/components/form/controlled-input';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { ArrowLeft } from 'lucide-react';
+import { ArrowLeft, Upload } from 'lucide-react';
 import Link from 'next/link';
 import { notFound, useParams } from 'next/navigation';
 import { categories } from '@/lib/mock-data';
 import Image from 'next/image';
 import { ControlledSelect } from '@/components/form/controlled-select';
+import React, { useRef, useState } from 'react';
+
 
 const categoryFormSchema = z.object({
   name: z.string().min(2, 'Tên danh mục phải có ít nhất 2 ký tự.'),
@@ -23,13 +25,16 @@ const categoryFormSchema = z.object({
 });
 
 type CategoryFormValues = z.infer<typeof categoryFormSchema>;
+type ImagePreview = {
+  url: string;
+  file?: File;
+};
 
 
 const getCategoryOptions = (currentCategoryId: string) => {
     const options: { value: string; label: string }[] = [{ value: 'null', label: 'Không có' }];
     const descendantIds = new Set<string>();
 
-    // Function to find all descendants of a category
     const findDescendants = (parentId: string) => {
         const children = categories.filter(c => c.parentId === parentId);
         for (const child of children) {
@@ -37,14 +42,12 @@ const getCategoryOptions = (currentCategoryId: string) => {
             findDescendants(child.id);
         }
     };
-
     findDescendants(currentCategoryId);
 
     const buildOptions = (parentId: string | null, level: number) => {
         categories
             .filter(c => c.parentId === parentId)
             .forEach(c => {
-                // A category cannot be its own parent or a child of its descendants
                 if (c.id !== currentCategoryId && !descendantIds.has(c.id) && c.level < 3) {
                      options.push({
                         value: c.id,
@@ -65,6 +68,11 @@ export default function EditCategoryPage() {
   const categoryId = params.id as string;
   const category = categories.find(c => c.id === categoryId);
 
+  const [imagePreview, setImagePreview] = useState<ImagePreview | null>(
+    category ? { url: category.image } : null
+  );
+  const imageInputRef = useRef<HTMLInputElement>(null);
+
   const form = useForm<CategoryFormValues>({
     resolver: zodResolver(categoryFormSchema),
     defaultValues: {
@@ -81,11 +89,22 @@ export default function EditCategoryPage() {
   }
 
   const categoryOptions = getCategoryOptions(categoryId);
+  
+  const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      setImagePreview({
+        url: URL.createObjectURL(file),
+        file: file,
+      });
+    }
+  };
 
   async function onSubmit(values: CategoryFormValues) {
     const finalValues = {
         ...values,
-        parentId: values.parentId === 'null' ? null : values.parentId
+        parentId: values.parentId === 'null' ? null : values.parentId,
+        imageFile: imagePreview?.file
     }
     console.log(finalValues);
     await new Promise(resolve => setTimeout(resolve, 1000));
@@ -97,8 +116,8 @@ export default function EditCategoryPage() {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="max-w-xl mx-auto">
-        <div className="flex items-center gap-4 mb-4">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="grid gap-4 md:grid-cols-[1fr_250px] lg:grid-cols-3 lg:gap-8">
+        <div className="lg:col-span-3 flex items-center gap-4 mb-0">
           <Button variant="outline" size="icon" className="h-7 w-7" asChild>
             <Link href="/admin/categories">
               <ArrowLeft className="h-4 w-4" />
@@ -108,44 +127,72 @@ export default function EditCategoryPage() {
           <h1 className="flex-1 shrink-0 whitespace-nowrap text-xl font-semibold tracking-tight">
             Sửa danh mục
           </h1>
-        </div>
-        <Card>
-            <CardHeader>
-                <CardTitle>Chi tiết danh mục</CardTitle>
-                <CardDescription>Cập nhật thông tin cho danh mục.</CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-4">
-                <ControlledInput name="name" control={form.control} label="Tên danh mục" />
-                <ControlledInput name="slug" control={form.control} label="Đường dẫn (Slug)" />
-                 <ControlledSelect 
-                    name="parentId"
-                    control={form.control}
-                    label="Danh mục cha"
-                    placeholder="Chọn danh mục cha"
-                    options={categoryOptions}
-                />
-                <div>
-                    <p className="text-sm font-medium mb-2">Hình ảnh</p>
-                    <div className='flex items-end gap-4'>
-                        <Image
-                            src={category.image}
-                            alt={category.name}
-                            width={80}
-                            height={80}
-                            className='rounded-md border p-1'
-                        />
-                        <Button variant="outline" type="button">Thay đổi ảnh</Button>
-                    </div>
-                </div>
-            </CardContent>
-        </Card>
-        <div className="flex justify-end gap-2 mt-4">
-             <Button variant="outline" type="button">
-              Hủy
+          <div className="ml-auto flex items-center gap-2">
+            <Button variant="outline" type="button" asChild>
+              <Link href="/admin/categories">Hủy</Link>
             </Button>
             <Button type="submit" disabled={isSubmitting}>
               {isSubmitting ? 'Đang lưu...' : 'Lưu thay đổi'}
             </Button>
+          </div>
+        </div>
+
+        <div className="grid auto-rows-max items-start gap-4 lg:col-span-2 lg:gap-8">
+            <Card>
+                <CardHeader>
+                    <CardTitle>Chi tiết danh mục</CardTitle>
+                    <CardDescription>Cập nhật thông tin cho danh mục.</CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                    <ControlledInput name="name" control={form.control} label="Tên danh mục" />
+                    <ControlledInput name="slug" control={form.control} label="Đường dẫn (Slug)" />
+                    <ControlledSelect 
+                        name="parentId"
+                        control={form.control}
+                        label="Danh mục cha"
+                        placeholder="Chọn danh mục cha"
+                        options={categoryOptions}
+                    />
+                </CardContent>
+            </Card>
+        </div>
+
+        <div className="grid auto-rows-max items-start gap-4 lg:gap-8">
+             <Card className="overflow-hidden">
+                <CardHeader>
+                    <CardTitle>Hình ảnh danh mục</CardTitle>
+                    <CardDescription>Thay đổi hình ảnh cho danh mục.</CardDescription>
+                </CardHeader>
+                <CardContent>
+                     <input
+                        type="file"
+                        ref={imageInputRef}
+                        onChange={handleImageChange}
+                        className="hidden"
+                        accept="image/*"
+                    />
+                    <div className="grid gap-2">
+                        <div className="relative aspect-square w-full">
+                            {imagePreview ? (
+                                <Image
+                                    alt="Xem trước ảnh danh mục"
+                                    className="rounded-md object-cover"
+                                    fill
+                                    src={imagePreview.url}
+                                />
+                            ) : (
+                                <div className="flex items-center justify-center w-full h-full bg-muted rounded-md">
+                                     <p className="text-muted-foreground text-sm">Chưa có ảnh</p>
+                                </div>
+                            )}
+                        </div>
+                        <Button variant="outline" type="button" onClick={() => imageInputRef.current?.click()}>
+                            <Upload className="mr-2 h-4 w-4" />
+                            Thay đổi ảnh
+                        </Button>
+                    </div>
+                </CardContent>
+            </Card>
         </div>
       </form>
     </Form>
