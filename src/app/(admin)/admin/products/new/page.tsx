@@ -38,8 +38,10 @@ type ImagePreview = {
 
 export default function NewProductPage() {
   const { toast } = useToast();
-  const [imagePreviews, setImagePreviews] = useState<ImagePreview[]>([]);
-  const fileInputRef = useRef<HTMLInputElement>(null);
+  const [mainImagePreview, setMainImagePreview] = useState<ImagePreview | null>(null);
+  const [subImagePreviews, setSubImagePreviews] = useState<ImagePreview[]>([]);
+  const mainImageInputRef = useRef<HTMLInputElement>(null);
+  const subImagesInputRef = useRef<HTMLInputElement>(null);
 
   const form = useForm<ProductFormValues>({
     resolver: zodResolver(productFormSchema),
@@ -56,32 +58,57 @@ export default function NewProductPage() {
 
   const { isSubmitting } = form.formState;
 
-  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleMainImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      setMainImagePreview({
+        url: URL.createObjectURL(file),
+        file: file,
+      });
+    }
+  };
+
+  const handleSubImagesChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const files = Array.from(event.target.files || []);
     const newPreviews = files.map(file => ({
         url: URL.createObjectURL(file),
         file: file,
     }));
-    setImagePreviews(prev => [...prev, ...newPreviews]);
+    setSubImagePreviews(prev => [...prev, ...newPreviews]);
   };
 
-  const removeImage = (urlToRemove: string) => {
-    setImagePreviews(prev => prev.filter(preview => preview.url !== urlToRemove));
+  const removeSubImage = (urlToRemove: string) => {
+    setSubImagePreviews(prev => prev.filter(preview => preview.url !== urlToRemove));
   };
 
+  const resetForm = () => {
+    form.reset();
+    setMainImagePreview(null);
+    setSubImagePreviews([]);
+  }
 
   async function onSubmit(values: ProductFormValues) {
+    const mainImageFile = mainImagePreview?.file;
+    const subImageFiles = subImagePreviews.map(p => p.file);
+    if (!mainImageFile) {
+        toast({
+            variant: "destructive",
+            title: "Lỗi",
+            description: "Vui lòng chọn ảnh đại diện cho sản phẩm."
+        })
+        return;
+    }
+
     console.log(values);
-    const filesToUpload = imagePreviews.map(p => p.file);
-    console.log("Files to upload:", filesToUpload);
+    console.log("Main image to upload:", mainImageFile);
+    console.log("Sub-images to upload:", subImageFiles);
 
     await new Promise(resolve => setTimeout(resolve, 1000));
     toast({
       title: 'Thành công',
       description: `Sản phẩm "${values.productName}" đã được tạo.`,
     });
-    form.reset();
-    setImagePreviews([]);
+    resetForm();
   }
 
   return (
@@ -98,7 +125,7 @@ export default function NewProductPage() {
             Tạo sản phẩm mới
           </h1>
           <div className="hidden items-center gap-2 md:ml-auto md:flex">
-            <Button variant="outline" size="sm" type="button" onClick={() => { form.reset(); setImagePreviews([]); }}>
+            <Button variant="outline" size="sm" type="button" onClick={resetForm}>
               Hủy
             </Button>
             <Button size="sm" type="submit" disabled={isSubmitting}>
@@ -117,17 +144,17 @@ export default function NewProductPage() {
               </CardHeader>
               <CardContent className="space-y-4">
                 <ControlledInput name="productName" control={form.control} label="Tên sản phẩm" placeholder="Ví dụ: Nồi nấu phở 50L"/>
-                <ControlledCKEditor
-                  name="description"
-                  control={form.control}
-                  label="Mô tả"
-                />
                  <div className="grid gap-6 sm:grid-cols-2">
                     <ControlledInput name="rawPrice" control={form.control} label="Giá gốc" type="number" placeholder="0" />
                     <ControlledInput name="salePrice" control={form.control} label="Giá bán (Sale)" type="number" placeholder="0" />
                     <ControlledInput name="quantity" control={form.control} label="Số lượng tồn kho" type="number" placeholder="0" />
                     <ControlledInput name="productCode" control={form.control} label="Mã SKU" placeholder="Vd: NNP-50L" />
                 </div>
+                <ControlledCKEditor
+                  name="description"
+                  control={form.control}
+                  label="Mô tả"
+                />
               </CardContent>
             </Card>
             <Card>
@@ -140,14 +167,14 @@ export default function NewProductPage() {
                 <CardContent>
                    <input
                         type="file"
-                        ref={fileInputRef}
-                        onChange={handleFileChange}
+                        ref={subImagesInputRef}
+                        onChange={handleSubImagesChange}
                         multiple
                         className="hidden"
                         accept="image/*"
                     />
                     <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 gap-3">
-                        {imagePreviews.map((preview) => (
+                        {subImagePreviews.map((preview) => (
                             <div key={preview.url} className="relative group aspect-square">
                                 <Image
                                     alt="Product sub-image preview"
@@ -161,7 +188,7 @@ export default function NewProductPage() {
                                         variant="destructive" 
                                         className="h-6 w-6" 
                                         type="button" 
-                                        onClick={() => removeImage(preview.url)}
+                                        onClick={() => removeSubImage(preview.url)}
                                     >
                                         <X className="h-3 w-3"/>
                                         <span className="sr-only">Xóa ảnh</span>
@@ -172,7 +199,7 @@ export default function NewProductPage() {
                          <button 
                             type="button" 
                             className="flex aspect-square w-full items-center justify-center rounded-md border-2 border-dashed hover:border-primary transition-colors"
-                            onClick={() => fileInputRef.current?.click()}
+                            onClick={() => subImagesInputRef.current?.click()}
                           >
                             <Upload className="h-6 w-6 text-muted-foreground" />
                             <span className="sr-only">Upload</span>
@@ -208,9 +235,31 @@ export default function NewProductPage() {
                     <CardDescription>Chọn một hình ảnh đại diện cho sản phẩm.</CardDescription>
                 </CardHeader>
                 <CardContent>
-                    <button type="button" className="flex aspect-square w-full items-center justify-center rounded-md border-2 border-dashed hover:border-primary transition-colors">
-                        <Upload className="h-8 w-8 text-muted-foreground" />
-                        <span className="sr-only">Upload</span>
+                    <input
+                        type="file"
+                        ref={mainImageInputRef}
+                        onChange={handleMainImageChange}
+                        className="hidden"
+                        accept="image/*"
+                    />
+                    <button 
+                        type="button" 
+                        className="flex aspect-square w-full items-center justify-center rounded-md border-2 border-dashed hover:border-primary transition-colors relative"
+                        onClick={() => mainImageInputRef.current?.click()}
+                    >
+                        {mainImagePreview ? (
+                            <Image
+                                src={mainImagePreview.url}
+                                alt="Ảnh đại diện preview"
+                                fill
+                                className="object-cover rounded-md"
+                            />
+                        ) : (
+                             <>
+                                <Upload className="h-8 w-8 text-muted-foreground" />
+                                <span className="sr-only">Upload</span>
+                             </>
+                        )}
                     </button>
                 </CardContent>
             </Card>

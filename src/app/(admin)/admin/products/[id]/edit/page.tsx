@@ -15,7 +15,8 @@ import { notFound, useParams } from 'next/navigation';
 import { products } from '@/lib/mock-data';
 import Image from 'next/image';
 import { ControlledCKEditor } from '@/components/form/controlled-ckeditor';
-import React, { useState, useRef } from 'react';
+import React, 'use-client';
+import { useState, useRef } from 'react';
 
 const productFormSchema = z.object({
   productName: z.string().min(3, 'Tên sản phẩm phải có ít nhất 3 ký tự.'),
@@ -40,10 +41,14 @@ export default function EditProductPage() {
   const productId = params.id as string;
   const product = products.find(p => p.id === productId);
 
+  const [mainImagePreview, setMainImagePreview] = useState<ImagePreview | null>(
+    product ? { url: product.pathMainImage, isNew: false } : null
+  );
   const [imagePreviews, setImagePreviews] = useState<ImagePreview[]>(
     product ? product.images.map(url => ({ url, isNew: false })) : []
   );
-  const fileInputRef = useRef<HTMLInputElement>(null);
+  const mainImageInputRef = useRef<HTMLInputElement>(null);
+  const subImagesInputRef = useRef<HTMLInputElement>(null);
 
   const form = useForm<ProductFormValues>({
     resolver: zodResolver(productFormSchema),
@@ -62,8 +67,19 @@ export default function EditProductPage() {
   if (!product) {
     return notFound();
   }
+  
+  const handleMainImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      setMainImagePreview({
+        url: URL.createObjectURL(file),
+        file: file,
+        isNew: true,
+      });
+    }
+  };
 
-  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleSubImagesChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const files = Array.from(event.target.files || []);
     const newPreviews = files.map(file => ({
         url: URL.createObjectURL(file),
@@ -73,7 +89,7 @@ export default function EditProductPage() {
     setImagePreviews(prev => [...prev, ...newPreviews]);
   };
 
-  const removeImage = (urlToRemove: string) => {
+  const removeSubImage = (urlToRemove: string) => {
     setImagePreviews(prev => prev.filter(preview => preview.url !== urlToRemove));
   };
 
@@ -81,8 +97,11 @@ export default function EditProductPage() {
   async function onSubmit(values: ProductFormValues) {
     console.log(values);
     // You would handle the upload of new image files here
-    const newFiles = imagePreviews.filter(p => p.isNew).map(p => p.file);
-    console.log("New files to upload:", newFiles);
+    const newMainImageFile = mainImagePreview?.isNew ? mainImagePreview.file : undefined;
+    const newSubImageFiles = imagePreviews.filter(p => p.isNew).map(p => p.file);
+
+    console.log("New main image to upload:", newMainImageFile);
+    console.log("New sub-images to upload:", newSubImageFiles);
 
     await new Promise(resolve => setTimeout(resolve, 1000));
     toast({
@@ -124,17 +143,17 @@ export default function EditProductPage() {
               </CardHeader>
               <CardContent className="space-y-4">
                 <ControlledInput name="productName" control={form.control} label="Tên sản phẩm" />
-                <ControlledCKEditor
-                  name="description"
-                  control={form.control}
-                  label="Mô tả"
-                />
                 <div className="grid gap-6 sm:grid-cols-2">
                     <ControlledInput name="rawPrice" control={form.control} label="Giá gốc" type="number" placeholder="0" />
                     <ControlledInput name="salePrice" control={form.control} label="Giá bán (Sale)" type="number" placeholder="0" />
                     <ControlledInput name="quantity" control={form.control} label="Số lượng tồn kho" type="number" placeholder="0" />
                     <ControlledInput name="productCode" control={form.control} label="Mã SKU" />
                 </div>
+                 <ControlledCKEditor
+                  name="description"
+                  control={form.control}
+                  label="Mô tả"
+                />
               </CardContent>
             </Card>
             <Card>
@@ -149,8 +168,8 @@ export default function EditProductPage() {
                 <CardContent>
                      <input
                         type="file"
-                        ref={fileInputRef}
-                        onChange={handleFileChange}
+                        ref={subImagesInputRef}
+                        onChange={handleSubImagesChange}
                         multiple
                         className="hidden"
                         accept="image/*"
@@ -170,7 +189,7 @@ export default function EditProductPage() {
                                         variant="destructive" 
                                         className="h-6 w-6" 
                                         type="button" 
-                                        onClick={() => removeImage(preview.url)}
+                                        onClick={() => removeSubImage(preview.url)}
                                     >
                                         <X className="h-3 w-3"/>
                                         <span className="sr-only">Xóa ảnh</span>
@@ -182,7 +201,7 @@ export default function EditProductPage() {
                          <button 
                             type="button" 
                             className="flex aspect-square w-full items-center justify-center rounded-md border-2 border-dashed hover:border-primary transition-colors"
-                            onClick={() => fileInputRef.current?.click()}
+                            onClick={() => subImagesInputRef.current?.click()}
                           >
                             <Upload className="h-6 w-6 text-muted-foreground" />
                             <span className="sr-only">Upload</span>
@@ -206,16 +225,29 @@ export default function EditProductPage() {
                     <CardDescription>Thêm hoặc cập nhật hình ảnh cho sản phẩm.</CardDescription>
                 </CardHeader>
                 <CardContent>
+                     <input
+                        type="file"
+                        ref={mainImageInputRef}
+                        onChange={handleMainImageChange}
+                        className="hidden"
+                        accept="image/*"
+                    />
                     <div className="grid gap-2">
                         <div className="relative aspect-square w-full">
-                             <Image
-                                alt="Product image"
-                                className="rounded-md object-cover"
-                                fill
-                                src={product.pathMainImage}
-                            />
+                            {mainImagePreview ? (
+                                <Image
+                                    alt="Product image preview"
+                                    className="rounded-md object-cover"
+                                    fill
+                                    src={mainImagePreview.url}
+                                />
+                            ) : (
+                                <div className="flex items-center justify-center w-full h-full bg-muted rounded-md">
+                                     <p className="text-muted-foreground text-sm">Chưa có ảnh</p>
+                                </div>
+                            )}
                         </div>
-                        <Button variant="outline" type="button">
+                        <Button variant="outline" type="button" onClick={() => mainImageInputRef.current?.click()}>
                             <Upload className="mr-2 h-4 w-4" />
                             Thay đổi ảnh đại diện
                         </Button>
