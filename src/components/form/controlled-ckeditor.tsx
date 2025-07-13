@@ -48,7 +48,7 @@ export function ControlledCKEditor<
     const [isEditorLoaded, setIsEditorLoaded] = useState(false);
 
     useEffect(() => {
-        // Load CKEditor modules dynamically only on the client side
+        // Use dynamic import() which returns a promise
         import('@ckeditor/ckeditor5-react').then(ckeditor => {
             import('@ckeditor/ckeditor5-build-classic').then(classicEditor => {
                 editorRef.current = {
