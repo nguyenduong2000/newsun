@@ -78,19 +78,17 @@ export default function LoginPage() {
                 autoComplete="email"
               />
               <div className="space-y-2">
-                <div className="flex items-center">
-                    <ControlledInput
-                    control={form.control}
-                    name="password"
-                    label="Mật khẩu"
-                    type="password"
-                  />
-                </div>
-                 <div className="flex items-center">
-                    <Link href="#" className="ml-auto inline-block text-sm underline">
+                 <div className="flex items-center justify-between">
+                    <label htmlFor="password" className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">Mật khẩu</label>
+                    <Link href="#" className="inline-block text-sm underline">
                         Quên mật khẩu?
                     </Link>
                  </div>
+                <ControlledInput
+                  control={form.control}
+                  name="password"
+                  type="password"
+                />
               </div>
             </CardContent>
             <CardContent>
