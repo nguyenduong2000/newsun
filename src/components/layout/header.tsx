@@ -11,7 +11,9 @@ import {
   ChevronRight,
   ChevronDown,
   ShoppingCart,
-  User
+  User,
+  LogOut,
+  LayoutDashboard
 } from "lucide-react";
 
 import { cn } from "@/lib/utils";
@@ -29,6 +31,9 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { navItems, megaMenu } from "@/lib/mock-data";
 import type { NavItem, MegaMenuCategory } from "@/types";
 import { useCart } from "@/context/cart-context";
+import { useAuth } from "@/context/auth-context";
+import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
+import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuItem } from "../ui/dropdown-menu";
 
 const Logo = () => (
   <Link href="/" className="block">
@@ -60,6 +65,53 @@ const CartIcon = () => {
   );
 };
 
+const AuthNav = () => {
+    const { isAuthenticated, user, logout } = useAuth();
+
+    if (isAuthenticated && user) {
+        return (
+            <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                    <Button variant="ghost" className="relative h-10 w-10 rounded-full">
+                        <Avatar className="h-10 w-10">
+                            <AvatarImage src="https://placehold.co/40x40.png" alt={user.name} data-ai-hint="person" />
+                            <AvatarFallback>{user.name.charAt(0)}</AvatarFallback>
+                        </Avatar>
+                    </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent className="w-56" align="end" forceMount>
+                    <DropdownMenuLabel className="font-normal">
+                        <div className="flex flex-col space-y-1">
+                            <p className="text-sm font-medium leading-none">{user.name}</p>
+                            <p className="text-xs leading-none text-muted-foreground">{user.email}</p>
+                        </div>
+                    </DropdownMenuLabel>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem asChild>
+                        <Link href="/admin/dashboard">
+                            <LayoutDashboard className="mr-2 h-4 w-4" />
+                            <span>Dashboard</span>
+                        </Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onClick={logout}>
+                        <LogOut className="mr-2 h-4 w-4" />
+                        <span>Đăng xuất</span>
+                    </DropdownMenuItem>
+                </DropdownMenuContent>
+            </DropdownMenu>
+        )
+    }
+
+    return (
+        <Button asChild>
+            <Link href="/login">
+                <User className="mr-2" />
+                Đăng nhập
+            </Link>
+        </Button>
+    )
+
+}
 
 export function Header() {
   const [open, setOpen] = React.useState(false);
@@ -91,12 +143,7 @@ export function Header() {
                 <p className="text-lg font-bold text-primary">0963.997.355</p>
               </div>
             </div>
-            <Button asChild>
-                <Link href="/login">
-                  <User className="mr-2"/>
-                  Đăng nhập
-                </Link>
-            </Button>
+            <AuthNav />
             <Button>Tư vấn chọn mua</Button>
           </div>
           
@@ -196,6 +243,7 @@ const DesktopNavigation = () => (
 
 
 const MobileMenu = ({ setOpen }: { setOpen: (open: boolean) => void }) => {
+  const { isAuthenticated, logout } = useAuth();
   return (
     <div className="h-full flex flex-col">
        <div className="p-4 border-b">
@@ -229,13 +277,20 @@ const MobileMenu = ({ setOpen }: { setOpen: (open: boolean) => void }) => {
                     </Link>
                 ))}
                  <div className="border-t my-4"></div>
-                 <Link
-                    href="/login"
-                    className="py-2 text-base font-medium"
-                    onClick={() => setOpen(false)}
-                    >
-                    Đăng nhập / Đăng ký
-                </Link>
+                 {isAuthenticated ? (
+                    <>
+                        <Link href="/admin/dashboard" className="py-2 text-base font-medium" onClick={() => setOpen(false)}>Dashboard</Link>
+                        <button onClick={() => { logout(); setOpen(false); }} className="py-2 text-base font-medium text-left">Đăng xuất</button>
+                    </>
+                 ) : (
+                    <Link
+                        href="/login"
+                        className="py-2 text-base font-medium"
+                        onClick={() => setOpen(false)}
+                        >
+                        Đăng nhập / Đăng ký
+                    </Link>
+                 )}
             </nav>
         </div>
          <div className="p-4 border-t bg-muted/50">

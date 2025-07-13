@@ -5,6 +5,8 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import Link from 'next/link';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { useEffect } from 'react';
 
 import { Button } from '@/components/ui/button';
 import {
@@ -17,18 +19,21 @@ import {
 import { Form } from '@/components/ui/form';
 import { ControlledInput } from '@/components/form/controlled-input';
 import { useToast } from '@/hooks/use-toast';
-import { useState } from 'react';
+import { useAuth } from '@/context/auth-context';
 
 const loginFormSchema = z.object({
   email: z.string().email('Địa chỉ email không hợp lệ.'),
-  password: z.string().min(6, 'Mật khẩu phải có ít nhất 6 ký tự.'),
+  password: z.string().min(1, 'Vui lòng nhập mật khẩu.'),
 });
 
 type LoginFormValues = z.infer<typeof loginFormSchema>;
 
 export default function LoginPage() {
   const { toast } = useToast();
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  const { login, isAuthenticated, isAuthLoading } = useAuth();
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const from = searchParams.get('from') || '/';
 
   const form = useForm<LoginFormValues>({
     resolver: zodResolver(loginFormSchema),
@@ -38,23 +43,40 @@ export default function LoginPage() {
     },
   });
 
+  const { isSubmitting } = form.formState;
+  
+  useEffect(() => {
+    if (isAuthenticated) {
+      router.replace(from);
+    }
+  }, [isAuthenticated, router, from]);
+
   async function onSubmit(values: LoginFormValues) {
-    setIsSubmitting(true);
-    console.log('Login attempt:', values);
+    try {
+      await login(values.email, values.password);
+      toast({
+        title: 'Đăng nhập thành công!',
+        description: `Chào mừng trở lại.`,
+      });
+      router.replace(from);
+    } catch (error: any) {
+        console.error(error);
+        toast({
+            variant: "destructive",
+            title: 'Đăng nhập thất bại',
+            description: error.message || "Email hoặc mật khẩu không chính xác.",
+        });
+    }
+  }
 
-    // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 1500));
-
-    // Simulate success
-    toast({
-      title: 'Đăng nhập thành công!',
-      description: `Chào mừng trở lại, ${values.email}.`,
-    });
-    
-    // In a real app, you would redirect the user here
-    // e.g., router.push('/dashboard');
-
-    setIsSubmitting(false);
+  if (isAuthLoading || isAuthenticated) {
+    return (
+        <div className="flex items-center justify-center h-screen">
+            <div className="text-center">
+                <p>Đang tải...</p>
+            </div>
+        </div>
+    );
   }
 
   return (
@@ -73,9 +95,10 @@ export default function LoginPage() {
                 control={form.control}
                 name="email"
                 label="Email"
-                placeholder="m@example.com"
+                placeholder="admin@example.com"
                 type="email"
                 autoComplete="email"
+                disabled={isSubmitting}
               />
               <div className="space-y-2">
                  <div className="flex items-center justify-between">
@@ -88,6 +111,8 @@ export default function LoginPage() {
                   control={form.control}
                   name="password"
                   type="password"
+                  placeholder="********"
+                  disabled={isSubmitting}
                 />
               </div>
             </CardContent>

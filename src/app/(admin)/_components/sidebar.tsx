@@ -11,10 +11,13 @@ import {
   LineChart,
   LayoutGrid,
   MessageSquare,
-  Mail
+  Mail,
+  LogOut
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Badge } from '@/components/ui/badge';
+import { useAuth } from '@/context/auth-context';
+import { Button } from '@/components/ui/button';
 
 const navLinks = [
   { href: '/admin/dashboard', icon: Home, label: 'Dashboard' },
@@ -29,6 +32,7 @@ const navLinks = [
 
 export function Sidebar() {
   const pathname = usePathname();
+  const { logout } = useAuth();
 
   return (
     <div className="hidden border-r bg-muted/40 md:block">
@@ -39,7 +43,7 @@ export function Sidebar() {
             <span className="">Admin Panel</span>
           </Link>
         </div>
-        <div className="flex-1">
+        <div className="flex-1 overflow-y-auto">
           <nav className="grid items-start px-2 text-sm font-medium lg:px-4">
             {navLinks.map(({ href, icon: Icon, label, notificationCount }) => (
               <Link
@@ -60,6 +64,12 @@ export function Sidebar() {
               </Link>
             ))}
           </nav>
+        </div>
+         <div className="mt-auto p-4 border-t">
+            <Button variant="ghost" className="w-full justify-start" onClick={logout}>
+                <LogOut className="mr-2 h-4 w-4"/>
+                Đăng xuất
+            </Button>
         </div>
       </div>
     </div>
