@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 
 export default function ContactPage() {
   return (
-    <div className="container-fluid mx-auto px-4 sm:px-6 lg:px-8 py-8 max-w-6xl">
+    <div className="container-fluid mx-auto px-4 sm:px-6 lg:px-8 py-16 max-w-6xl">
       <h1 className="text-3xl md:text-4xl font-headline font-bold text-center mb-4">
         Liên hệ với chúng tôi
       </h1>
@@ -18,13 +18,12 @@ export default function ContactPage() {
         dưới hoặc liên hệ trực tiếp qua thông tin được cung cấp.
       </p>
 
-      <div className="grid md:grid-cols-2 gap-12">
-        <div className="bg-card p-8 rounded-lg shadow-sm">
+      <div className="grid lg:grid-cols-2 gap-12 items-start">
+        <div className="bg-card p-8 rounded-lg shadow-sm border">
           <h2 className="font-headline text-2xl font-bold mb-6">Gửi yêu cầu</h2>
           <ContactForm />
         </div>
-        <div className="space-y-8">
-          <h2 className="font-headline text-2xl font-bold">Thông tin liên hệ</h2>
+        <div className="space-y-8 lg:mt-16">
           <div className="space-y-6">
             <div className="flex items-start">
               <div className="flex-shrink-0 w-12 h-12 bg-primary/10 text-primary rounded-full flex items-center justify-center">
