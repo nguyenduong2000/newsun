@@ -9,12 +9,13 @@ import { Form } from '@/components/ui/form';
 import { useToast } from '@/hooks/use-toast';
 import { ControlledInput } from '@/components/form/controlled-input';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { ArrowLeft, PlusCircle } from 'lucide-react';
+import { ArrowLeft, PlusCircle, Upload, X } from 'lucide-react';
 import Link from 'next/link';
 import { ControlledSelect } from '@/components/form/controlled-select';
 import { categories } from '@/lib/mock-data';
 import { ControlledCheckbox } from '@/components/form/controlled-checkbox';
 import { ControlledCKEditor } from '@/components/form/controlled-ckeditor';
+import Image from 'next/image';
 
 const productFormSchema = z.object({
   productName: z.string().min(3, 'Tên sản phẩm phải có ít nhất 3 ký tự.'),
@@ -96,6 +97,28 @@ export default function NewProductPage() {
                 />
               </CardContent>
             </Card>
+            <Card>
+                <CardHeader>
+                    <div className="flex items-center justify-between">
+                        <div>
+                            <CardTitle>Thư viện ảnh</CardTitle>
+                            <CardDescription>Thêm các hình ảnh phụ cho sản phẩm.</CardDescription>
+                        </div>
+                        <Button size="sm" variant="outline" type="button">
+                            <Upload className="mr-2 h-4 w-4" />
+                            Thêm ảnh
+                        </Button>
+                    </div>
+                </CardHeader>
+                <CardContent>
+                   <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                     <button type="button" className="flex aspect-square w-full items-center justify-center rounded-md border-2 border-dashed hover:border-primary transition-colors">
+                        <Upload className="h-8 w-8 text-muted-foreground" />
+                        <span className="sr-only">Upload</span>
+                    </button>
+                   </div>
+                </CardContent>
+            </Card>
              <Card>
                 <CardHeader>
                     <CardTitle>Định giá và tồn kho</CardTitle>
@@ -133,16 +156,14 @@ export default function NewProductPage() {
              </Card>
              <Card className="overflow-hidden">
                 <CardHeader>
-                    <CardTitle>Hình ảnh sản phẩm</CardTitle>
-                    <CardDescription>Thêm hình ảnh cho sản phẩm mới.</CardDescription>
+                    <CardTitle>Hình ảnh đại diện</CardTitle>
+                    <CardDescription>Chọn một hình ảnh đại diện cho sản phẩm.</CardDescription>
                 </CardHeader>
                 <CardContent>
-                    <div className="grid gap-2">
-                         <button type="button" className="flex aspect-square w-full items-center justify-center rounded-md border border-dashed">
-                            <PlusCircle className="h-8 w-8 text-muted-foreground" />
-                            <span className="sr-only">Upload</span>
-                        </button>
-                    </div>
+                    <button type="button" className="flex aspect-square w-full items-center justify-center rounded-md border-2 border-dashed hover:border-primary transition-colors">
+                        <Upload className="h-8 w-8 text-muted-foreground" />
+                        <span className="sr-only">Upload</span>
+                    </button>
                 </CardContent>
             </Card>
           </div>

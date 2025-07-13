@@ -9,7 +9,7 @@ import { Form } from '@/components/ui/form';
 import { useToast } from '@/hooks/use-toast';
 import { ControlledInput } from '@/components/form/controlled-input';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { ArrowLeft, PlusCircle } from 'lucide-react';
+import { ArrowLeft, PlusCircle, Upload, X } from 'lucide-react';
 import Link from 'next/link';
 import { notFound, useParams } from 'next/navigation';
 import { products } from '@/lib/mock-data';
@@ -96,6 +96,45 @@ export default function EditProductPage() {
                 />
               </CardContent>
             </Card>
+            <Card>
+                <CardHeader>
+                    <div className="flex items-center justify-between">
+                        <div>
+                            <CardTitle>Thư viện ảnh</CardTitle>
+                            <CardDescription>Quản lý các hình ảnh phụ của sản phẩm.</CardDescription>
+                        </div>
+                        <Button size="sm" variant="outline" type="button">
+                            <Upload className="mr-2 h-4 w-4" />
+                            Thêm ảnh
+                        </Button>
+                    </div>
+                </CardHeader>
+                <CardContent>
+                    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                        {product.images.map((image, index) => (
+                            <div key={index} className="relative group">
+                                <Image
+                                    alt={`Product sub-image ${index + 1}`}
+                                    className="aspect-square w-full rounded-md object-cover"
+                                    height="150"
+                                    src={image}
+                                    width="150"
+                                />
+                                <div className="absolute top-1 right-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                                    <Button size="icon" variant="destructive" className="h-7 w-7">
+                                        <X className="h-4 w-4"/>
+                                        <span className="sr-only">Xóa ảnh</span>
+                                    </Button>
+                                </div>
+                            </div>
+                        ))}
+                         <button type="button" className="flex aspect-square w-full items-center justify-center rounded-md border-2 border-dashed hover:border-primary transition-colors">
+                            <Upload className="h-8 w-8 text-muted-foreground" />
+                            <span className="sr-only">Upload</span>
+                        </button>
+                    </div>
+                </CardContent>
+            </Card>
              <Card>
                 <CardHeader>
                     <CardTitle>Định giá</CardTitle>
@@ -124,37 +163,18 @@ export default function EditProductPage() {
                 </CardHeader>
                 <CardContent>
                     <div className="grid gap-2">
-                        <Image
-                            alt="Product image"
-                            className="aspect-square w-full rounded-md object-cover"
-                            height="300"
-                            src={product.pathMainImage}
-                            width="300"
-                        />
-                         <div className="grid grid-cols-3 gap-2">
-                            <button type="button">
-                                <Image
+                        <div className="relative aspect-square w-full">
+                             <Image
                                 alt="Product image"
-                                className="aspect-square w-full rounded-md object-cover"
-                                height="84"
-                                src={product.images[0]}
-                                width="84"
-                                />
-                            </button>
-                             <button type="button">
-                                <Image
-                                alt="Product image"
-                                className="aspect-square w-full rounded-md object-cover"
-                                height="84"
-                                src={product.images[1]}
-                                width="84"
-                                />
-                            </button>
-                             <button type="button" className="flex aspect-square w-full items-center justify-center rounded-md border border-dashed">
-                                <PlusCircle className="h-4 w-4 text-muted-foreground" />
-                                <span className="sr-only">Upload</span>
-                            </button>
-                         </div>
+                                className="rounded-md object-cover"
+                                fill
+                                src={product.pathMainImage}
+                            />
+                        </div>
+                        <Button variant="outline" type="button">
+                            <Upload className="mr-2 h-4 w-4" />
+                            Thay đổi ảnh đại diện
+                        </Button>
                     </div>
                 </CardContent>
             </Card>
