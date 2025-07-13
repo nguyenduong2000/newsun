@@ -8,13 +8,13 @@ import { Button } from '@/components/ui/button';
 import { Form } from '@/components/ui/form';
 import { useToast } from '@/hooks/use-toast';
 import { ControlledInput } from '@/components/form/controlled-input';
-import { ControlledTextarea } from '@/components/form/controlled-textarea';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { ArrowLeft, PlusCircle } from 'lucide-react';
 import Link from 'next/link';
 import { ControlledSelect } from '@/components/form/controlled-select';
 import { categories } from '@/lib/mock-data';
 import { ControlledCheckbox } from '@/components/form/controlled-checkbox';
+import { ControlledCKEditor } from '@/components/form/controlled-ckeditor';
 
 const productFormSchema = z.object({
   productName: z.string().min(3, 'Tên sản phẩm phải có ít nhất 3 ký tự.'),
@@ -89,12 +89,10 @@ export default function NewProductPage() {
               </CardHeader>
               <CardContent className="space-y-4">
                 <ControlledInput name="productName" control={form.control} label="Tên sản phẩm" placeholder="Ví dụ: Nồi nấu phở 50L"/>
-                <ControlledTextarea
+                <ControlledCKEditor
                   name="description"
                   control={form.control}
                   label="Mô tả"
-                  placeholder="Mô tả chi tiết về sản phẩm..."
-                  rows={5}
                 />
               </CardContent>
             </Card>

@@ -7,16 +7,14 @@ import { z } from 'zod';
 import { Button } from '@/components/ui/button';
 import { Form } from '@/components/ui/form';
 import { useToast } from '@/hooks/use-toast';
-import { useState } from 'react';
 import { ControlledInput } from '@/components/form/controlled-input';
-import { ControlledTextarea } from '@/components/form/controlled-textarea';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { ArrowLeft, PlusCircle } from 'lucide-react';
 import Link from 'next/link';
 import { notFound, useParams } from 'next/navigation';
 import { products } from '@/lib/mock-data';
-import { Input } from '@/components/ui/input';
 import Image from 'next/image';
+import { ControlledCKEditor } from '@/components/form/controlled-ckeditor';
 
 const productFormSchema = z.object({
   productName: z.string().min(3, 'Tên sản phẩm phải có ít nhất 3 ký tự.'),
@@ -91,11 +89,10 @@ export default function EditProductPage() {
               </CardHeader>
               <CardContent className="space-y-4">
                 <ControlledInput name="productName" control={form.control} label="Tên sản phẩm" />
-                <ControlledTextarea
+                <ControlledCKEditor
                   name="description"
                   control={form.control}
                   label="Mô tả"
-                  rows={5}
                 />
               </CardContent>
             </Card>
@@ -135,7 +132,7 @@ export default function EditProductPage() {
                             width="300"
                         />
                          <div className="grid grid-cols-3 gap-2">
-                            <button>
+                            <button type="button">
                                 <Image
                                 alt="Product image"
                                 className="aspect-square w-full rounded-md object-cover"
@@ -144,7 +141,7 @@ export default function EditProductPage() {
                                 width="84"
                                 />
                             </button>
-                             <button>
+                             <button type="button">
                                 <Image
                                 alt="Product image"
                                 className="aspect-square w-full rounded-md object-cover"
@@ -153,7 +150,7 @@ export default function EditProductPage() {
                                 width="84"
                                 />
                             </button>
-                             <button className="flex aspect-square w-full items-center justify-center rounded-md border border-dashed">
+                             <button type="button" className="flex aspect-square w-full items-center justify-center rounded-md border border-dashed">
                                 <PlusCircle className="h-4 w-4 text-muted-foreground" />
                                 <span className="sr-only">Upload</span>
                             </button>
