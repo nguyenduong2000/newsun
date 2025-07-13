@@ -14,6 +14,7 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel"
 import { DealProductCard } from "@/components/deal-product-card";
+import { ProductCard } from "@/components/product-card";
 
 
 export default function Home() {
@@ -94,7 +95,23 @@ export default function Home() {
               </Link>
             </Button>
           </div>
-          <ProductGrid products={featuredProducts} />
+          <Carousel
+            opts={{
+              align: "start",
+              loop: true,
+            }}
+            className="w-full"
+          >
+            <CarouselContent className="-ml-4">
+              {featuredProducts.map((product, index) => (
+                <CarouselItem key={index} className="pl-4 md:basis-1/3 lg:basis-1/4">
+                   <ProductCard product={product} />
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+            <CarouselPrevious className="absolute left-[-20px] top-1/2 -translate-y-1/2 hidden sm:flex" />
+            <CarouselNext className="absolute right-[-20px] top-1/2 -translate-y-1/2 hidden sm:flex" />
+          </Carousel>
         </section>
 
         <section>
