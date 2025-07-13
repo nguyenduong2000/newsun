@@ -33,6 +33,8 @@ export interface Category {
   name: string;
   slug: string;
   image: string;
+  parentId: string | null;
+  level: number;
 }
 
 export interface NavItem {

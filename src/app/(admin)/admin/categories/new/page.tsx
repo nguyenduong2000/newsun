@@ -11,13 +11,33 @@ import { ControlledInput } from '@/components/form/controlled-input';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { ArrowLeft } from 'lucide-react';
 import Link from 'next/link';
+import { ControlledSelect } from '@/components/form/controlled-select';
+import { categories } from '@/lib/mock-data';
 
 const categoryFormSchema = z.object({
   name: z.string().min(2, 'Tên danh mục phải có ít nhất 2 ký tự.'),
   slug: z.string().min(2, 'Đường dẫn tĩnh phải có ít nhất 2 ký tự.'),
+  parentId: z.string().nullable().optional(),
 });
 
 type CategoryFormValues = z.infer<typeof categoryFormSchema>;
+
+const getCategoryOptions = () => {
+    const options: { value: string; label: string }[] = [{ value: '', label: 'Không có' }];
+    const buildOptions = (parentId: string | null, level: number) => {
+        categories
+            .filter(c => c.parentId === parentId && c.level < 3)
+            .forEach(c => {
+                options.push({
+                    value: c.id,
+                    label: `${'--'.repeat(level)} ${c.name}`
+                });
+                buildOptions(c.id, level + 1);
+            });
+    };
+    buildOptions(null, 0);
+    return options;
+};
 
 export default function NewCategoryPage() {
   const { toast } = useToast();
@@ -26,13 +46,19 @@ export default function NewCategoryPage() {
     defaultValues: {
       name: '',
       slug: '',
+      parentId: '',
     },
   });
 
   const { isSubmitting } = form.formState;
+  const categoryOptions = getCategoryOptions();
 
   async function onSubmit(values: CategoryFormValues) {
-    console.log(values);
+    const finalValues = {
+        ...values,
+        parentId: values.parentId || null
+    }
+    console.log(finalValues);
     await new Promise(resolve => setTimeout(resolve, 1000));
     toast({
       title: 'Thành công',
@@ -63,6 +89,13 @@ export default function NewCategoryPage() {
             <CardContent className="space-y-4">
                 <ControlledInput name="name" control={form.control} label="Tên danh mục" placeholder="Ví dụ: Nồi nấu phở" />
                 <ControlledInput name="slug" control={form.control} label="Đường dẫn (Slug)" placeholder="vi-du: noi-nau-pho" />
+                <ControlledSelect 
+                    name="parentId"
+                    control={form.control}
+                    label="Danh mục cha"
+                    placeholder="Chọn danh mục cha"
+                    options={categoryOptions}
+                />
                  <div>
                     <p className="text-sm font-medium mb-2">Hình ảnh</p>
                     <Button variant="outline" type="button">Tải ảnh lên</Button>

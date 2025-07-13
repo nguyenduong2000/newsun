@@ -14,13 +14,50 @@ import Link from 'next/link';
 import { notFound, useParams } from 'next/navigation';
 import { categories } from '@/lib/mock-data';
 import Image from 'next/image';
+import { ControlledSelect } from '@/components/form/controlled-select';
 
 const categoryFormSchema = z.object({
   name: z.string().min(2, 'Tên danh mục phải có ít nhất 2 ký tự.'),
   slug: z.string().min(2, 'Đường dẫn tĩnh phải có ít nhất 2 ký tự.'),
+  parentId: z.string().nullable().optional(),
 });
 
 type CategoryFormValues = z.infer<typeof categoryFormSchema>;
+
+
+const getCategoryOptions = (currentCategoryId: string) => {
+    const options: { value: string; label: string }[] = [{ value: '', label: 'Không có' }];
+    const descendantIds = new Set<string>();
+
+    // Function to find all descendants of a category
+    const findDescendants = (parentId: string) => {
+        const children = categories.filter(c => c.parentId === parentId);
+        for (const child of children) {
+            descendantIds.add(child.id);
+            findDescendants(child.id);
+        }
+    };
+
+    findDescendants(currentCategoryId);
+
+    const buildOptions = (parentId: string | null, level: number) => {
+        categories
+            .filter(c => c.parentId === parentId)
+            .forEach(c => {
+                // A category cannot be its own parent or a child of its descendants
+                if (c.id !== currentCategoryId && !descendantIds.has(c.id) && c.level < 3) {
+                     options.push({
+                        value: c.id,
+                        label: `${'--'.repeat(level)} ${c.name}`
+                    });
+                    buildOptions(c.id, level + 1);
+                }
+            });
+    };
+    buildOptions(null, 0);
+    return options;
+};
+
 
 export default function EditCategoryPage() {
   const { toast } = useToast();
@@ -33,6 +70,7 @@ export default function EditCategoryPage() {
     defaultValues: {
       name: category?.name || '',
       slug: category?.slug || '',
+      parentId: category?.parentId || '',
     },
   });
 
@@ -42,8 +80,14 @@ export default function EditCategoryPage() {
     return notFound();
   }
 
+  const categoryOptions = getCategoryOptions(categoryId);
+
   async function onSubmit(values: CategoryFormValues) {
-    console.log(values);
+    const finalValues = {
+        ...values,
+        parentId: values.parentId || null
+    }
+    console.log(finalValues);
     await new Promise(resolve => setTimeout(resolve, 1000));
     toast({
       title: 'Thành công',
@@ -73,6 +117,13 @@ export default function EditCategoryPage() {
             <CardContent className="space-y-4">
                 <ControlledInput name="name" control={form.control} label="Tên danh mục" />
                 <ControlledInput name="slug" control={form.control} label="Đường dẫn (Slug)" />
+                 <ControlledSelect 
+                    name="parentId"
+                    control={form.control}
+                    label="Danh mục cha"
+                    placeholder="Chọn danh mục cha"
+                    options={categoryOptions}
+                />
                 <div>
                     <p className="text-sm font-medium mb-2">Hình ảnh</p>
                     <div className='flex items-end gap-4'>
