@@ -59,10 +59,7 @@ export default function NewProductPage() {
       isSale: false,
       productCode: '',
       specs: [
-        { key: 'Model', value: '' },
-        { key: 'Điện áp', value: '' },
-        { key: 'Công suất', value: '' },
-        { key: 'Bảo hành', value: '12 tháng' },
+        { key: '', value: '' },
       ]
     },
   });
