@@ -1,0 +1,67 @@
+
+'use client';
+
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+import { 
+  Home, 
+  Package, 
+  ShoppingCart, 
+  Users, 
+  LineChart,
+  LayoutGrid,
+  MessageSquare,
+  Mail
+} from 'lucide-react';
+import { cn } from '@/lib/utils';
+import { Badge } from '@/components/ui/badge';
+
+const navLinks = [
+  { href: '/admin/dashboard', icon: Home, label: 'Dashboard' },
+  { href: '/admin/products', icon: Package, label: 'Sản phẩm' },
+  { href: '/admin/categories', icon: LayoutGrid, label: 'Danh mục' },
+  { href: '/admin/orders', icon: ShoppingCart, label: 'Đơn hàng', notificationCount: 6 },
+  { href: '/admin/consultations', icon: MessageSquare, label: 'Tư vấn' },
+  { href: '/admin/feedback', icon: Mail, label: 'Góp ý' },
+  { href: '/admin/customers', icon: Users, label: 'Khách hàng' },
+  { href: '/admin/analytics', icon: LineChart, label: 'Phân tích' },
+];
+
+export function Sidebar() {
+  const pathname = usePathname();
+
+  return (
+    <div className="hidden border-r bg-muted/40 md:block">
+      <div className="flex h-full max-h-screen flex-col gap-2">
+        <div className="flex h-14 items-center border-b px-4 lg:h-[60px] lg:px-6">
+          <Link href="/admin/dashboard" className="flex items-center gap-2 font-semibold">
+            <Package className="h-6 w-6" />
+            <span className="">Admin Panel</span>
+          </Link>
+        </div>
+        <div className="flex-1">
+          <nav className="grid items-start px-2 text-sm font-medium lg:px-4">
+            {navLinks.map(({ href, icon: Icon, label, notificationCount }) => (
+              <Link
+                key={label}
+                href={href}
+                className={cn(
+                  'flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary',
+                  pathname === href && 'bg-muted text-primary'
+                )}
+              >
+                <Icon className="h-4 w-4" />
+                {label}
+                {notificationCount && (
+                  <Badge className="ml-auto flex h-6 w-6 shrink-0 items-center justify-center rounded-full">
+                    {notificationCount}
+                  </Badge>
+                )}
+              </Link>
+            ))}
+          </nav>
+        </div>
+      </div>
+    </div>
+  );
+}
