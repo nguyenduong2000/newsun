@@ -12,11 +12,18 @@ import { ControlledTextarea } from '@/components/form/controlled-textarea';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { ArrowLeft, PlusCircle } from 'lucide-react';
 import Link from 'next/link';
+import { ControlledSelect } from '@/components/form/controlled-select';
+import { categories } from '@/lib/mock-data';
+import { ControlledCheckbox } from '@/components/form/controlled-checkbox';
 
 const productFormSchema = z.object({
   productName: z.string().min(3, 'Tên sản phẩm phải có ít nhất 3 ký tự.'),
   description: z.string().min(10, 'Mô tả phải có ít nhất 10 ký tự.'),
+  rawPrice: z.coerce.number().min(0, 'Giá không được âm.'),
   salePrice: z.coerce.number().min(0, 'Giá không được âm.'),
+  quantity: z.coerce.number().int().min(0, 'Số lượng không được âm.'),
+  isSale: z.boolean().default(false),
+  categoryId: z.string({ required_error: 'Vui lòng chọn danh mục.' }),
   productCode: z.string().optional(),
 });
 
@@ -29,7 +36,10 @@ export default function NewProductPage() {
     defaultValues: {
       productName: '',
       description: '',
+      rawPrice: 0,
       salePrice: 0,
+      quantity: 0,
+      isSale: false,
       productCode: '',
     },
   });
@@ -90,17 +100,39 @@ export default function NewProductPage() {
             </Card>
              <Card>
                 <CardHeader>
-                    <CardTitle>Định giá</CardTitle>
+                    <CardTitle>Định giá và tồn kho</CardTitle>
                 </CardHeader>
                 <CardContent>
                     <div className="grid gap-6 sm:grid-cols-2">
-                        <ControlledInput name="salePrice" control={form.control} label="Giá bán" type="number" placeholder="0" />
+                        <ControlledInput name="rawPrice" control={form.control} label="Giá gốc" type="number" placeholder="0" />
+                        <ControlledInput name="salePrice" control={form.control} label="Giá bán (Sale)" type="number" placeholder="0" />
+                        <ControlledInput name="quantity" control={form.control} label="Số lượng" type="number" placeholder="0" />
                         <ControlledInput name="productCode" control={form.control} label="Mã SKU" placeholder="Vd: NNP-50L" />
                     </div>
                 </CardContent>
             </Card>
           </div>
           <div className="grid auto-rows-max items-start gap-4 lg:gap-8">
+             <Card>
+                <CardHeader>
+                    <CardTitle>Danh mục & Trạng thái</CardTitle>
+                </CardHeader>
+                 <CardContent className="space-y-4">
+                    <ControlledSelect 
+                        name="categoryId"
+                        control={form.control}
+                        label="Danh mục sản phẩm"
+                        placeholder="Chọn danh mục"
+                        options={categories.map(c => ({ value: c.id, label: c.name }))}
+                    />
+                    <ControlledCheckbox
+                        name="isSale"
+                        control={form.control}
+                        label="Đang giảm giá (isSale)"
+                        description="Check vào đây nếu sản phẩm đang được giảm giá."
+                    />
+                </CardContent>
+             </Card>
              <Card className="overflow-hidden">
                 <CardHeader>
                     <CardTitle>Hình ảnh sản phẩm</CardTitle>

@@ -4,6 +4,7 @@ export interface Product {
   id: string;
   typeCode: string;
   typeName: string;
+  categoryId: string;
   productName: string;
   slug: string;
   productCode: string;
