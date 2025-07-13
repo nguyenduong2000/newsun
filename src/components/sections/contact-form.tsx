@@ -1,3 +1,4 @@
+
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -5,18 +6,11 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 
 import { Button } from "@/components/ui/button";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
+import { Form } from "@/components/ui/form";
 import { useToast } from "@/hooks/use-toast";
 import { useState } from "react";
+import { ControlledInput } from "../form/controlled-input";
+import { ControlledTextarea } from "../form/controlled-textarea";
 
 const formSchema = z.object({
   name: z.string().min(2, "Tên phải có ít nhất 2 ký tự."),
@@ -56,61 +50,30 @@ export function ContactForm() {
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-        <FormField
-          control={form.control}
-          name="name"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Họ và tên</FormLabel>
-              <FormControl>
-                <Input placeholder="Nguyễn Văn A" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
+        <ControlledInput
+            control={form.control}
+            name="name"
+            label="Họ và tên"
+            placeholder="Nguyễn Văn A"
         />
-        <FormField
-          control={form.control}
-          name="phone"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Số điện thoại</FormLabel>
-              <FormControl>
-                <Input placeholder="09xxxxxxxx" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
+        <ControlledInput
+            control={form.control}
+            name="phone"
+            label="Số điện thoại"
+            placeholder="09xxxxxxxx"
         />
-        <FormField
-          control={form.control}
-          name="email"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Email</FormLabel>
-              <FormControl>
-                <Input placeholder="email@example.com" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
+        <ControlledInput
+            control={form.control}
+            name="email"
+            label="Email"
+            placeholder="email@example.com"
         />
-        <FormField
-          control={form.control}
-          name="message"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Nội dung</FormLabel>
-              <FormControl>
-                <Textarea
-                  placeholder="Nội dung bạn muốn trao đổi..."
-                  className="resize-none"
-                  {...field}
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
+         <ControlledTextarea
+            control={form.control}
+            name="message"
+            label="Nội dung"
+            placeholder="Nội dung bạn muốn trao đổi..."
+            className="resize-none"
         />
         <Button type="submit" className="w-full" disabled={isSubmitting}>
           {isSubmitting ? "Đang gửi..." : "Gửi yêu cầu"}
