@@ -11,15 +11,9 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 
-// We need to dynamically import CKEditor components as they are client-side only.
-// We will create a wrapper that handles this.
-let CKEditor: any = null;
-let ClassicEditor: any = null;
-
-if (typeof window !== 'undefined') {
-  CKEditor = require('@ckeditor/ckeditor5-react').CKEditor;
-  ClassicEditor = require('@ckeditor/ckeditor5-build-classic');
-}
+// Dynamically import client-side components
+import { CKEditor } from '@ckeditor/ckeditor5-react';
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
 const editorConfiguration = {
     toolbar: [ 'heading', '|', 'bold', 'italic', 'link', 'bulletedList', 'numberedList', '|', 'outdent', 'indent', '|', 'uploadImage', 'blockQuote', 'insertTable', 'undo', 'redo' ],
@@ -67,9 +61,15 @@ export function ControlledCKEditor<
         setIsMounted(true);
     }, []);
 
-    // Render the editor only on the client-side
-    if (!isMounted || !CKEditor || !ClassicEditor) {
-        return <div>Loading Editor...</div>;
+    if (!isMounted) {
+        return (
+          <div className="space-y-2">
+            {label && <FormLabel>{label}</FormLabel>}
+            <div className="w-full rounded-md border border-input bg-background px-3 py-2 min-h-[300px] flex items-center justify-center">
+              <p className="text-muted-foreground">Loading Editor...</p>
+            </div>
+          </div>
+        );
     }
 
   return (

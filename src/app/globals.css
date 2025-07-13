@@ -78,4 +78,9 @@
   .specs-table tr:first-child td {
       @apply border-t-0;
   }
+
+  /* CKEditor custom styles */
+  .ck-editor__editable_inline {
+      @apply min-h-[300px];
+  }
 }
