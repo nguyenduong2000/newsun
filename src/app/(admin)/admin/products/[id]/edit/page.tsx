@@ -20,7 +20,9 @@ import React, { useState, useRef } from 'react';
 const productFormSchema = z.object({
   productName: z.string().min(3, 'Tên sản phẩm phải có ít nhất 3 ký tự.'),
   description: z.string().min(10, 'Mô tả phải có ít nhất 10 ký tự.'),
+  rawPrice: z.coerce.number().min(0, 'Giá không được âm.'),
   salePrice: z.coerce.number().min(0, 'Giá không được âm.'),
+  quantity: z.coerce.number().int().min(0, 'Số lượng không được âm.'),
   productCode: z.string().optional(),
 });
 
@@ -48,7 +50,9 @@ export default function EditProductPage() {
     defaultValues: {
       productName: product?.productName || '',
       description: product?.description || '',
+      rawPrice: product?.rawPrice || 0,
       salePrice: product?.salePrice || 0,
+      quantity: product?.quantity || 0,
       productCode: product?.productCode || '',
     },
   });
@@ -115,7 +119,7 @@ export default function EditProductPage() {
               <CardHeader>
                 <CardTitle>Chi tiết sản phẩm</CardTitle>
                 <CardDescription>
-                  Thông tin cơ bản về sản phẩm.
+                  Chỉnh sửa thông tin, giá và tồn kho cho sản phẩm.
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
@@ -125,6 +129,12 @@ export default function EditProductPage() {
                   control={form.control}
                   label="Mô tả"
                 />
+                <div className="grid gap-6 sm:grid-cols-2">
+                    <ControlledInput name="rawPrice" control={form.control} label="Giá gốc" type="number" placeholder="0" />
+                    <ControlledInput name="salePrice" control={form.control} label="Giá bán (Sale)" type="number" placeholder="0" />
+                    <ControlledInput name="quantity" control={form.control} label="Số lượng tồn kho" type="number" placeholder="0" />
+                    <ControlledInput name="productCode" control={form.control} label="Mã SKU" />
+                </div>
               </CardContent>
             </Card>
             <Card>
@@ -177,17 +187,6 @@ export default function EditProductPage() {
                             <Upload className="h-6 w-6 text-muted-foreground" />
                             <span className="sr-only">Upload</span>
                         </button>
-                    </div>
-                </CardContent>
-            </Card>
-             <Card>
-                <CardHeader>
-                    <CardTitle>Định giá</CardTitle>
-                </CardHeader>
-                <CardContent>
-                    <div className="grid gap-6 sm:grid-cols-2">
-                        <ControlledInput name="salePrice" control={form.control} label="Giá bán" type="number" />
-                        <ControlledInput name="productCode" control={form.control} label="Mã SKU" />
                     </div>
                 </CardContent>
             </Card>

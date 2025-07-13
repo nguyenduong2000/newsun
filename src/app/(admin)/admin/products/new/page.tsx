@@ -112,7 +112,7 @@ export default function NewProductPage() {
               <CardHeader>
                 <CardTitle>Chi tiết sản phẩm</CardTitle>
                 <CardDescription>
-                  Điền thông tin cơ bản cho sản phẩm mới.
+                  Điền thông tin cơ bản, giá và tồn kho cho sản phẩm mới.
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
@@ -122,6 +122,12 @@ export default function NewProductPage() {
                   control={form.control}
                   label="Mô tả"
                 />
+                 <div className="grid gap-6 sm:grid-cols-2">
+                    <ControlledInput name="rawPrice" control={form.control} label="Giá gốc" type="number" placeholder="0" />
+                    <ControlledInput name="salePrice" control={form.control} label="Giá bán (Sale)" type="number" placeholder="0" />
+                    <ControlledInput name="quantity" control={form.control} label="Số lượng tồn kho" type="number" placeholder="0" />
+                    <ControlledInput name="productCode" control={form.control} label="Mã SKU" placeholder="Vd: NNP-50L" />
+                </div>
               </CardContent>
             </Card>
             <Card>
@@ -171,19 +177,6 @@ export default function NewProductPage() {
                             <Upload className="h-6 w-6 text-muted-foreground" />
                             <span className="sr-only">Upload</span>
                         </button>
-                    </div>
-                </CardContent>
-            </Card>
-             <Card>
-                <CardHeader>
-                    <CardTitle>Định giá và tồn kho</CardTitle>
-                </CardHeader>
-                <CardContent>
-                    <div className="grid gap-6 sm:grid-cols-2">
-                        <ControlledInput name="rawPrice" control={form.control} label="Giá gốc" type="number" placeholder="0" />
-                        <ControlledInput name="salePrice" control={form.control} label="Giá bán (Sale)" type="number" placeholder="0" />
-                        <ControlledInput name="quantity" control={form.control} label="Số lượng" type="number" placeholder="0" />
-                        <ControlledInput name="productCode" control={form.control} label="Mã SKU" placeholder="Vd: NNP-50L" />
                     </div>
                 </CardContent>
             </Card>
