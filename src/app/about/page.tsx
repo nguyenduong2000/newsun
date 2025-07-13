@@ -41,37 +41,6 @@ const coreValues = [
     }
 ]
 
-const historyMilestones = [
-  {
-    year: "2015",
-    title: "Thành lập",
-    description: "Công ty NEWSUN được thành lập, khởi đầu với việc cung cấp các thiết bị bếp công nghiệp cơ bản.",
-    image: "https://placehold.co/500x300.png",
-    aiHint: "company office",
-  },
-  {
-    year: "2017",
-    title: "Mở rộng sản phẩm",
-    description: "Đa dạng hóa danh mục sản phẩm, tập trung vào các dòng máy chế biến thực phẩm chuyên sâu.",
-    image: "https://placehold.co/500x300.png",
-    aiHint: "factory machine",
-  },
-  {
-    year: "2019",
-    title: "Phát triển chi nhánh",
-    description: "Khai trương chi nhánh tại Đà Nẵng và TP. Hồ Chí Minh, đánh dấu bước phát triển vượt bậc.",
-    image: "https://placehold.co/500x300.png",
-    aiHint: "city storefront",
-  },
-  {
-    year: "2022",
-    title: "Dẫn đầu thị trường",
-    description: "Trở thành một trong những đơn vị uy tín hàng đầu, được hàng chục nghìn khách hàng trên cả nước tin dùng.",
-    image: "https://placehold.co/500x300.png",
-    aiHint: "team celebration",
-  }
-];
-
 const servicePromises = [
   {
     icon: PackageCheck,
@@ -144,54 +113,6 @@ export default function AboutPage() {
                 ))}
             </div>
         </section>
-        
-        <section className="mt-12 md:mt-20">
-           <h2 className="text-3xl md:text-4xl font-headline font-bold text-center mb-12">Lịch sử hình thành & phát triển</h2>
-           <div className="relative wrap overflow-hidden p-10 h-full">
-                <div className="border-2-2 absolute border-opacity-20 border-gray-700 h-full border" style={{left: '50%'}}></div>
-                {historyMilestones.map((item, index) => (
-                    <div key={index} className={`mb-8 flex justify-between items-center w-full ${index % 2 === 0 ? 'flex-row-reverse left-timeline' : 'right-timeline'}`}>
-                         <div className="order-1 w-5/12"></div>
-                         <div className="z-20 flex items-center order-1 bg-primary shadow-xl w-12 h-12 rounded-full">
-                            <h3 className="mx-auto font-bold text-lg text-white">{item.year}</h3>
-                        </div>
-                        <div className="order-1 bg-card rounded-lg shadow-xl w-5/12 px-6 py-4 border">
-                            <h4 className="font-bold text-lg mb-1">{item.title}</h4>
-                            <p className="text-sm leading-snug tracking-wide text-muted-foreground">{item.description}</p>
-                            <div className="mt-4 aspect-video rounded-md overflow-hidden">
-                                <Image src={item.image} alt={item.title} width={500} height={300} className="w-full h-full object-cover" data-ai-hint={item.aiHint} />
-                            </div>
-                        </div>
-                    </div>
-                ))}
-           </div>
-        </section>
-
-        <section className="mt-12 md:mt-20">
-           <h2 className="text-3xl md:text-4xl font-headline font-bold text-center mb-12">Các dòng sản phẩm NEWSUN cung cấp</h2>
-           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
-            {categories.map((category) => (
-              <Link href={`/products?category=${category.slug}`} key={category.id} className="block group">
-                <Card className="overflow-hidden transition-all duration-300 hover:shadow-lg hover:-translate-y-1 rounded-lg">
-                  <CardContent className="p-4 text-center">
-                    <div className="relative w-24 h-24 mx-auto">
-                      <Image
-                          src={category.image}
-                          alt={category.name}
-                          fill
-                          className="object-contain rounded-full bg-gray-100 p-2"
-                          data-ai-hint="kitchen appliance"
-                        />
-                    </div>
-                    <h3 className="font-semibold text-gray-800 group-hover:text-primary transition-colors mt-4">
-                        {category.name}
-                    </h3>
-                  </CardContent>
-                </Card>
-              </Link>
-            ))}
-          </div>
-        </section>
 
         <section className="mt-12 md:mt-20 bg-muted py-12 rounded-lg">
              <h2 className="text-3xl md:text-4xl font-headline font-bold text-center mb-12">Cam kết của NEWSUN</h2>
@@ -228,7 +149,9 @@ export default function AboutPage() {
                 ))}
             </div>
             <div className="text-center mt-8">
-                <Button size="lg">Xem tất cả 17 chi nhánh</Button>
+                <Button size="lg" asChild>
+                  <Link href="/stores">Xem tất cả 17 chi nhánh</Link>
+                </Button>
             </div>
         </section>
 
