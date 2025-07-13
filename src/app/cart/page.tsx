@@ -37,10 +37,6 @@ export default function CartPage() {
 
   return (
     <div className="container-fluid mx-auto px-4 sm:px-6 lg:px-8 py-8 max-w-6xl">
-      <h1 className="text-3xl md:text-4xl font-headline font-bold mb-8">
-        Giỏ hàng của bạn
-      </h1>
-
       <div className="grid lg:grid-cols-3 lg:gap-8">
         <div className="lg:col-span-2">
           <div className="divide-y divide-border rounded-lg border">
@@ -117,8 +113,8 @@ export default function CartPage() {
               </p>
             </CardContent>
             <CardFooter className="flex-col space-y-4">
-                 <Button size="lg" className="w-full">
-                    Tiến hành thanh toán
+                 <Button size="lg" className="w-full" asChild>
+                    <Link href="/checkout">Tiến hành thanh toán</Link>
                 </Button>
                  <Button variant="outline" className="w-full" asChild>
                     <Link href="/products">
@@ -132,4 +128,3 @@ export default function CartPage() {
     </div>
   );
 }
-

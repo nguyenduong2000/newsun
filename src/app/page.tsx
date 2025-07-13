@@ -25,7 +25,7 @@ export default function Home() {
     <div className="space-y-12 md:space-y-16 lg:space-y-20">
       <HeroSection />
 
-      <div className="container-fluid mx-auto px-4 sm:px-6 lg:px-8 py-8 max-w-6xl space-y-12 md:space-y-16 lg:space-y-20">
+      <div className="container-fluid mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl space-y-12 md:space-y-16 lg:space-y-20">
         <section>
           <div className="flex justify-between items-center mb-6">
             <h2 className="text-2xl md:text-3xl font-headline font-bold">
