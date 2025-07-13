@@ -1,3 +1,4 @@
+
 import { HeroSection } from "@/components/sections/hero-section";
 import { ProductGrid } from "@/components/sections/product-grid";
 import { Button } from "@/components/ui/button";

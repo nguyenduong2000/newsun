@@ -1,0 +1,22 @@
+
+import { Header } from "@/components/layout/header";
+import { Footer } from "@/components/layout/footer";
+import { Breadcrumbs } from "@/components/layout/breadcrumbs";
+import "./about/about.css";
+
+export default function MainLayout({
+  children,
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
+  return (
+    <div className="flex flex-col min-h-screen">
+      <Header />
+      <main className="flex-grow">
+        <Breadcrumbs />
+        {children}
+      </main>
+      <Footer />
+    </div>
+  );
+}

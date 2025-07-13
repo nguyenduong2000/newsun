@@ -1,3 +1,4 @@
+
 import { ProductGrid } from "@/components/sections/product-grid";
 import { products } from "@/lib/mock-data";
 import type { Metadata } from "next";

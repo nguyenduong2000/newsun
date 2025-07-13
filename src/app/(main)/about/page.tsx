@@ -13,8 +13,6 @@ import {
   MapPin,
   Building2
 } from "lucide-react";
-import { categories } from "@/lib/mock-data";
-import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import "./about.css";
 
