@@ -7,19 +7,17 @@ import { z } from 'zod';
 import { Button } from '@/components/ui/button';
 import { Form } from '@/components/ui/form';
 import { useToast } from '@/hooks/use-toast';
-import { useState } from 'react';
 import { ControlledInput } from '@/components/form/controlled-input';
 import { ControlledTextarea } from '@/components/form/controlled-textarea';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { ArrowLeft, PlusCircle } from 'lucide-react';
 import Link from 'next/link';
-import Image from 'next/image';
 
 const productFormSchema = z.object({
-  name: z.string().min(3, 'Tên sản phẩm phải có ít nhất 3 ký tự.'),
+  productName: z.string().min(3, 'Tên sản phẩm phải có ít nhất 3 ký tự.'),
   description: z.string().min(10, 'Mô tả phải có ít nhất 10 ký tự.'),
-  price: z.coerce.number().min(0, 'Giá không được âm.'),
-  sku: z.string().optional(),
+  salePrice: z.coerce.number().min(0, 'Giá không được âm.'),
+  productCode: z.string().optional(),
 });
 
 type ProductFormValues = z.infer<typeof productFormSchema>;
@@ -29,10 +27,10 @@ export default function NewProductPage() {
   const form = useForm<ProductFormValues>({
     resolver: zodResolver(productFormSchema),
     defaultValues: {
-      name: '',
+      productName: '',
       description: '',
-      price: 0,
-      sku: '',
+      salePrice: 0,
+      productCode: '',
     },
   });
 
@@ -43,7 +41,7 @@ export default function NewProductPage() {
     await new Promise(resolve => setTimeout(resolve, 1000));
     toast({
       title: 'Thành công',
-      description: `Sản phẩm "${values.name}" đã được tạo.`,
+      description: `Sản phẩm "${values.productName}" đã được tạo.`,
     });
     form.reset();
   }
@@ -80,7 +78,7 @@ export default function NewProductPage() {
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
-                <ControlledInput name="name" control={form.control} label="Tên sản phẩm" placeholder="Ví dụ: Nồi nấu phở 50L"/>
+                <ControlledInput name="productName" control={form.control} label="Tên sản phẩm" placeholder="Ví dụ: Nồi nấu phở 50L"/>
                 <ControlledTextarea
                   name="description"
                   control={form.control}
@@ -96,8 +94,8 @@ export default function NewProductPage() {
                 </CardHeader>
                 <CardContent>
                     <div className="grid gap-6 sm:grid-cols-2">
-                        <ControlledInput name="price" control={form.control} label="Giá" type="number" placeholder="0" />
-                        <ControlledInput name="sku" control={form.control} label="Mã SKU" placeholder="Vd: NNP-50L" />
+                        <ControlledInput name="salePrice" control={form.control} label="Giá bán" type="number" placeholder="0" />
+                        <ControlledInput name="productCode" control={form.control} label="Mã SKU" placeholder="Vd: NNP-50L" />
                     </div>
                 </CardContent>
             </Card>
