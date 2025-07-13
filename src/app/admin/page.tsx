@@ -9,7 +9,7 @@ export default function AdminRootPage() {
   const router = useRouter();
 
   useEffect(() => {
-    router.replace('/dashboard');
+    router.replace('/admin/dashboard');
   }, [router]);
 
   // Render a loading state or null while redirecting

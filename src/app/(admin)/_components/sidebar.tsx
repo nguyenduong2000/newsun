@@ -20,14 +20,14 @@ import { useAuth } from '@/context/auth-context';
 import { Button } from '@/components/ui/button';
 
 const navLinks = [
-  { href: '/dashboard', icon: Home, label: 'Dashboard' },
-  { href: '/products', icon: Package, label: 'Sản phẩm' },
-  { href: '/categories', icon: LayoutGrid, label: 'Danh mục' },
-  { href: '/orders', icon: ShoppingCart, label: 'Đơn hàng', notificationCount: 6 },
-  { href: '/consultations', icon: MessageSquare, label: 'Tư vấn' },
-  { href: '/feedback', icon: Mail, label: 'Góp ý' },
-  { href: '/customers', icon: Users, label: 'Khách hàng' },
-  { href: '/analytics', icon: LineChart, label: 'Phân tích' },
+  { href: '/admin/dashboard', icon: Home, label: 'Dashboard' },
+  { href: '/admin/products', icon: Package, label: 'Sản phẩm' },
+  { href: '/admin/categories', icon: LayoutGrid, label: 'Danh mục' },
+  { href: '/admin/orders', icon: ShoppingCart, label: 'Đơn hàng', notificationCount: 6 },
+  { href: '/admin/consultations', icon: MessageSquare, label: 'Tư vấn' },
+  { href: '/admin/feedback', icon: Mail, label: 'Góp ý' },
+  { href: '/admin/customers', icon: Users, label: 'Khách hàng' },
+  { href: '/admin/analytics', icon: LineChart, label: 'Phân tích' },
 ];
 
 export function Sidebar() {
@@ -38,7 +38,7 @@ export function Sidebar() {
     <div className="hidden border-r bg-background md:block">
       <div className="flex h-full max-h-screen flex-col gap-2">
         <div className="flex h-14 items-center border-b px-4 lg:h-[60px] lg:px-6">
-          <Link href="/dashboard" className="flex items-center gap-2 font-semibold">
+          <Link href="/admin/dashboard" className="flex items-center gap-2 font-semibold">
             <Package className="h-6 w-6" />
             <span className="">Admin Panel</span>
           </Link>
