@@ -10,7 +10,8 @@ import {
   Phone,
   ChevronRight,
   ChevronDown,
-  ShoppingCart
+  ShoppingCart,
+  User
 } from "lucide-react";
 
 import { cn } from "@/lib/utils";
@@ -81,13 +82,21 @@ export function Header() {
             </div>
           </div>
          
-          <div className="hidden lg:flex items-center space-x-4 flex-shrink-0">
+          <div className="hidden lg:flex items-center space-x-2 flex-shrink-0">
             <CartIcon />
-            <MessageSquare className="w-8 h-8 text-primary"/>
-            <div>
-              <p className="text-sm font-semibold">Tư vấn bán hàng</p>
-              <p className="text-lg font-bold text-primary">0963.997.355 | 0965.997.355</p>
+            <div className="flex items-center space-x-2">
+              <MessageSquare className="w-8 h-8 text-primary"/>
+              <div>
+                <p className="text-sm font-semibold">Tư vấn bán hàng</p>
+                <p className="text-lg font-bold text-primary">0963.997.355</p>
+              </div>
             </div>
+            <Button asChild>
+                <Link href="/login">
+                  <User className="mr-2"/>
+                  Đăng nhập
+                </Link>
+            </Button>
             <Button>Tư vấn chọn mua</Button>
           </div>
           
@@ -130,7 +139,7 @@ const MegaMenu = () => {
                         Tất cả danh mục sản phẩm
                     </NavigationMenuTrigger>
                     <NavigationMenuContent>
-                        <div className="grid grid-cols-5 gap-4 p-4 w-[1000px] max-w-full">
+                        <div className="grid grid-cols-5 gap-4 p-4 md:w-[1000px]">
                            <div className="col-span-1">
                              <ul className="space-y-1">
                                 {megaMenu.map(category => (
@@ -219,6 +228,14 @@ const MobileMenu = ({ setOpen }: { setOpen: (open: boolean) => void }) => {
                       {item.title}
                     </Link>
                 ))}
+                 <div className="border-t my-4"></div>
+                 <Link
+                    href="/login"
+                    className="py-2 text-base font-medium"
+                    onClick={() => setOpen(false)}
+                    >
+                    Đăng nhập / Đăng ký
+                </Link>
             </nav>
         </div>
          <div className="p-4 border-t bg-muted/50">
@@ -272,5 +289,3 @@ const MobileSubMenu = ({ item, setOpen, level }: { item: MegaMenuCategory, setOp
     </div>
   );
 };
-
-    
