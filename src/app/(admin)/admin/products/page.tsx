@@ -83,25 +83,25 @@ export default function AdminProductsPage() {
                 <TableRow key={product.id}>
                     <TableCell className="hidden sm:table-cell">
                         <Image
-                        alt={product.name}
+                        alt={product.productName}
                         className="aspect-square rounded-md object-cover"
                         height="64"
-                        src={product.image}
+                        src={product.pathMainImage}
                         width="64"
                         data-ai-hint="kitchen appliance"
                         />
                     </TableCell>
                     <TableCell className="font-medium">
-                        {product.name}
+                        {product.productName}
                     </TableCell>
                     <TableCell>
-                        <Badge variant="outline">Còn hàng</Badge>
+                        <Badge variant={product.isSale ? "destructive" : "outline"}>{product.isSale ? 'Đang giảm giá' : 'Còn hàng'}</Badge>
                     </TableCell>
                     <TableCell className="hidden md:table-cell">
-                        {formatPrice(product.price)}
+                        {formatPrice(product.salePrice)}
                     </TableCell>
                     <TableCell className="hidden md:table-cell">
-                        {product.sold || 25}
+                        {product.purchaseCount}
                     </TableCell>
                     <TableCell className="hidden md:table-cell">
                         2023-07-12 10:42 AM

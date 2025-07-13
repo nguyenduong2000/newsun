@@ -1,18 +1,23 @@
 
+
 export interface Product {
   id: string;
-  name: string;
+  typeCode: string;
+  typeName: string;
+  productName: string;
   slug: string;
-  price: number;
-  originalPrice?: number;
-  description: string;
-  category: string;
-  image: string;
+  productCode: string;
+  pathMainImage: string;
   images: string[];
+  rawPrice: number;
+  salePrice: number;
+  starRating: number;
+  quantity: number;
+  purchaseCount: number;
+  isSale: boolean;
+  description: string;
   specs: Record<string, string>;
-  rating?: number;
   reviews?: number;
-  sold?: number;
   featuresImage?: string;
   models?: string[];
 }

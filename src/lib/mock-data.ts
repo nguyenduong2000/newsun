@@ -1,3 +1,4 @@
+
 import type { Product, Category, NavItem, MegaMenuCategory } from "@/types";
 
 export const categories: Category[] = [
@@ -12,13 +13,14 @@ export const categories: Category[] = [
 export const products: Product[] = [
   {
     id: "1",
-    name: "Nồi nấu phở bằng điện 20L",
+    productName: "Nồi nấu phở bằng điện 20L",
     slug: "noi-nau-pho-dien-20l",
-    price: 2500000,
-    originalPrice: 3500000,
+    salePrice: 2500000,
+    rawPrice: 3500000,
     description: "Nồi nấu phở bằng điện dung tích 20 lít, chất liệu inox 304 cao cấp, an toàn và bền bỉ. Giữ nhiệt tốt, tiết kiệm điện năng.",
-    category: "noi-nau-pho",
-    image: "https://placehold.co/400x400.png",
+    typeCode: "noi-nau-pho",
+    typeName: "Nồi nấu phở",
+    pathMainImage: "https://placehold.co/400x400.png",
     images: ["https://placehold.co/400x400.png?1", "https://placehold.co/400x400.png?2", "https://placehold.co/400x400.png?3", "https://placehold.co/400x400.png?4", "https://placehold.co/400x400.png?5"],
     specs: {
       "Dung tích": "20 Lít",
@@ -26,21 +28,25 @@ export const products: Product[] = [
       "Công suất": "3 kW",
       "Bảo hành": "12 tháng"
     },
-    rating: 5,
+    starRating: 5,
     reviews: 85,
-    sold: 548,
+    purchaseCount: 548,
+    quantity: 100,
+    isSale: true,
+    productCode: "NNP-D20L",
     featuresImage: "https://placehold.co/300x300.png",
     models: ["20L", "30L", "50L", "80L", "100L", "120L"]
   },
   {
     id: "2",
-    name: "Máy xay giò chả 3 kg/mẻ",
+    productName: "Máy xay giò chả 3 kg/mẻ",
     slug: "may-xay-gio-cha-3kg",
-    price: 7500000,
-    originalPrice: 10500000,
+    salePrice: 7500000,
+    rawPrice: 10500000,
     description: "Máy xay giò chả công nghiệp 3KG/mẻ, motor công suất lớn, xay thịt nhuyễn mịn, không nóng. Phù hợp cho các cơ sở sản xuất.",
-    category: "may-xay-gio-cha",
-    image: "https://placehold.co/400x400.png",
+    typeCode: "may-xay-gio-cha",
+    typeName: "Máy xay giò chả",
+    pathMainImage: "https://placehold.co/400x400.png",
     images: ["https://placehold.co/400x400.png", "https://placehold.co/400x400.png"],
     specs: {
       "Năng suất": "3 KG/mẻ",
@@ -48,19 +54,24 @@ export const products: Product[] = [
       "Công suất motor": "3 kW (4HP)",
       "Bảo hành": "24 tháng"
     },
-    rating: 5,
+    starRating: 5,
     reviews: 2663,
-    sold: 6220,
+    purchaseCount: 6220,
+    quantity: 50,
+    isSale: true,
+    productCode: "MXGC-3KG",
     featuresImage: "https://placehold.co/300x300.png"
   },
   {
     id: "3",
-    name: "Máy hút chân không cao cấp Kunba DZ400/2SA (2 buồng)",
+    productName: "Máy hút chân không cao cấp Kunba DZ400/2SA (2 buồng)",
     slug: "may-hut-chan-khong-kunba-dz400-2sa",
-    price: 0,
+    salePrice: 0,
+    rawPrice: 0,
     description: "Máy hút chân không công nghiệp cao cấp Kunba DZ400/2SA với 2 buồng hút, tăng năng suất, phù hợp cho nhà xưởng, xí nghiệp.",
-    category: "may-hut-chan-khong",
-    image: "https://placehold.co/400x400.png",
+    typeCode: "may-hut-chan-khong",
+    typeName: "Máy hút chân không",
+    pathMainImage: "https://placehold.co/400x400.png",
     images: ["https://placehold.co/400x400.png"],
      specs: {
       "Model": "DZ400/2SA",
@@ -68,20 +79,24 @@ export const products: Product[] = [
       "Chất liệu": "Inox",
       "Bảo hành": "12 tháng"
     },
-    rating: 5,
+    starRating: 5,
     reviews: 866,
-    sold: 1200,
+    purchaseCount: 1200,
+    quantity: 20,
+    isSale: false,
+    productCode: "MHCK-DZ400",
     featuresImage: "https://placehold.co/300x300.png"
   },
   {
     id: "4",
-    name: "Máy đùn xúc xích 3 lít quay tay",
+    productName: "Máy đùn xúc xích 3 lít quay tay",
     slug: "may-dun-xuc-xich-3-lit-quay-tay",
-    price: 2600000,
-    originalPrice: 3700000,
+    salePrice: 2600000,
+    rawPrice: 3700000,
     description: "Máy đùn xúc xích quay tay dung tích 3 lít, dễ sử dụng, phù hợp cho gia đình hoặc kinh doanh nhỏ.",
-    category: "may-che-bien-thit",
-    image: "https://placehold.co/400x400.png",
+    typeCode: "may-che-bien-thit",
+    typeName: "Máy chế biến thịt",
+    pathMainImage: "https://placehold.co/400x400.png",
     images: ["https://placehold.co/400x400.png"],
      specs: {
       "Dung tích": "3 Lít",
@@ -89,20 +104,24 @@ export const products: Product[] = [
       "Loại": "Quay tay",
       "Bảo hành": "6 tháng"
     },
-    rating: 5,
+    starRating: 5,
     reviews: 5526,
-    sold: 6235,
+    purchaseCount: 6235,
+    quantity: 150,
+    isSale: true,
+    productCode: "MDXX-3LQT",
     featuresImage: "https://placehold.co/300x300.png"
   },
   {
     id: "5",
-    name: "Máy thái thịt tươi sống mini SS-90",
+    productName: "Máy thái thịt tươi sống mini SS-90",
     slug: "may-thai-thit-tuoi-song-mini-ss-90",
-    price: 3200000,
-    originalPrice: 4500000,
+    salePrice: 3200000,
+    rawPrice: 4500000,
     description: "Máy thái thịt tươi sống mini, công suất 350W, thái nhanh và đều. Thích hợp cho các quán phở, bún chả.",
-    category: "may-thai-thit",
-    image: "https://placehold.co/400x400.png",
+    typeCode: "may-thai-thit",
+    typeName: "Máy thái thịt",
+    pathMainImage: "https://placehold.co/400x400.png",
     images: ["https://placehold.co/400x400.png"],
      specs: {
       "Công suất": "350W",
@@ -110,21 +129,25 @@ export const products: Product[] = [
       "Độ dày lát cắt": "2mm",
       "Bảo hành": "12 tháng"
     },
-    rating: 5,
+    starRating: 5,
     reviews: 734,
-    sold: 978,
+    purchaseCount: 978,
+    quantity: 80,
+    isSale: true,
+    productCode: "MTT-SS90",
     featuresImage: "https://placehold.co/300x300.png",
     models: ["SS-70", "SS-80", "SS-90", "SS-100"]
   },
   {
     id: "6",
-    name: "Máy vặt lông gà, vịt phi 55",
+    productName: "Máy vặt lông gà, vịt phi 55",
     slug: "may-vat-long-ga-phi-55",
-    price: 6900000,
-    originalPrice: 7500000,
+    salePrice: 6900000,
+    rawPrice: 7500000,
     description: "Máy vặt lông gà, vịt phi 55cm, vặt sạch 95% chỉ trong 60 giây. Giúp tiết kiệm thời gian và nhân công.",
-    category: "may-vat-long-ga",
-    image: "https://placehold.co/400x400.png",
+    typeCode: "may-vat-long-ga",
+    typeName: "Máy vặt lông gà",
+    pathMainImage: "https://placehold.co/400x400.png",
     images: ["https://placehold.co/400x400.png"],
      specs: {
       "Đường kính lồng": "55 cm",
@@ -132,19 +155,23 @@ export const products: Product[] = [
       "Tỷ lệ sạch": "95%",
       "Bảo hành": "12 tháng"
     },
-    rating: 4,
+    starRating: 4,
     reviews: 12,
-    sold: 45
+    purchaseCount: 45,
+    quantity: 30,
+    isSale: true,
+    productCode: "MVLG-P55"
   },
   {
     id: "7",
-    name: "Máy hút chân không gia đình DZ300B mini",
+    productName: "Máy hút chân không gia đình DZ300B mini",
     slug: "may-hut-chan-khong-dz300b-mini",
-    price: 1300000,
-    originalPrice: 1625000,
+    salePrice: 1300000,
+    rawPrice: 1625000,
     description: "Máy hút chân không gia đình mini, nhỏ gọn, tiện lợi. Giúp bảo quản thực phẩm tươi lâu hơn.",
-    category: "may-hut-chan-khong",
-    image: "https://placehold.co/400x400.png",
+    typeCode: "may-hut-chan-khong",
+    typeName: "Máy hút chân không",
+    pathMainImage: "https://placehold.co/400x400.png",
     images: ["https://placehold.co/400x400.png"],
      specs: {
       "Công suất hút": "-60-80Kpa",
@@ -152,19 +179,24 @@ export const products: Product[] = [
       "Nguồn điện": "220V",
       "Bảo hành": "12 tháng"
     },
-    rating: 5,
+    starRating: 5,
     reviews: 124,
-    sold: 241,
+    purchaseCount: 241,
+    quantity: 200,
+    isSale: true,
+    productCode: "MHCK-DZ300B",
     featuresImage: "https://placehold.co/300x300.png"
   },
   {
     id: "8",
-    name: "Máy xay giò chả 5KG",
+    productName: "Máy xay giò chả 5KG",
     slug: "may-xay-gio-cha-5kg",
-    price: 7800000,
+    salePrice: 7800000,
+    rawPrice: 8500000,
     description: "Máy xay giò chả công nghiệp 5KG/mẻ, motor công suất lớn, xay thịt nhuyễn mịn, không nóng. Phù hợp cho các cơ sở sản xuất vừa và nhỏ.",
-    category: "may-xay-gio-cha",
-    image: "https://placehold.co/400x400.png",
+    typeCode: "may-xay-gio-cha",
+    typeName: "Máy xay giò chả",
+    pathMainImage: "https://placehold.co/400x400.png",
     images: ["https://placehold.co/400x400.png", "https://placehold.co/400x400.png"],
     specs: {
       "Năng suất": "5 KG/mẻ",
@@ -172,9 +204,12 @@ export const products: Product[] = [
       "Công suất motor": "3 kW",
       "Bảo hành": "24 tháng"
     },
-    rating: 5,
+    starRating: 5,
     reviews: 320,
-    sold: 650
+    purchaseCount: 650,
+    quantity: 40,
+    isSale: false,
+    productCode: "MXGC-5KG"
   }
 ];
 

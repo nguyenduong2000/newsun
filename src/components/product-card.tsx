@@ -24,7 +24,7 @@ const formatPrice = (price: number) => {
 };
 
 export function ProductCard({ product }: ProductCardProps) {
-  const displayPrice = product.price > 0 ? `${formatPrice(product.price)}đ` : "Liên Hệ";
+  const displayPrice = product.salePrice > 0 ? `${formatPrice(product.salePrice)}đ` : "Liên Hệ";
   const { addToCart } = useCart();
   const { toast } = useToast();
 
@@ -32,7 +32,7 @@ export function ProductCard({ product }: ProductCardProps) {
     addToCart(product, 1);
     toast({
       title: "Thêm thành công",
-      description: `"${product.name}" đã được thêm vào giỏ hàng.`,
+      description: `"${product.productName}" đã được thêm vào giỏ hàng.`,
     });
   };
 
@@ -41,13 +41,13 @@ export function ProductCard({ product }: ProductCardProps) {
        <Link href={`/products/${product.slug}`} className="block overflow-hidden">
           <div className="aspect-square relative w-full bg-white p-2">
             <Image
-              src={product.image}
-              alt={product.name}
+              src={product.pathMainImage}
+              alt={product.productName}
               fill
               className="object-contain group-hover:scale-105 transition-transform duration-300"
               data-ai-hint="kitchen appliance"
             />
-             {product.originalPrice && (
+             {product.isSale && (
               <Badge variant="destructive" className="absolute top-2 right-2 z-10">
                 SALE
               </Badge>
@@ -60,29 +60,29 @@ export function ProductCard({ product }: ProductCardProps) {
             href={`/products/${product.slug}`}
             className="hover:text-primary"
           >
-            {product.name}
+            {product.productName}
           </Link>
         </h3>
         <div className="flex items-center mt-2 text-xs">
-           {product.rating && (
+           {product.starRating && (
             <>
                 <div className="flex items-center text-yellow-500">
                     {[...Array(5)].map((_, i) => (
-                        <Star key={i} className={`h-3 w-3 ${i < product.rating! ? 'fill-current' : 'fill-gray-300'}`} />
+                        <Star key={i} className={`h-3 w-3 ${i < product.starRating! ? 'fill-current' : 'fill-gray-300'}`} />
                     ))}
                 </div>
                 <span className="text-muted-foreground ml-1">({product.reviews})</span>
             </>
            )}
-           {product.sold && <span className="text-muted-foreground ml-2">{product.sold} <ShoppingCart className="inline h-3 w-3"/></span>}
+           {product.purchaseCount && <span className="text-muted-foreground ml-2">{product.purchaseCount} <ShoppingCart className="inline h-3 w-3"/></span>}
         </div>
       </CardContent>
       <CardFooter className="flex flex-col items-start p-3 pt-0">
         <div className="mb-2 w-full">
             <div className="text-sm text-muted-foreground">Giá: <span className="text-primary font-bold text-base">{displayPrice}</span></div>
-            {product.originalPrice && product.price > 0 && (
+            {product.rawPrice && product.salePrice > 0 && (
                 <span className="text-muted-foreground line-through ml-2 text-xs">
-                {formatPrice(product.originalPrice)}đ
+                {formatPrice(product.rawPrice)}đ
                 </span>
             )}
         </div>

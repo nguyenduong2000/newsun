@@ -118,15 +118,15 @@ function ConsultationForm({ setOpen }: { setOpen: (open: boolean) => void }) {
 
 function ProductDetailView({ product }: { product: NonNullable<ReturnType<typeof getProduct>> }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedImage, setSelectedImage] = useState(product.image);
+  const [selectedImage, setSelectedImage] = useState(product.pathMainImage);
   const [selectedModel, setSelectedModel] = useState(product.models?.[1] || null);
 
-  const relatedProducts = products.filter(p => p.category === product.category && p.id !== product.id).slice(0, 4);
+  const relatedProducts = products.filter(p => p.typeCode === product.typeCode && p.id !== product.id).slice(0, 4);
 
   const formatPrice = (price: number) => {
     return new Intl.NumberFormat("vi-VN").format(price);
   };
-  const displayPrice = product.price > 0 ? `${formatPrice(product.price)}đ` : "Liên Hệ";
+  const displayPrice = product.salePrice > 0 ? `${formatPrice(product.salePrice)}đ` : "Liên Hệ";
 
   return (
     <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 max-w-6xl">
@@ -136,7 +136,7 @@ function ProductDetailView({ product }: { product: NonNullable<ReturnType<typeof
           <div className="aspect-square relative w-full border rounded-lg overflow-hidden mb-4">
             <Image
               src={selectedImage}
-              alt={product.name}
+              alt={product.productName}
               fill
               className="object-contain"
               sizes="(max-width: 768px) 100vw, 50vw"
@@ -161,7 +161,7 @@ function ProductDetailView({ product }: { product: NonNullable<ReturnType<typeof
                     >
                       <Image
                         src={img}
-                        alt={`${product.name} thumbnail ${index + 1}`}
+                        alt={`${product.productName} thumbnail ${index + 1}`}
                         fill
                         className="object-contain"
                         sizes="20vw"
@@ -179,12 +179,12 @@ function ProductDetailView({ product }: { product: NonNullable<ReturnType<typeof
 
         {/* Right Column: Product Info */}
         <div>
-          <h1 className="text-3xl lg:text-4xl font-headline font-bold mb-4">{product.name}</h1>
+          <h1 className="text-3xl lg:text-4xl font-headline font-bold mb-4">{product.productName}</h1>
           <div className="flex items-center gap-4 mb-4">
              <span className="text-3xl font-bold text-primary">{displayPrice}</span>
-             {product.originalPrice && product.price > 0 && (
+             {product.rawPrice && product.salePrice > 0 && (
                 <span className="text-muted-foreground line-through text-lg">
-                    {formatPrice(product.originalPrice)}đ
+                    {formatPrice(product.rawPrice)}đ
                 </span>
             )}
           </div>
@@ -251,7 +251,7 @@ function ProductDetailView({ product }: { product: NonNullable<ReturnType<typeof
                      <figure>
                         <Image
                             src="https://placehold.co/800x450.png"
-                            alt={`Hình ảnh mô tả ${product.name}`}
+                            alt={`Hình ảnh mô tả ${product.productName}`}
                             width={800}
                             height={450}
                             className="rounded-lg shadow-md"

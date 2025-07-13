@@ -11,7 +11,7 @@ import { useState } from 'react';
 import { ControlledInput } from '@/components/form/controlled-input';
 import { ControlledTextarea } from '@/components/form/controlled-textarea';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { ArrowLeft } from 'lucide-react';
+import { ArrowLeft, PlusCircle } from 'lucide-react';
 import Link from 'next/link';
 import { notFound, useParams } from 'next/navigation';
 import { products } from '@/lib/mock-data';
@@ -19,10 +19,10 @@ import { Input } from '@/components/ui/input';
 import Image from 'next/image';
 
 const productFormSchema = z.object({
-  name: z.string().min(3, 'Tên sản phẩm phải có ít nhất 3 ký tự.'),
+  productName: z.string().min(3, 'Tên sản phẩm phải có ít nhất 3 ký tự.'),
   description: z.string().min(10, 'Mô tả phải có ít nhất 10 ký tự.'),
-  price: z.coerce.number().min(0, 'Giá không được âm.'),
-  sku: z.string().optional(),
+  salePrice: z.coerce.number().min(0, 'Giá không được âm.'),
+  productCode: z.string().optional(),
 });
 
 type ProductFormValues = z.infer<typeof productFormSchema>;
@@ -36,10 +36,10 @@ export default function EditProductPage() {
   const form = useForm<ProductFormValues>({
     resolver: zodResolver(productFormSchema),
     defaultValues: {
-      name: product?.name || '',
+      productName: product?.productName || '',
       description: product?.description || '',
-      price: product?.price || 0,
-      sku: `SKU-${product?.id}` || '',
+      salePrice: product?.salePrice || 0,
+      productCode: product?.productCode || '',
     },
   });
 
@@ -54,7 +54,7 @@ export default function EditProductPage() {
     await new Promise(resolve => setTimeout(resolve, 1000));
     toast({
       title: 'Thành công',
-      description: `Sản phẩm "${values.name}" đã được cập nhật.`,
+      description: `Sản phẩm "${values.productName}" đã được cập nhật.`,
     });
   }
 
@@ -69,7 +69,7 @@ export default function EditProductPage() {
             </Link>
           </Button>
           <h1 className="flex-1 shrink-0 whitespace-nowrap text-xl font-semibold tracking-tight sm:grow-0">
-            {product.name}
+            {product.productName}
           </h1>
           <div className="hidden items-center gap-2 md:ml-auto md:flex">
             <Button variant="outline" size="sm">
@@ -90,7 +90,7 @@ export default function EditProductPage() {
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
-                <ControlledInput name="name" control={form.control} label="Tên sản phẩm" />
+                <ControlledInput name="productName" control={form.control} label="Tên sản phẩm" />
                 <ControlledTextarea
                   name="description"
                   control={form.control}
@@ -105,8 +105,8 @@ export default function EditProductPage() {
                 </CardHeader>
                 <CardContent>
                     <div className="grid gap-6 sm:grid-cols-2">
-                        <ControlledInput name="price" control={form.control} label="Giá" type="number" />
-                        <ControlledInput name="sku" control={form.control} label="Mã SKU" />
+                        <ControlledInput name="salePrice" control={form.control} label="Giá bán" type="number" />
+                        <ControlledInput name="productCode" control={form.control} label="Mã SKU" />
                     </div>
                 </CardContent>
             </Card>
@@ -131,7 +131,7 @@ export default function EditProductPage() {
                             alt="Product image"
                             className="aspect-square w-full rounded-md object-cover"
                             height="300"
-                            src={product.image}
+                            src={product.pathMainImage}
                             width="300"
                         />
                          <div className="grid grid-cols-3 gap-2">
