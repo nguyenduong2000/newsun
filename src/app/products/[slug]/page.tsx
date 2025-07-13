@@ -13,8 +13,7 @@ import {
 } from "@/components/ui/table";
 import { ProductGrid } from "@/components/sections/product-grid";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Gift, ShieldCheck, Truck, ShoppingCart } from "lucide-react";
+import { Gift, ShieldCheck, Truck, MessageSquare } from "lucide-react";
 import {
   Carousel,
   CarouselContent,
@@ -22,13 +21,105 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
-import { useCart } from "@/context/cart-context";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+  DialogFooter,
+  DialogClose,
+} from "@/components/ui/dialog";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
+import { Form } from "@/components/ui/form";
+import { ControlledInput } from "@/components/form/controlled-input";
+import { ControlledTextarea } from "@/components/form/controlled-textarea";
 import { useToast } from "@/hooks/use-toast";
+
+
+const consultationFormSchema = z.object({
+  name: z.string().min(2, "Họ tên phải có ít nhất 2 ký tự."),
+  phone: z.string().regex(/^[0-9]{10}$/, "Số điện thoại không hợp lệ."),
+  message: z.string().min(10, "Nội dung phải có ít nhất 10 ký tự."),
+});
+
+type ConsultationFormValues = z.infer<typeof consultationFormSchema>;
+
+function ConsultationForm({ setOpen }: { setOpen: (open: boolean) => void }) {
+  const { toast } = useToast();
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const form = useForm<ConsultationFormValues>({
+    resolver: zodResolver(consultationFormSchema),
+    defaultValues: {
+      name: "",
+      phone: "",
+      message: "Tôi đang quan tâm đến sản phẩm này, vui lòng tư vấn cho tôi.",
+    },
+  });
+
+  async function onSubmit(values: ConsultationFormValues) {
+    setIsSubmitting(true);
+    // Simulate API call
+    await new Promise((resolve) => setTimeout(resolve, 1500));
+    console.log(values);
+    setIsSubmitting(false);
+
+    toast({
+      title: "Gửi yêu cầu thành công!",
+      description: "Chúng tôi sẽ liên hệ với bạn trong thời gian sớm nhất.",
+    });
+    setOpen(false);
+    form.reset();
+  }
+
+  return (
+    <Form {...form}>
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+        <DialogHeader>
+          <DialogTitle className="text-2xl font-bold text-center">THÔNG TIN LIÊN HỆ</DialogTitle>
+          <DialogDescription className="text-center">
+            Vui lòng để lại thông tin chúng tôi sẽ liên hệ lại ngay, xin cám ơn!
+          </DialogDescription>
+        </DialogHeader>
+        <ControlledInput
+          control={form.control}
+          name="name"
+          placeholder="Họ tên"
+          autoComplete="name"
+        />
+        <ControlledInput
+          control={form.control}
+          name="phone"
+          placeholder="Số điện thoại"
+          autoComplete="tel"
+        />
+        <ControlledTextarea
+          control={form.control}
+          name="message"
+          placeholder="Nội dung yêu cầu"
+          rows={4}
+        />
+        <DialogFooter className="sm:justify-between sm:gap-4 pt-4">
+          <DialogClose asChild>
+            <Button type="button" variant="outline" className="w-full sm:w-auto bg-gray-200 hover:bg-gray-300">
+              HUỶ
+            </Button>
+          </DialogClose>
+          <Button type="submit" className="w-full sm:w-auto" disabled={isSubmitting}>
+            {isSubmitting ? "Đang gửi..." : "GỬI"}
+          </Button>
+        </DialogFooter>
+      </form>
+    </Form>
+  );
+}
+
 
 export default function ProductDetailPage({ params }: { params: { slug: string } }) {
   const product = products.find((p) => p.slug === params.slug);
-  const { addToCart } = useCart();
-  const { toast } = useToast();
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   if (!product) {
     notFound();
@@ -44,16 +135,8 @@ export default function ProductDetailPage({ params }: { params: { slug: string }
   };
   const displayPrice = product.price > 0 ? `${formatPrice(product.price)}đ` : "Liên Hệ";
 
-  const handleAddToCart = () => {
-    addToCart(product, 1);
-    toast({
-      title: "Thêm thành công",
-      description: `"${product.name}" đã được thêm vào giỏ hàng.`,
-    });
-  };
-
   return (
-    <div className="container-fluid mx-auto px-4 sm:px-6 lg:px-8 py-8 max-w-6xl">
+    <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 max-w-6xl">
       <div className="grid lg:grid-cols-2 gap-8 lg:gap-12">
         {/* Left Column: Image Gallery */}
         <div>
@@ -138,9 +221,15 @@ export default function ProductDetailPage({ params }: { params: { slug: string }
             </div>
           </div>
           
-          <Button size="lg" className="w-full text-lg h-14 font-bold" onClick={handleAddToCart}>
-            <ShoppingCart className="mr-2"/> Thêm vào giỏ hàng
-          </Button>
+          <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
+            <Button size="lg" className="w-full text-lg h-14 font-bold" onClick={() => setIsModalOpen(true)}>
+              <MessageSquare className="mr-2"/> Tư vấn miễn phí
+            </Button>
+            <DialogContent className="sm:max-w-[425px]">
+              <ConsultationForm setOpen={setIsModalOpen} />
+            </DialogContent>
+          </Dialog>
+
           <div className="grid grid-cols-3 gap-4 text-center mt-4 text-sm">
             <div className="flex flex-col items-center">
                 <Truck className="w-8 h-8 text-primary mb-1"/>
