@@ -10,30 +10,43 @@ import {
   FormLabel,
   FormMessage,
 } from '@/components/ui/form';
-import { CKEditor } from '@ckeditor/ckeditor5-react';
-import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+
+// We need to dynamically import CKEditor components as they are client-side only.
+// We will create a wrapper that handles this.
+let CKEditor: any = null;
+let ClassicEditor: any = null;
+
+if (typeof window !== 'undefined') {
+  CKEditor = require('@ckeditor/ckeditor5-react').CKEditor;
+  ClassicEditor = require('@ckeditor/ckeditor5-build-classic');
+}
 
 const editorConfiguration = {
-    toolbar: [ 'heading', '|', 'bold', 'italic', 'link', 'bulletedList', 'numberedList', 'blockQuote', 'insertTable', 'uploadImage' ],
+    toolbar: [ 'heading', '|', 'bold', 'italic', 'link', 'bulletedList', 'numberedList', '|', 'outdent', 'indent', '|', 'uploadImage', 'blockQuote', 'insertTable', 'undo', 'redo' ],
 };
 
+// Custom upload adapter to simulate image uploads
 function MyUploadAdapterPlugin(editor: any) {
   editor.plugins.get('FileRepository').createUploadAdapter = (loader: any) => {
     return {
       upload: async () => {
         const file = await loader.readAsDataURL();
-        console.log('Simulating upload for:', file.substring(0, 50) + '...');
-        // Simulate a delay
+        console.log('Simulating upload for a file...');
+        // Simulate a network delay
         await new Promise(resolve => setTimeout(resolve, 1500));
         console.log('Upload complete!');
-        // Return a placeholder image
+        // Return a placeholder image as the result of the upload
         return {
           default: `https://placehold.co/800x450.png`
         };
+      },
+      abort: () => {
+        console.log('Upload aborted');
       }
     };
   };
 }
+
 
 interface ControlledCKEditorProps<
   TFieldValues extends FieldValues = FieldValues,
@@ -54,7 +67,8 @@ export function ControlledCKEditor<
         setIsMounted(true);
     }, []);
 
-    if (!isMounted) {
+    // Render the editor only on the client-side
+    if (!isMounted || !CKEditor || !ClassicEditor) {
         return <div>Loading Editor...</div>;
     }
 
