@@ -15,8 +15,7 @@ import { notFound, useParams } from 'next/navigation';
 import { products } from '@/lib/mock-data';
 import Image from 'next/image';
 import { ControlledCKEditor } from '@/components/form/controlled-ckeditor';
-import React, 'use-client';
-import { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef } from 'react';
 
 const productFormSchema = z.object({
   productName: z.string().min(3, 'Tên sản phẩm phải có ít nhất 3 ký tự.'),
@@ -271,14 +270,6 @@ export default function EditProductPage() {
             </Card>
           </div>
           <div className="grid auto-rows-max items-start gap-4 lg:gap-8">
-            <Card>
-              <CardHeader>
-                <CardTitle>Trạng thái</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p>Còn hàng</p>
-              </CardContent>
-            </Card>
             <Card className="overflow-hidden">
                 <CardHeader>
                     <CardTitle>Hình ảnh sản phẩm</CardTitle>
