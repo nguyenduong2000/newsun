@@ -26,12 +26,13 @@ interface ControlledSelectProps<
   label: string;
   placeholder?: string;
   options: { value: string; label: string }[];
+  disabled?: boolean;
 }
 
 export function ControlledSelect<
   TFieldValues extends FieldValues = FieldValues,
   TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
->({ control, name, label, placeholder, options }: ControlledSelectProps<TFieldValues, TName>) {
+>({ control, name, label, placeholder, options, disabled = false }: ControlledSelectProps<TFieldValues, TName>) {
   return (
     <FormField
       control={control}
@@ -39,7 +40,7 @@ export function ControlledSelect<
       render={({ field }) => (
         <FormItem>
           <FormLabel>{label}</FormLabel>
-          <Select onValueChange={field.onChange} defaultValue={field.value}>
+          <Select onValueChange={field.onChange} value={field.value} disabled={disabled}>
             <FormControl>
               <SelectTrigger>
                 <SelectValue placeholder={placeholder} />

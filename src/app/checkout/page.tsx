@@ -7,7 +7,7 @@ import { z } from 'zod';
 import { Button } from '@/components/ui/button';
 import { Form } from '@/components/ui/form';
 import { useToast } from '@/hooks/use-toast';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { ControlledInput } from '@/components/form/controlled-input';
 import { ControlledTextarea } from '@/components/form/controlled-textarea';
 import { ControlledSelect } from '@/components/form/controlled-select';
@@ -16,6 +16,7 @@ import { useCart } from '@/context/cart-context';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Input } from '@/components/ui/input';
+import { useAddress } from '@/hooks/useAddress';
 
 const checkoutFormSchema = z.object({
   name: z.string().min(2, 'Vui lòng nhập họ và tên.'),
@@ -39,7 +40,7 @@ export default function CheckoutPage() {
   const { toast } = useToast();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { cartItems, getCartTotal } = useCart();
-
+  
   const form = useForm<CheckoutFormValues>({
     resolver: zodResolver(checkoutFormSchema),
     defaultValues: {
@@ -52,10 +53,47 @@ export default function CheckoutPage() {
     },
   });
 
+  const {
+    cities,
+    districts,
+    wards,
+    setCityCode,
+    setDistrictCode,
+    loadingCities,
+    loadingDistricts,
+    loadingWards,
+  } = useAddress();
+
+  const selectedCityCode = form.watch('city');
+  const selectedDistrictCode = form.watch('district');
+
+  useEffect(() => {
+    if (selectedCityCode) {
+      setCityCode(selectedCityCode);
+      form.setValue('district', '');
+      form.setValue('ward', '');
+    }
+  }, [selectedCityCode, setCityCode, form]);
+
+  useEffect(() => {
+    if (selectedDistrictCode) {
+      setDistrictCode(selectedDistrictCode);
+       form.setValue('ward', '');
+    }
+  }, [selectedDistrictCode, setDistrictCode, form]);
+
   async function onSubmit(values: CheckoutFormValues) {
     setIsSubmitting(true);
+
+    const fullAddress = {
+        ...values,
+        city: cities.find(c => c.value === values.city)?.label,
+        district: districts.find(d => d.value === values.district)?.label,
+        ward: wards.find(w => w.value === values.ward)?.label,
+    }
+
     console.log('Submitting Order:', {
-      customerInfo: values,
+      customerInfo: fullAddress,
       orderItems: cartItems,
       total: getCartTotal(),
     });
@@ -96,23 +134,26 @@ export default function CheckoutPage() {
                     control={form.control}
                     name="city"
                     label="Tỉnh/Thành phố *"
-                    placeholder="Chọn Tỉnh/Thành phố"
-                    options={[{ value: 'hanoi', label: 'Hà Nội' }]}
+                    placeholder={loadingCities ? "Đang tải..." : "Chọn Tỉnh/Thành phố"}
+                    options={cities}
+                    disabled={loadingCities}
                   />
                   <div className="grid grid-cols-2 gap-4">
                     <ControlledSelect
                         control={form.control}
                         name="district"
                         label="Quận/Huyện *"
-                        placeholder="Chọn Quận/Huyện"
-                        options={[{ value: 'thanhxuan', label: 'Thanh Xuân' }]}
+                        placeholder={loadingDistricts ? "Đang tải..." : "Chọn Quận/Huyện"}
+                        options={districts}
+                        disabled={!selectedCityCode || loadingDistricts}
                     />
                      <ControlledSelect
                         control={form.control}
                         name="ward"
                         label="Xã/Phường/Thị trấn *"
-                        placeholder="Chọn Xã/Phường"
-                        options={[{ value: 'nhanchinh', label: 'Nhân Chính' }]}
+                        placeholder={loadingWards ? "Đang tải..." : "Chọn Xã/Phường"}
+                        options={wards}
+                        disabled={!selectedDistrictCode || loadingWards}
                     />
                   </div>
                   <ControlledInput control={form.control} name="address" label="Địa chỉ của bạn *" placeholder="Nhập địa chỉ cụ thể"/>
