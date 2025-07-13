@@ -23,7 +23,7 @@ const categoryFormSchema = z.object({
 type CategoryFormValues = z.infer<typeof categoryFormSchema>;
 
 const getCategoryOptions = () => {
-    const options: { value: string; label: string }[] = [{ value: '', label: 'Không có' }];
+    const options: { value: string; label: string }[] = [{ value: 'null', label: 'Không có' }];
     const buildOptions = (parentId: string | null, level: number) => {
         categories
             .filter(c => c.parentId === parentId && c.level < 3)
@@ -46,7 +46,7 @@ export default function NewCategoryPage() {
     defaultValues: {
       name: '',
       slug: '',
-      parentId: '',
+      parentId: 'null',
     },
   });
 
@@ -56,7 +56,7 @@ export default function NewCategoryPage() {
   async function onSubmit(values: CategoryFormValues) {
     const finalValues = {
         ...values,
-        parentId: values.parentId || null
+        parentId: values.parentId === 'null' ? null : values.parentId,
     }
     console.log(finalValues);
     await new Promise(resolve => setTimeout(resolve, 1000));

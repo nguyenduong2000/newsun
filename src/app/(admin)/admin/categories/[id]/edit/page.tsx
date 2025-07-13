@@ -26,7 +26,7 @@ type CategoryFormValues = z.infer<typeof categoryFormSchema>;
 
 
 const getCategoryOptions = (currentCategoryId: string) => {
-    const options: { value: string; label: string }[] = [{ value: '', label: 'Không có' }];
+    const options: { value: string; label: string }[] = [{ value: 'null', label: 'Không có' }];
     const descendantIds = new Set<string>();
 
     // Function to find all descendants of a category
@@ -70,7 +70,7 @@ export default function EditCategoryPage() {
     defaultValues: {
       name: category?.name || '',
       slug: category?.slug || '',
-      parentId: category?.parentId || '',
+      parentId: category?.parentId || 'null',
     },
   });
 
@@ -85,7 +85,7 @@ export default function EditCategoryPage() {
   async function onSubmit(values: CategoryFormValues) {
     const finalValues = {
         ...values,
-        parentId: values.parentId || null
+        parentId: values.parentId === 'null' ? null : values.parentId
     }
     console.log(finalValues);
     await new Promise(resolve => setTimeout(resolve, 1000));
