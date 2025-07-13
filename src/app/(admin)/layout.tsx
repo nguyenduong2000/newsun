@@ -1,28 +1,13 @@
 
 import type { Metadata } from "next";
-import Link from "next/link";
 import {
-  Bell,
-  CircleUser,
-  Home,
-  LineChart,
   Menu,
-  Package,
-  Package2,
   Search,
-  ShoppingCart,
-  Users,
+  CircleUser,
 } from "lucide-react";
 
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -96,7 +81,7 @@ export default function AdminLayout({
               </DropdownMenuContent>
             </DropdownMenu>
           </header>
-          <main className="flex flex-1 flex-col gap-4 p-4 lg:gap-6 lg:p-6">
+          <main className="flex flex-1 flex-col gap-4 p-4 lg:gap-6 lg:p-6 bg-muted/40">
             {children}
           </main>
         </div>

@@ -35,7 +35,7 @@ export function Sidebar() {
   const { logout } = useAuth();
 
   return (
-    <div className="hidden border-r bg-muted/40 md:block">
+    <div className="hidden border-r bg-background md:block">
       <div className="flex h-full max-h-screen flex-col gap-2">
         <div className="flex h-14 items-center border-b px-4 lg:h-[60px] lg:px-6">
           <Link href="/admin/dashboard" className="flex items-center gap-2 font-semibold">
@@ -51,7 +51,7 @@ export function Sidebar() {
                 href={href}
                 className={cn(
                   'flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary',
-                  pathname === href && 'bg-muted text-primary'
+                  pathname.startsWith(href) && 'bg-muted text-primary'
                 )}
               >
                 <Icon className="h-4 w-4" />
