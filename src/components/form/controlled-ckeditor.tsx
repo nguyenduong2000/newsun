@@ -1,7 +1,7 @@
 
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import type { Control, FieldPath, FieldValues } from 'react-hook-form';
 import {
   FormControl,
@@ -10,6 +10,8 @@ import {
   FormLabel,
   FormMessage,
 } from '@/components/ui/form';
+import { CKEditor } from '@ckeditor/ckeditor5-react';
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
 const editorConfiguration = {
     toolbar: [ 'heading', '|', 'bold', 'italic', 'link', 'bulletedList', 'numberedList', 'blockQuote', 'insertTable', 'uploadImage' ],
@@ -21,8 +23,10 @@ function MyUploadAdapterPlugin(editor: any) {
       upload: async () => {
         const file = await loader.readAsDataURL();
         console.log('Simulating upload for:', file.substring(0, 50) + '...');
+        // Simulate a delay
         await new Promise(resolve => setTimeout(resolve, 1500));
         console.log('Upload complete!');
+        // Return a placeholder image
         return {
           default: `https://placehold.co/800x450.png`
         };
@@ -44,23 +48,15 @@ export function ControlledCKEditor<
   TFieldValues extends FieldValues = FieldValues,
   TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
 >({ control, name, label }: ControlledCKEditorProps<TFieldValues, TName>) {
-    const editorRef = useRef<{ CKEditor: any, ClassicEditor: any } | null>(null);
-    const [isEditorLoaded, setIsEditorLoaded] = useState(false);
+    const [isMounted, setIsMounted] = useState(false);
 
     useEffect(() => {
-        // Use dynamic import() which returns a promise
-        import('@ckeditor/ckeditor5-react').then(ckeditor => {
-            import('@ckeditor/ckeditor5-build-classic').then(classicEditor => {
-                editorRef.current = {
-                    CKEditor: ckeditor.CKEditor,
-                    ClassicEditor: classicEditor.default
-                };
-                setIsEditorLoaded(true);
-            });
-        });
+        setIsMounted(true);
     }, []);
 
-    const { CKEditor, ClassicEditor } = editorRef.current || {};
+    if (!isMounted) {
+        return <div>Loading Editor...</div>;
+    }
 
   return (
     <FormField
@@ -70,7 +66,6 @@ export function ControlledCKEditor<
         <FormItem>
           {label && <FormLabel>{label}</FormLabel>}
           <FormControl>
-             {isEditorLoaded && CKEditor && ClassicEditor ? (
               <CKEditor
                 editor={ClassicEditor}
                 data={field.value || ''}
@@ -83,9 +78,6 @@ export function ControlledCKEditor<
                   field.onChange(data);
                 }}
               />
-            ) : (
-              <div>Loading Editor...</div>
-            )}
           </FormControl>
           <FormMessage />
         </FormItem>
