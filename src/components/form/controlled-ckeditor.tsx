@@ -1,7 +1,7 @@
 
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import type { Control, FieldPath, FieldValues } from 'react-hook-form';
 import {
   FormControl,
@@ -56,6 +56,7 @@ export function ControlledCKEditor<
   TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
 >({ control, name, label }: ControlledCKEditorProps<TFieldValues, TName>) {
     const editorRef = useRef<any>(null);
+    const [isEditorLoaded, setIsEditorLoaded] = useState(false);
     const { CKEditor, ClassicEditor } = editorRef.current || {};
 
     useEffect(() => {
@@ -64,6 +65,7 @@ export function ControlledCKEditor<
             CKEditor: require('@ckeditor/ckeditor5-react').CKEditor,
             ClassicEditor: require('@ckeditor/ckeditor5-build-classic')
         };
+        setIsEditorLoaded(true);
     }, []);
 
   return (
@@ -74,7 +76,7 @@ export function ControlledCKEditor<
         <FormItem>
           {label && <FormLabel>{label}</FormLabel>}
           <FormControl>
-             {CKEditor && ClassicEditor ? (
+             {isEditorLoaded ? (
               <CKEditor
                 editor={ClassicEditor}
                 data={field.value}
