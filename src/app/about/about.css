@@ -1,0 +1,20 @@
+
+@media (max-width: 767px) {
+  .timeline-container .left-timeline,
+  .timeline-container .right-timeline {
+    justify-content: center;
+    flex-direction: column;
+  }
+  .timeline-container .left-timeline > div:last-child,
+  .timeline-container .right-timeline > div:last-child {
+      width: 90%;
+      margin: 1rem auto;
+  }
+}
+
+.left-timeline > div:last-child {
+    transform: translateX(-16px);
+}
+.right-timeline > div:last-child {
+    transform: translateX(16px);
+}
