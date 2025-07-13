@@ -1,26 +1,26 @@
+
 import { ContactForm } from "@/components/sections/contact-form";
 import type { Metadata } from "next";
 import { Mail, MapPin, Phone } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "Liên hệ",
-  description: "Liên hệ với Điện máy Newsun để được tư vấn và hỗ trợ về các sản phẩm máy móc công nghiệp.",
+  title: "Hòm thư góp ý",
+  description: "Gửi góp ý, khiếu nại hoặc yêu cầu hỗ trợ tới Điện máy Newsun. Chúng tôi luôn lắng nghe ý kiến của bạn.",
 };
 
 export default function ContactPage() {
   return (
     <div className="container-fluid mx-auto px-4 sm:px-6 lg:px-8 py-16 max-w-6xl">
       <h1 className="text-3xl md:text-4xl font-headline font-bold text-center mb-4">
-        Liên hệ với chúng tôi
+        Hòm thư góp ý khách hàng
       </h1>
       <p className="text-center text-muted-foreground max-w-2xl mx-auto mb-12">
-        Chúng tôi luôn sẵn sàng lắng nghe bạn. Vui lòng điền vào biểu mẫu bên
-        dưới hoặc liên hệ trực tiếp qua thông tin được cung cấp.
+        Cảm ơn Quý khách hàng đã tin tưởng và sử dụng sản phẩm, dịch vụ của NEWSUN. Để nâng cao chất lượng dịch vụ, chúng tôi rất mong nhận được những ý kiến đóng góp, phản hồi của Quý khách.
       </p>
 
       <div className="grid lg:grid-cols-2 gap-12 items-start">
         <div className="bg-card p-8 rounded-lg shadow-sm border">
-          <h2 className="font-headline text-2xl font-bold mb-6">Gửi yêu cầu</h2>
+          <h2 className="font-headline text-2xl font-bold mb-6">Gửi yêu cầu của bạn</h2>
           <ContactForm />
         </div>
         <div className="space-y-8 lg:mt-16">
