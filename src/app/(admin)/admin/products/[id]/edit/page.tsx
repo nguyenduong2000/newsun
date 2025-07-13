@@ -9,12 +9,13 @@ import { Form } from '@/components/ui/form';
 import { useToast } from '@/hooks/use-toast';
 import { ControlledInput } from '@/components/form/controlled-input';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { ArrowLeft, PlusCircle, Upload, X } from 'lucide-react';
+import { ArrowLeft, Upload, X } from 'lucide-react';
 import Link from 'next/link';
 import { notFound, useParams } from 'next/navigation';
 import { products } from '@/lib/mock-data';
 import Image from 'next/image';
 import { ControlledCKEditor } from '@/components/form/controlled-ckeditor';
+import React, { useState, useRef } from 'react';
 
 const productFormSchema = z.object({
   productName: z.string().min(3, 'Tên sản phẩm phải có ít nhất 3 ký tự.'),
@@ -25,11 +26,22 @@ const productFormSchema = z.object({
 
 type ProductFormValues = z.infer<typeof productFormSchema>;
 
+type ImagePreview = {
+  url: string;
+  file?: File;
+  isNew: boolean;
+};
+
 export default function EditProductPage() {
   const { toast } = useToast();
   const params = useParams();
   const productId = params.id as string;
   const product = products.find(p => p.id === productId);
+
+  const [imagePreviews, setImagePreviews] = useState<ImagePreview[]>(
+    product ? product.images.map(url => ({ url, isNew: false })) : []
+  );
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const form = useForm<ProductFormValues>({
     resolver: zodResolver(productFormSchema),
@@ -47,8 +59,27 @@ export default function EditProductPage() {
     return notFound();
   }
 
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const files = Array.from(event.target.files || []);
+    const newPreviews = files.map(file => ({
+        url: URL.createObjectURL(file),
+        file: file,
+        isNew: true
+    }));
+    setImagePreviews(prev => [...prev, ...newPreviews]);
+  };
+
+  const removeImage = (urlToRemove: string) => {
+    setImagePreviews(prev => prev.filter(preview => preview.url !== urlToRemove));
+  };
+
+
   async function onSubmit(values: ProductFormValues) {
     console.log(values);
+    // You would handle the upload of new image files here
+    const newFiles = imagePreviews.filter(p => p.isNew).map(p => p.file);
+    console.log("New files to upload:", newFiles);
+
     await new Promise(resolve => setTimeout(resolve, 1000));
     toast({
       title: 'Thành công',
@@ -103,33 +134,47 @@ export default function EditProductPage() {
                             <CardTitle>Thư viện ảnh</CardTitle>
                             <CardDescription>Quản lý các hình ảnh phụ của sản phẩm.</CardDescription>
                         </div>
-                        <Button size="sm" variant="outline" type="button">
-                            <Upload className="mr-2 h-4 w-4" />
-                            Thêm ảnh
-                        </Button>
                     </div>
                 </CardHeader>
                 <CardContent>
-                    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                        {product.images.map((image, index) => (
-                            <div key={index} className="relative group">
+                     <input
+                        type="file"
+                        ref={fileInputRef}
+                        onChange={handleFileChange}
+                        multiple
+                        className="hidden"
+                        accept="image/*"
+                    />
+                    <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 gap-3">
+                        {imagePreviews.map((preview) => (
+                            <div key={preview.url} className="relative group aspect-square">
                                 <Image
-                                    alt={`Product sub-image ${index + 1}`}
-                                    className="aspect-square w-full rounded-md object-cover"
-                                    height="150"
-                                    src={image}
-                                    width="150"
+                                    alt="Product sub-image preview"
+                                    className="w-full h-full rounded-md object-cover"
+                                    fill
+                                    src={preview.url}
                                 />
                                 <div className="absolute top-1 right-1 opacity-0 group-hover:opacity-100 transition-opacity">
-                                    <Button size="icon" variant="destructive" className="h-7 w-7">
-                                        <X className="h-4 w-4"/>
+                                    <Button 
+                                        size="icon" 
+                                        variant="destructive" 
+                                        className="h-6 w-6" 
+                                        type="button" 
+                                        onClick={() => removeImage(preview.url)}
+                                    >
+                                        <X className="h-3 w-3"/>
                                         <span className="sr-only">Xóa ảnh</span>
                                     </Button>
                                 </div>
+                                {preview.isNew && <div className="absolute bottom-0 w-full text-center bg-blue-500/80 text-white text-xs py-0.5 rounded-b-md">Mới</div>}
                             </div>
                         ))}
-                         <button type="button" className="flex aspect-square w-full items-center justify-center rounded-md border-2 border-dashed hover:border-primary transition-colors">
-                            <Upload className="h-8 w-8 text-muted-foreground" />
+                         <button 
+                            type="button" 
+                            className="flex aspect-square w-full items-center justify-center rounded-md border-2 border-dashed hover:border-primary transition-colors"
+                            onClick={() => fileInputRef.current?.click()}
+                          >
+                            <Upload className="h-6 w-6 text-muted-foreground" />
                             <span className="sr-only">Upload</span>
                         </button>
                     </div>
