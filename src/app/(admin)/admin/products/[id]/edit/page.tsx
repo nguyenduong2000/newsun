@@ -2,21 +2,21 @@
 'use client';
 
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useForm } from 'react-hook-form';
+import { useForm, useFieldArray } from 'react-hook-form';
 import { z } from 'zod';
 import { Button } from '@/components/ui/button';
 import { Form } from '@/components/ui/form';
 import { useToast } from '@/hooks/use-toast';
 import { ControlledInput } from '@/components/form/controlled-input';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { ArrowLeft, Upload, X } from 'lucide-react';
+import { ArrowLeft, Upload, X, Trash2, PlusCircle } from 'lucide-react';
 import Link from 'next/link';
 import { notFound, useParams } from 'next/navigation';
 import { products } from '@/lib/mock-data';
 import Image from 'next/image';
 import { ControlledCKEditor } from '@/components/form/controlled-ckeditor';
 import React, 'use-client';
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 
 const productFormSchema = z.object({
   productName: z.string().min(3, 'Tên sản phẩm phải có ít nhất 3 ký tự.'),
@@ -25,6 +25,10 @@ const productFormSchema = z.object({
   salePrice: z.coerce.number().min(0, 'Giá không được âm.'),
   quantity: z.coerce.number().int().min(0, 'Số lượng không được âm.'),
   productCode: z.string().optional(),
+  specs: z.array(z.object({
+      key: z.string().min(1, 'Tên thông số không được để trống.'),
+      value: z.string().min(1, 'Giá trị không được để trống.'),
+  })).optional(),
 });
 
 type ProductFormValues = z.infer<typeof productFormSchema>;
@@ -59,10 +63,17 @@ export default function EditProductPage() {
       salePrice: product?.salePrice || 0,
       quantity: product?.quantity || 0,
       productCode: product?.productCode || '',
+      specs: product ? Object.entries(product.specs).map(([key, value]) => ({ key, value })) : [],
     },
   });
 
-  const { isSubmitting } = form.formState;
+  const { control, formState: { isSubmitting } } = form;
+
+  const { fields, append, remove } = useFieldArray({
+    control,
+    name: 'specs',
+  });
+
 
   if (!product) {
     return notFound();
@@ -95,11 +106,19 @@ export default function EditProductPage() {
 
 
   async function onSubmit(values: ProductFormValues) {
-    console.log(values);
     // You would handle the upload of new image files here
     const newMainImageFile = mainImagePreview?.isNew ? mainImagePreview.file : undefined;
     const newSubImageFiles = imagePreviews.filter(p => p.isNew).map(p => p.file);
 
+     // Convert specs array to object
+    const specsObject = values.specs?.reduce((acc, spec) => {
+        if(spec.key) acc[spec.key] = spec.value;
+        return acc;
+    }, {} as Record<string, string>);
+
+    const finalValues = { ...values, specs: specsObject };
+
+    console.log("Final values to submit:", finalValues);
     console.log("New main image to upload:", newMainImageFile);
     console.log("New sub-images to upload:", newSubImageFiles);
 
@@ -142,20 +161,61 @@ export default function EditProductPage() {
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
-                <ControlledInput name="productName" control={form.control} label="Tên sản phẩm" />
+                <ControlledInput name="productName" control={control} label="Tên sản phẩm" />
                 <div className="grid gap-6 sm:grid-cols-2">
-                    <ControlledInput name="rawPrice" control={form.control} label="Giá gốc" type="number" placeholder="0" />
-                    <ControlledInput name="salePrice" control={form.control} label="Giá bán (Sale)" type="number" placeholder="0" />
-                    <ControlledInput name="quantity" control={form.control} label="Số lượng tồn kho" type="number" placeholder="0" />
-                    <ControlledInput name="productCode" control={form.control} label="Mã SKU" />
+                    <ControlledInput name="rawPrice" control={control} label="Giá gốc" type="number" placeholder="0" />
+                    <ControlledInput name="salePrice" control={control} label="Giá bán (Sale)" type="number" placeholder="0" />
+                    <ControlledInput name="quantity" control={control} label="Số lượng tồn kho" type="number" placeholder="0" />
+                    <ControlledInput name="productCode" control={control} label="Mã SKU" />
                 </div>
                  <ControlledCKEditor
                   name="description"
-                  control={form.control}
+                  control={control}
                   label="Mô tả"
                 />
               </CardContent>
             </Card>
+
+            <Card>
+              <CardHeader>
+                <CardTitle>Thông số kỹ thuật</CardTitle>
+                <CardDescription>Chỉnh sửa các thông số kỹ thuật cho sản phẩm.</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-4">
+                  {fields.map((field, index) => (
+                    <div key={field.id} className="flex items-end gap-4">
+                      <ControlledInput 
+                        name={`specs.${index}.key`} 
+                        control={control}
+                        placeholder="Thuộc tính"
+                        className="flex-1"
+                      />
+                       <ControlledInput 
+                        name={`specs.${index}.value`}
+                        control={control}
+                        placeholder="Giá trị"
+                        className="flex-1"
+                      />
+                      <Button type="button" variant="ghost" size="icon" onClick={() => remove(index)}>
+                        <Trash2 className="h-4 w-4 text-destructive" />
+                      </Button>
+                    </div>
+                  ))}
+                  <Button
+                    type="button"
+                    variant="outline"
+                    size="sm"
+                    className="mt-2"
+                    onClick={() => append({ key: '', value: '' })}
+                  >
+                    <PlusCircle className="mr-2 h-4 w-4" />
+                    Thêm thông số
+                  </Button>
+                </div>
+              </CardContent>
+            </Card>
+
             <Card>
                 <CardHeader>
                     <div className="flex items-center justify-between">
