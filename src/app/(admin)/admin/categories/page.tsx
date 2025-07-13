@@ -18,18 +18,30 @@ import {
 import { Button } from "@/components/ui/button";
 import { categories } from "@/lib/mock-data";
 import { Badge } from "@/components/ui/badge";
-import { MoreHorizontal } from "lucide-react";
+import { MoreHorizontal, PlusCircle } from "lucide-react";
 import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuLabel, DropdownMenuItem } from "@/components/ui/dropdown-menu";
 import Image from "next/image";
+import Link from "next/link";
+import { Pagination, PaginationContent, PaginationItem, PaginationPrevious, PaginationLink, PaginationEllipsis, PaginationNext } from "@/components/ui/pagination";
 
 export default function CategoriesPage() {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Danh mục</CardTitle>
-        <CardDescription>
-          Quản lý danh mục sản phẩm của bạn.
-        </CardDescription>
+        <div className="flex items-center justify-between">
+            <div>
+                <CardTitle>Danh mục</CardTitle>
+                <CardDescription>
+                Quản lý danh mục sản phẩm của bạn.
+                </CardDescription>
+            </div>
+            <Button asChild>
+                <Link href="/admin/categories/new">
+                    <PlusCircle className="mr-2 h-4 w-4" />
+                    Thêm danh mục
+                </Link>
+            </Button>
+        </div>
       </CardHeader>
       <CardContent>
         <Table>
@@ -76,7 +88,9 @@ export default function CategoriesPage() {
                     </DropdownMenuTrigger>
                     <DropdownMenuContent align="end">
                       <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                      <DropdownMenuItem>Sửa</DropdownMenuItem>
+                      <DropdownMenuItem asChild>
+                        <Link href={`/admin/categories/${category.id}/edit`}>Sửa</Link>
+                      </DropdownMenuItem>
                       <DropdownMenuItem>Xóa</DropdownMenuItem>
                     </DropdownMenuContent>
                   </DropdownMenu>
@@ -90,6 +104,30 @@ export default function CategoriesPage() {
         <div className="text-xs text-muted-foreground">
           Hiển thị <strong>1-10</strong> trên <strong>{categories.length}</strong> danh mục
         </div>
+         <Pagination className="ml-auto">
+            <PaginationContent>
+                <PaginationItem>
+                <PaginationPrevious href="#" />
+                </PaginationItem>
+                <PaginationItem>
+                <PaginationLink href="#">1</PaginationLink>
+                </PaginationItem>
+                <PaginationItem>
+                <PaginationLink href="#" isActive>
+                    2
+                </PaginationLink>
+                </PaginationItem>
+                <PaginationItem>
+                <PaginationLink href="#">3</PaginationLink>
+                </PaginationItem>
+                <PaginationItem>
+                <PaginationEllipsis />
+                </PaginationItem>
+                <PaginationItem>
+                <PaginationNext href="#" />
+                </PaginationItem>
+            </PaginationContent>
+        </Pagination>
       </CardFooter>
     </Card>
   );

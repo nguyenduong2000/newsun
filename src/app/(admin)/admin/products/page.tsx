@@ -1,6 +1,7 @@
 
 import Image from "next/image"
-import { MoreHorizontal } from "lucide-react"
+import Link from "next/link"
+import { MoreHorizontal, PlusCircle } from "lucide-react"
 
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
@@ -28,6 +29,7 @@ import {
   TableRow,
 } from "@/components/ui/table"
 import { products } from "@/lib/mock-data"
+import { Pagination, PaginationContent, PaginationItem, PaginationNext, PaginationPrevious, PaginationLink, PaginationEllipsis } from "@/components/ui/pagination"
 
 const formatPrice = (price: number) => {
     if (price === 0) return "Liên hệ";
@@ -38,10 +40,20 @@ export default function AdminProductsPage() {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Sản phẩm</CardTitle>
-        <CardDescription>
-          Quản lý các sản phẩm của bạn.
-        </CardDescription>
+        <div className="flex items-center justify-between">
+            <div>
+                <CardTitle>Sản phẩm</CardTitle>
+                <CardDescription>
+                Quản lý các sản phẩm của bạn.
+                </CardDescription>
+            </div>
+            <Button asChild>
+                <Link href="/admin/products/new">
+                    <PlusCircle className="mr-2 h-4 w-4" />
+                    Thêm sản phẩm
+                </Link>
+            </Button>
+        </div>
       </CardHeader>
       <CardContent>
         <Table>
@@ -108,7 +120,9 @@ export default function AdminProductsPage() {
                         </DropdownMenuTrigger>
                         <DropdownMenuContent align="end">
                             <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                            <DropdownMenuItem>Sửa</DropdownMenuItem>
+                            <DropdownMenuItem asChild>
+                                <Link href={`/admin/products/${product.id}/edit`}>Sửa</Link>
+                            </DropdownMenuItem>
                             <DropdownMenuItem>Xóa</DropdownMenuItem>
                         </DropdownMenuContent>
                         </DropdownMenu>
@@ -120,9 +134,22 @@ export default function AdminProductsPage() {
       </CardContent>
       <CardFooter>
         <div className="text-xs text-muted-foreground">
-          Showing <strong>1-10</strong> of <strong>{products.length}</strong>{" "}
-          products
+          Hiển thị <strong>1-8</strong> của <strong>{products.length}</strong>{" "}
+          sản phẩm
         </div>
+         <Pagination className="ml-auto">
+            <PaginationContent>
+                <PaginationItem>
+                <PaginationPrevious href="#" />
+                </PaginationItem>
+                <PaginationItem>
+                <PaginationLink href="#">1</PaginationLink>
+                </PaginationItem>
+                <PaginationItem>
+                <PaginationNext href="#" />
+                </PaginationItem>
+            </PaginationContent>
+        </Pagination>
       </CardFooter>
     </Card>
   )

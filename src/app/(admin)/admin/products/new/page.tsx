@@ -1,0 +1,125 @@
+
+'use client';
+
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useForm } from 'react-hook-form';
+import { z } from 'zod';
+import { Button } from '@/components/ui/button';
+import { Form } from '@/components/ui/form';
+import { useToast } from '@/hooks/use-toast';
+import { useState } from 'react';
+import { ControlledInput } from '@/components/form/controlled-input';
+import { ControlledTextarea } from '@/components/form/controlled-textarea';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { ArrowLeft, PlusCircle } from 'lucide-react';
+import Link from 'next/link';
+import Image from 'next/image';
+
+const productFormSchema = z.object({
+  name: z.string().min(3, 'Tên sản phẩm phải có ít nhất 3 ký tự.'),
+  description: z.string().min(10, 'Mô tả phải có ít nhất 10 ký tự.'),
+  price: z.coerce.number().min(0, 'Giá không được âm.'),
+  sku: z.string().optional(),
+});
+
+type ProductFormValues = z.infer<typeof productFormSchema>;
+
+export default function NewProductPage() {
+  const { toast } = useToast();
+  const form = useForm<ProductFormValues>({
+    resolver: zodResolver(productFormSchema),
+    defaultValues: {
+      name: '',
+      description: '',
+      price: 0,
+      sku: '',
+    },
+  });
+
+  const { isSubmitting } = form.formState;
+
+  async function onSubmit(values: ProductFormValues) {
+    console.log(values);
+    await new Promise(resolve => setTimeout(resolve, 1000));
+    toast({
+      title: 'Thành công',
+      description: `Sản phẩm "${values.name}" đã được tạo.`,
+    });
+    form.reset();
+  }
+
+  return (
+    <Form {...form}>
+      <form onSubmit={form.handleSubmit(onSubmit)}>
+        <div className="flex items-center gap-4 mb-4">
+          <Button variant="outline" size="icon" className="h-7 w-7" asChild>
+            <Link href="/admin/products">
+              <ArrowLeft className="h-4 w-4" />
+              <span className="sr-only">Back</span>
+            </Link>
+          </Button>
+          <h1 className="flex-1 shrink-0 whitespace-nowrap text-xl font-semibold tracking-tight sm:grow-0">
+            Tạo sản phẩm mới
+          </h1>
+          <div className="hidden items-center gap-2 md:ml-auto md:flex">
+            <Button variant="outline" size="sm" type="button" onClick={() => form.reset()}>
+              Hủy
+            </Button>
+            <Button size="sm" type="submit" disabled={isSubmitting}>
+              {isSubmitting ? 'Đang tạo...' : 'Tạo sản phẩm'}
+            </Button>
+          </div>
+        </div>
+        <div className="grid gap-4 md:grid-cols-[1fr_250px] lg:grid-cols-3 lg:gap-8">
+          <div className="grid auto-rows-max items-start gap-4 lg:col-span-2 lg:gap-8">
+            <Card>
+              <CardHeader>
+                <CardTitle>Chi tiết sản phẩm</CardTitle>
+                <CardDescription>
+                  Điền thông tin cơ bản cho sản phẩm mới.
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <ControlledInput name="name" control={form.control} label="Tên sản phẩm" placeholder="Ví dụ: Nồi nấu phở 50L"/>
+                <ControlledTextarea
+                  name="description"
+                  control={form.control}
+                  label="Mô tả"
+                  placeholder="Mô tả chi tiết về sản phẩm..."
+                  rows={5}
+                />
+              </CardContent>
+            </Card>
+             <Card>
+                <CardHeader>
+                    <CardTitle>Định giá</CardTitle>
+                </CardHeader>
+                <CardContent>
+                    <div className="grid gap-6 sm:grid-cols-2">
+                        <ControlledInput name="price" control={form.control} label="Giá" type="number" placeholder="0" />
+                        <ControlledInput name="sku" control={form.control} label="Mã SKU" placeholder="Vd: NNP-50L" />
+                    </div>
+                </CardContent>
+            </Card>
+          </div>
+          <div className="grid auto-rows-max items-start gap-4 lg:gap-8">
+             <Card className="overflow-hidden">
+                <CardHeader>
+                    <CardTitle>Hình ảnh sản phẩm</CardTitle>
+                    <CardDescription>Thêm hình ảnh cho sản phẩm mới.</CardDescription>
+                </CardHeader>
+                <CardContent>
+                    <div className="grid gap-2">
+                         <button type="button" className="flex aspect-square w-full items-center justify-center rounded-md border border-dashed">
+                            <PlusCircle className="h-8 w-8 text-muted-foreground" />
+                            <span className="sr-only">Upload</span>
+                        </button>
+                    </div>
+                </CardContent>
+            </Card>
+          </div>
+        </div>
+      </form>
+    </Form>
+  );
+}
