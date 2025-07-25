@@ -39,14 +39,14 @@ export default async function Home() {
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {featuredCategories.map((category) => (
-              <Link href={`/products?category=${category.slug}`} key={category.id} className="block group">
+              <Link href={`/products?category=${category.categoryCode}`} key={category.id} className="block group">
                 <Card className="overflow-hidden transition-all duration-300 hover:shadow-lg hover:-translate-y-1 rounded-lg">
                   <CardContent className="p-4">
                     <div className="flex items-center gap-4">
                       <div className="relative w-20 h-20 flex-shrink-0">
                         <Image
-                            src={category.image}
-                            alt={category.name}
+                            src="https://dienmaynewsun.com/wp-content/uploads/2023/05/may-thai-thit.jpg"
+                            alt={category.categoryName}
                             width={80}
                             height={80}
                             className="object-contain rounded-full bg-gray-100 p-2"
@@ -54,7 +54,7 @@ export default async function Home() {
                           />
                       </div>
                       <h3 className="font-semibold text-gray-800 group-hover:text-primary transition-colors">
-                          {category.name}
+                          {category.categoryName}
                       </h3>
                     </div>
                   </CardContent>
