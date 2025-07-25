@@ -24,8 +24,9 @@ export interface Product {
   sections?: ApiProductSection[];
 }
 
-export interface CartItem extends Product {
+export interface CartItem extends Omit<Product, 'salePrice'> {
   quantity: number;
+  price: number;
 }
 
 

@@ -9,7 +9,7 @@ type CartState = {
 };
 
 type CartAction =
-  | { type: 'ADD_TO_CART'; payload: { product: Product; quantity: number } }
+  | { type: 'ADD_TO_CART'; payload: { item: CartItem } }
   | { type: 'REMOVE_FROM_CART'; payload: { productId: string } }
   | { type: 'UPDATE_QUANTITY'; payload: { productId: string; quantity: number } }
   | { type: 'CLEAR_CART' }
@@ -32,19 +32,19 @@ const CartContext = createContext<{
 const cartReducer = (state: CartState, action: CartAction): CartState => {
   switch (action.type) {
     case 'ADD_TO_CART': {
-      const { product, quantity } = action.payload;
-      const existingItem = state.cartItems.find(item => item.id === product.id);
+      const { item } = action.payload;
+      const existingItem = state.cartItems.find(i => i.id === item.id);
       if (existingItem) {
         return {
           ...state,
-          cartItems: state.cartItems.map(item =>
-            item.id === product.id ? { ...item, quantity: item.quantity + quantity } : item
+          cartItems: state.cartItems.map(i =>
+            i.id === item.id ? { ...i, quantity: i.quantity + item.quantity } : i
           ),
         };
       }
       return {
         ...state,
-        cartItems: [...state.cartItems, { ...product, quantity }],
+        cartItems: [...state.cartItems, item],
       };
     }
     case 'REMOVE_FROM_CART': {
@@ -106,7 +106,12 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
   }, [state.cartItems]);
 
   const addToCart = (product: Product, quantity: number) => {
-    dispatch({ type: 'ADD_TO_CART', payload: { product, quantity } });
+    const itemToAdd: CartItem = {
+      ...product,
+      quantity,
+      price: product.salePrice, // Ensure price is set correctly
+    }
+    dispatch({ type: 'ADD_TO_CART', payload: { item: itemToAdd } });
   };
 
   const removeFromCart = (productId: string) => {

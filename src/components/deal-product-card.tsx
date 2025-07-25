@@ -75,7 +75,7 @@ export function DealProductCard({ product }: DealProductCardProps) {
           <span className="text-primary font-bold text-base">
             {formatPrice(product.salePrice)}đ
           </span>
-          {product.rawPrice && (
+          {product.rawPrice && product.rawPrice > 0 && product.salePrice > 0 && (
             <span className="text-muted-foreground line-through ml-2 text-xs">
               {formatPrice(product.rawPrice)}đ
             </span>

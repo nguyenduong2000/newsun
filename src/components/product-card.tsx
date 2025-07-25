@@ -29,7 +29,7 @@ export function ProductCard({ product }: ProductCardProps) {
   const { toast } = useToast();
 
   const handleAddToCart = () => {
-    addToCart(product, 1);
+    addToCart({ ...product, price: product.salePrice }, 1);
     toast({
       title: "Thêm thành công",
       description: `"${product.productName}" đã được thêm vào giỏ hàng.`,

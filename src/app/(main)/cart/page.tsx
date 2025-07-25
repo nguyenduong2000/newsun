@@ -44,8 +44,8 @@ export default function CartPage() {
               <div key={item.id} className="flex items-center p-4">
                 <div className="relative h-24 w-24 flex-shrink-0 overflow-hidden rounded-md">
                   <Image
-                    src={item.image}
-                    alt={item.name}
+                    src={item.pathMainImage}
+                    alt={item.productName}
                     fill
                     className="object-contain"
                     data-ai-hint="kitchen appliance"
@@ -55,7 +55,7 @@ export default function CartPage() {
                   <div>
                     <div className="flex justify-between text-base font-medium text-foreground">
                       <h3>
-                        <Link href={`/products/${item.slug}`}>{item.name}</Link>
+                        <Link href={`/products/${item.slug}`}>{item.productName}</Link>
                       </h3>
                       <p className="ml-4 whitespace-nowrap">{formatPrice(item.price * item.quantity)}đ</p>
                     </div>

@@ -3,7 +3,7 @@
 
 import axios from '@/lib/axios';
 import type { Product, Banner, ApiCategory, ApiProduct, ApiProductType } from '@/types';
-import { products as allMockProducts, apiCategories, heroBanners as allMockBanners } from '@/lib/mock-data';
+import { apiProducts, apiCategories, heroBanners as allMockBanners } from '@/lib/mock-data';
 
 const MOCK_API_DELAY = 100; // ms
 
@@ -37,36 +37,42 @@ const mapApiProductToProduct = (apiProduct: ApiProduct, categoryTypeCode: string
             acc[prop.name] = prop.value;
             return acc;
         }, {} as Record<string, string>),
-        reviews: Math.floor(Math.random() * 100),
-        featuresImage: apiProduct.pathMainImage,
+        reviews: Math.floor(Math.random() * 100), // Mocking reviews
+        featuresImage: apiProduct.pathMainImage, // Example mapping
     }
 }
+
 
 export const getProducts = async (searchKey?: string): Promise<Product[]> => {
   try {
     console.log(`API call: getProducts with searchKey: "${searchKey || ''}"`);
     await new Promise(resolve => setTimeout(resolve, MOCK_API_DELAY));
 
-    // In a real scenario, you'd pass the searchKey to the API
-    // const response = await axios.get('/products', { params: { q: searchKey } });
-    // For now, we mock filtering
-    let products = allMockProducts;
+    const apiResponse: { data: ApiProductType[] } = {
+        data: apiProducts
+    };
+
+    let allProducts: Product[] = [];
+    apiResponse.data.forEach(catType => {
+        catType.listProduct.forEach(apiProd => {
+            allProducts.push(mapApiProductToProduct(apiProd, catType.categoryTypeCode, catType.categoryTypeName));
+        });
+    });
 
     if (searchKey) {
-      products = products.filter(p => p.productName.toLowerCase().includes(searchKey.toLowerCase()));
+      allProducts = allProducts.filter(p => p.productName.toLowerCase().includes(searchKey.toLowerCase()));
     }
-    return products;
+
+    return allProducts;
   } catch (error) {
     console.error("Failed to fetch products:", error);
-    return []; // Return an empty array on error
+    return [];
   }
 };
 
 export const getProductBySlug = async (slug: string): Promise<Product | undefined> => {
     try {
         console.log(`API call: getProductBySlug with slug: ${slug}`);
-        // We're fetching all and then filtering, which is inefficient.
-        // A real API would have an endpoint like /products/{slug}
         const allProducts = await getProducts();
         return allProducts.find(p => p.slug === slug);
     } catch(error) {
@@ -79,12 +85,10 @@ export const getCategories = async (): Promise<ApiCategory[]> => {
   try {
     console.log('API call: getCategories');
     await new Promise(resolve => setTimeout(resolve, MOCK_API_DELAY));
-    // const response = await axios.get('/categories');
-    // return response.data;
     return apiCategories;
   } catch (error) {
     console.error("Failed to fetch categories:", error);
-    return []; // Return an empty array on error
+    return [];
   }
 };
 
@@ -92,11 +96,9 @@ export const getBanners = async (): Promise<Banner[]> => {
     try {
         console.log('API call: getBanners');
         await new Promise(resolve => setTimeout(resolve, MOCK_API_DELAY));
-        // const response = await axios.get('/banners');
-        // return response.data;
         return allMockBanners;
     } catch (error) {
         console.error("Failed to fetch banners:", error);
-        return []; // Return an empty array on error
+        return [];
     }
 }
