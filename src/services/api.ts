@@ -2,8 +2,9 @@
 'use server';
 
 import axios from '@/lib/axios';
-import type { Product, Banner, ApiCategory, ApiProduct, ApiProductType, ApiProductSection } from '@/types';
+import type { Product, Banner, ApiCategory, ApiProduct, ApiResponse } from '@/types';
 import { apiProducts, apiCategories, heroBanners as allMockBanners } from '@/lib/mock-data';
+import { API_ENDPOINTS } from '@/config/endpoints';
 
 const MOCK_API_DELAY = 100; // ms
 
@@ -15,16 +16,16 @@ const createSlug = (text: string): string => {
     .replace(/[^\w-]+/g, '');
 };
 
-const mapApiProductToProduct = (apiProduct: ApiProduct, categoryTypeCode: string, categoryTypeName: string): Product => {
+const mapApiProductToProduct = (apiProduct: ApiProduct): Product => {
     return {
         id: apiProduct.id,
         productName: apiProduct.productName,
         slug: createSlug(apiProduct.productName),
-        typeCode: categoryTypeCode,
-        typeName: categoryTypeName,
-        categoryId: categoryTypeCode, // Or map to a specific category if needed
+        typeCode: apiProduct.typeCode,
+        typeName: apiProduct.typeName,
+        categoryId: apiProduct.typeCode, // Or map to a specific category if needed
         pathMainImage: apiProduct.pathMainImage,
-        images: apiProduct.lisProductSubImage.map(img => img.pathImage),
+        images: apiProduct.lisProductSubImage ? apiProduct.lisProductSubImage.map(img => img.pathImage) : [apiProduct.pathMainImage],
         productCode: apiProduct.productCode,
         rawPrice: apiProduct.rawPrice,
         salePrice: apiProduct.salePrice,
@@ -32,10 +33,10 @@ const mapApiProductToProduct = (apiProduct: ApiProduct, categoryTypeCode: string
         quantity: apiProduct.quantity,
         purchaseCount: apiProduct.purchaseCount,
         isSale: apiProduct.isSale,
-        description: apiProduct.listProductSection?.[0]?.description || 'Mô tả chi tiết sản phẩm đang được cập nhật.', // Example mapping
+        description: apiProduct.listProductSection?.[0]?.description || 'Mô tả chi tiết sản phẩm đang được cập nhật.',
         specs: apiProduct.listProductProperties || [],
         reviews: Math.floor(Math.random() * 100), // Mocking reviews
-        featuresImage: apiProduct.pathMainImage, // Example mapping
+        featuresImage: apiProduct.pathMainImage, 
         sections: apiProduct.listProductSection || []
     }
 }
@@ -44,33 +45,36 @@ const mapApiProductToProduct = (apiProduct: ApiProduct, categoryTypeCode: string
 export const getProducts = async (searchKey?: string): Promise<Product[]> => {
   try {
     console.log(`API call: getProducts with searchKey: "${searchKey || ''}"`);
-    await new Promise(resolve => setTimeout(resolve, MOCK_API_DELAY));
-
-    const apiResponse: { data: ApiProductType[] } = {
-        data: apiProducts
-    };
-
-    let allProducts: Product[] = [];
-    apiResponse.data.forEach(catType => {
-        catType.listProduct.forEach(apiProd => {
-            allProducts.push(mapApiProductToProduct(apiProd, catType.categoryTypeCode, catType.categoryTypeName));
-        });
+    // NOTE: This now makes a real API call.
+    // If the API is not ready, this will fail. For development, you might want to switch back to mocks.
+    const apiResponse = await axios.get<ApiProduct[]>(API_ENDPOINTS.GET_PRODUCTS, {
+        params: { search: searchKey }
     });
 
-    if (searchKey) {
-      allProducts = allProducts.filter(p => p.productName.toLowerCase().includes(searchKey.toLowerCase()));
-    }
+    const allProducts: Product[] = apiResponse.map(p => mapApiProductToProduct(p));
 
     return allProducts;
   } catch (error) {
     console.error("Failed to fetch products:", error);
-    return [];
+    // Fallback to mock data if API fails during development
+    console.log("Falling back to mock product data.");
+    let mockProducts: Product[] = [];
+    apiProducts.forEach(catType => {
+        catType.listProduct.forEach(apiProd => {
+            mockProducts.push(mapApiProductToProduct(apiProd));
+        });
+    });
+     if (searchKey) {
+      mockProducts = mockProducts.filter(p => p.productName.toLowerCase().includes(searchKey.toLowerCase()));
+    }
+    return mockProducts;
   }
 };
 
 export const getProductBySlug = async (slug: string): Promise<Product | undefined> => {
     try {
         console.log(`API call: getProductBySlug with slug: ${slug}`);
+        // NOTE: This is a simulated call. You would replace this with a real API endpoint.
         const allProducts = await getProducts();
         return allProducts.find(p => p.slug === slug);
     } catch(error) {
@@ -82,21 +86,23 @@ export const getProductBySlug = async (slug: string): Promise<Product | undefine
 export const getCategories = async (): Promise<ApiCategory[]> => {
   try {
     console.log('API call: getCategories');
-    await new Promise(resolve => setTimeout(resolve, MOCK_API_DELAY));
-    return apiCategories;
+    const categories = await axios.get<ApiCategory[]>(API_ENDPOINTS.GET_CATEGORIES);
+    return categories;
   } catch (error) {
     console.error("Failed to fetch categories:", error);
-    return [];
+    console.log("Falling back to mock category data.");
+    return apiCategories;
   }
 };
 
 export const getBanners = async (): Promise<Banner[]> => {
     try {
         console.log('API call: getBanners');
-        await new Promise(resolve => setTimeout(resolve, MOCK_API_DELAY));
-        return allMockBanners;
+        const banners = await axios.get<Banner[]>(API_ENDPOINTS.GET_BANNERS);
+        return banners;
     } catch (error) {
         console.error("Failed to fetch banners:", error);
-        return [];
+        console.log("Falling back to mock banner data.");
+        return allMockBanners;
     }
 }

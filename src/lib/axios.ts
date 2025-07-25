@@ -2,11 +2,14 @@
 'use client';
 
 import axios from 'axios';
+import { API_ENDPOINTS } from '@/config/endpoints';
 
 const axiosInstance = axios.create({
-  // Normally you would set the baseURL to your API endpoint.
-  // For this example, we'll leave it empty as we are faking API calls.
-  // baseURL: 'https://api.example.com/api',
+  // The base URL is now read from the environment variable
+  baseURL: process.env.NEXT_PUBLIC_API_BASE_URL,
+  headers: {
+    'Content-Type': 'application/json',
+  },
 });
 
 axiosInstance.interceptors.request.use(
@@ -27,7 +30,12 @@ axiosInstance.interceptors.request.use(
 
 axiosInstance.interceptors.response.use(
   (response) => {
-    return response;
+    // The API response is nested under a `data` key. 
+    // We can extract it here to simplify data access in the services.
+    if (response.data && response.data.data) {
+        return response.data.data;
+    }
+    return response.data;
   },
   (error) => {
     if (error.response && error.response.status === 401) {
@@ -41,6 +49,13 @@ axiosInstance.interceptors.response.use(
         window.location.href = '/login'; 
       }
     }
+     // Log the error for debugging purposes
+    console.error('API Call Error:', {
+        message: error.message,
+        url: error.config.url,
+        method: error.config.method,
+        response: error.response?.data,
+    });
     return Promise.reject(error);
   }
 );
