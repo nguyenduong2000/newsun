@@ -4,7 +4,7 @@ export interface Product {
   id: string;
   typeCode: string;
   typeName: string;
-  categoryId: string;
+  categoryId: string; // This might be deprecated with new structure
   productName: string;
   slug: string;
   productCode: string;
@@ -28,6 +28,7 @@ export interface CartItem extends Product {
 }
 
 
+// Old category structure, will be replaced by API DTO based structures
 export interface Category {
   id: string;
   name: string;
@@ -44,6 +45,7 @@ export interface NavItem {
   children?: NavItem[];
 }
 
+// This will be the main navigation structure for the mega menu
 export interface MegaMenuCategory {
   title: string;
   href: string;
@@ -61,4 +63,60 @@ export interface Banner {
   src: string;
   alt: string;
   aiHint: string;
+}
+
+
+// --- New API DTO based types ---
+
+export interface ApiProduct {
+  id: string;
+  typeCode: string;
+  typeName: string;
+  productName: string;
+  pathMainImage: string;
+  productCode: string;
+  rawPrice: number;
+  salePrice: number;
+  starRating: number;
+  quantity: number;
+  purchaseCount: number;
+  isSale: boolean;
+  listProductSection: any[]; // Define more strictly if needed
+  lisProductSubImage: { id: string; pathImage: string }[];
+  listProductProperties: { name: string; value: string }[];
+}
+
+export interface ApiProductType {
+  id: string;
+  productTypeCode: string;
+  productTypeName: string;
+  description: string;
+  listProduct: ApiProduct[];
+}
+
+export interface ApiCategoryType {
+  id: string;
+  categoryTypeCode: string;
+  categoryTypeName: string;
+  listProductType: ApiProductType[];
+}
+
+export interface ApiCategory {
+  id: string;
+  categoryCode: string;
+  categoryName: string;
+  description: string;
+  listCategoryType: ApiCategoryType[];
+}
+
+export interface ApiResponse<T> {
+  data: T;
+  meta: {
+    code: string;
+    page: number;
+    size: number;
+    total: number;
+    totalErrors: number;
+    message: string;
+  };
 }

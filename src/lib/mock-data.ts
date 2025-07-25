@@ -1,5 +1,6 @@
 
-import type { Product, Category, NavItem, MegaMenuCategory, Banner } from "@/types";
+
+import type { Product, Category, NavItem, MegaMenuCategory, Banner, ApiCategory } from "@/types";
 
 export const categories: Category[] = [
   { id: "1", name: "Thiết bị bếp", slug: "thiet-bi-bep", image: "https://dienmaynewsun.com/wp-content/uploads/2023/05/may-thai-thit.jpg", parentId: null, level: 1 },
@@ -259,17 +260,17 @@ export const megaMenu: MegaMenuCategory[] = [
                     { title: 'Bộ nồi nấu phở bằng điện', href: '/products/noi-nau-pho-dien-20l' },
                     { title: 'Nồi nấu phở điện Việt Nam', href: '/products/noi-nau-pho-dien-20l' },
                     { title: 'Nồi nấu phở điện nhập khẩu', href: '/products/noi-nau-pho-dien-20l' },
-                    { title: 'Phụ kiện nồi nấu phở', href: '/products/phu-kien-noi-nau-pho' },
+                    { title: 'Phụ kiện nồi nấu phở', href: '/products?category=phu-kien-noi-nau-pho' },
                 ]
             },
             {
                 title: 'Tủ nấu cơm công nghiệp',
                 href: '/products?category=tu-nau-com',
                 children: [
-                    { title: 'Tủ nấu cơm bằng điện', href: '/products/tu-nau-com-dien' },
-                    { title: 'Tủ nấu cơm bằng gas', href: '/products/tu-nau-com-gas' },
-                    { title: 'Tủ nấu cơm bằng điện và gas', href: '/products/tu-nau-com-dien-gas' },
-                    { title: 'Phụ kiện tủ nấu cơm', href: '/products/phu-kien-tu-nau-com' },
+                    { title: 'Tủ nấu cơm bằng điện', href: '/products?category=tu-nau-com-dien' },
+                    { title: 'Tủ nấu cơm bằng gas', href: '/products?category=tu-nau-com-gas' },
+                    { title: 'Tủ nấu cơm bằng điện và gas', href: '/products?category=tu-nau-com-dien-gas' },
+                    { title: 'Phụ kiện tủ nấu cơm', href: '/products?category=phu-kien-tu-nau-com' },
                 ]
             },
         ]
@@ -282,16 +283,16 @@ export const megaMenu: MegaMenuCategory[] = [
                 title: 'Máy thái rau củ quả',
                 href: '/products?category=may-thai-rau-cu-qua',
                 children: [
-                    { title: 'Máy thái rau củ quả đa năng', href: '/products/may-thai-rau-cu-qua-da-nang' },
-                    { title: 'Máy thái lát củ quả', href: '/products/may-thai-lat-cu-qua' },
+                    { title: 'Máy thái rau củ quả đa năng', href: '/products?category=may-thai-rau-cu-qua-da-nang' },
+                    { title: 'Máy thái lát củ quả', href: '/products?category=may-thai-lat-cu-qua' },
                 ]
             },
              {
                 title: 'Bếp chiên điện',
                 href: '/products?category=bep-chien-dien',
                 children: [
-                    { title: 'Bếp chiên công nghiệp', href: '/products/bep-chien-cong-nghiep' },
-                    { title: 'Bếp chiên tách dầu', href: '/products/bep-chien-tach-dau' },
+                    { title: 'Bếp chiên công nghiệp', href: '/products?category=bep-chien-cong-nghiep' },
+                    { title: 'Bếp chiên tách dầu', href: '/products?category=bep-chien-tach-dau' },
                 ]
             },
         ]
@@ -305,7 +306,7 @@ export const megaMenu: MegaMenuCategory[] = [
                 href: '/products?category=may-thai-thit',
                 children: [
                     { title: 'Máy thái thịt tươi sống', href: '/products/may-thai-thit-tuoi-song-mini-ss-90' },
-                    { title: 'Máy thái thịt đông lạnh', href: '/products/may-thai-thit-dong-lanh' },
+                    { title: 'Máy thái thịt đông lạnh', href: '/products?category=may-thai-thit-dong-lanh' },
                 ]
             },
             {
@@ -324,6 +325,60 @@ export const megaMenu: MegaMenuCategory[] = [
         children: []
     }
 ]
+
+export const apiCategories: ApiCategory[] = [
+    {
+      id: "cat_1",
+      categoryCode: "thiet-bi-bep",
+      categoryName: "Thiết bị bếp nhà hàng",
+      description: "Các thiết bị cho bếp nhà hàng",
+      listCategoryType: [
+        {
+          id: "cat_type_1",
+          categoryTypeCode: "noi-nau-pho",
+          categoryTypeName: "Nồi nấu phở",
+          listProductType: [
+            {
+              id: "prod_type_1",
+              productTypeCode: "noi-nau-pho-dien",
+              productTypeName: "Nồi nấu phở điện",
+              description: "Các loại nồi nấu phở bằng điện",
+              listProduct: [
+                { id: "prod_1", productName: "Nồi nấu phở 20L", typeCode: 'noi-nau-pho-dien-20l' } as any,
+                { id: "prod_2", productName: "Nồi nấu phở 50L", typeCode: 'noi-nau-pho-dien-50l' } as any,
+              ]
+            }
+          ]
+        },
+        {
+          id: "cat_type_2",
+          categoryTypeCode: "tu-nau-com",
+          categoryTypeName: "Tủ nấu cơm công nghiệp",
+          listProductType: []
+        }
+      ]
+    },
+    {
+      id: "cat_2",
+      categoryCode: "may-che-bien-thit",
+      categoryName: "Máy chế biến thịt",
+      description: "Các loại máy chế biến thịt",
+      listCategoryType: [
+        {
+          id: "cat_type_3",
+          categoryTypeCode: "may-thai-thit",
+          categoryTypeName: "Máy thái thịt",
+          listProductType: []
+        },
+        {
+          id: "cat_type_4",
+          categoryTypeCode: "may-xay-gio-cha",
+          categoryTypeName: "Máy xay giò chả",
+          listProductType: []
+        }
+      ]
+    }
+  ];
 
 export const heroBanners: Banner[] = [
   {

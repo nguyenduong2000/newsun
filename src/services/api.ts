@@ -1,13 +1,14 @@
 
+
 'use server';
 
 import axios from '@/lib/axios';
-import type { Product, Category, Banner } from '@/types';
+import type { Product, Category, Banner, ApiCategory, ApiResponse } from '@/types';
 
 // In a real application, you would replace these mock API calls
 // with actual requests to your backend. The mock data is returned
 // for demonstration purposes.
-import { products, categories } from '@/lib/mock-data';
+import { products, apiCategories } from '@/lib/mock-data';
 
 const heroBanners: Banner[] = [
   {
@@ -49,12 +50,12 @@ export const getProductBySlug = async (slug: string): Promise<Product | undefine
     return products.find(p => p.slug === slug);
 }
 
-export const getCategories = async (): Promise<Category[]> => {
+export const getCategories = async (): Promise<ApiCategory[]> => {
   console.log('API call: getCategories');
-  // const response = await axios.get('/api/categories');
-  // return response.data;
+  // const response = await axios.get<ApiResponse<ApiCategory[]>>('/api/v1/category-types');
+  // return response.data.data;
   await new Promise(resolve => setTimeout(resolve, MOCK_API_DELAY));
-  return categories;
+  return apiCategories;
 };
 
 export const getBanners = async (): Promise<Banner[]> => {

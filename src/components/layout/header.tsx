@@ -1,4 +1,5 @@
 
+
 "use client";
 
 import * as React from "react";
@@ -28,12 +29,15 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { navItems, megaMenu } from "@/lib/mock-data";
-import type { NavItem, MegaMenuCategory } from "@/types";
+import { navItems } from "@/lib/mock-data";
+import type { NavItem, MegaMenuCategory, ApiCategory } from "@/types";
 import { useCart } from "@/context/cart-context";
 import { useAuth } from "@/context/auth-context";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuItem } from "../ui/dropdown-menu";
+import { getCategories } from "@/services/api";
+import { mapCategoriesToMegaMenu } from "@/lib/data-mapper";
+import { Skeleton } from "../ui/skeleton";
 
 const Logo = () => (
   <Link href="/" className="block">
@@ -115,6 +119,24 @@ const AuthNav = () => {
 
 export function Header() {
   const [open, setOpen] = React.useState(false);
+  const [megaMenuData, setMegaMenuData] = React.useState<MegaMenuCategory[]>([]);
+  const [isLoadingMenu, setIsLoadingMenu] = React.useState(true);
+  
+  React.useEffect(() => {
+    async function fetchMenuData() {
+      try {
+        setIsLoadingMenu(true);
+        const apiData = await getCategories();
+        const mappedData = mapCategoriesToMegaMenu(apiData);
+        setMegaMenuData(mappedData);
+      } catch (error) {
+        console.error("Failed to fetch categories for menu:", error);
+      } finally {
+        setIsLoadingMenu(false);
+      }
+    }
+    fetchMenuData();
+  }, []);
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -157,7 +179,7 @@ export function Header() {
                 </Button>
               </SheetTrigger>
               <SheetContent side="left" className="w-full max-w-sm p-0">
-                <MobileMenu setOpen={setOpen} />
+                <MobileMenu setOpen={setOpen} megaMenu={megaMenuData} isLoading={isLoadingMenu} />
               </SheetContent>
             </Sheet>
           </div>
@@ -165,7 +187,7 @@ export function Header() {
       </div>
       <nav className="hidden lg:flex bg-primary text-primary-foreground">
         <div className="container-fluid mx-auto px-4 sm:px-6 lg:px-8 flex items-center max-w-6xl">
-            <MegaMenu />
+            <MegaMenu megaMenu={megaMenuData} isLoading={isLoadingMenu}/>
             <div className="h-6 w-px bg-primary-foreground/30 mx-2"></div>
             <DesktopNavigation />
         </div>
@@ -174,9 +196,23 @@ export function Header() {
   );
 }
 
-const MegaMenu = () => {
-    const [activeCategory, setActiveCategory] = React.useState<MegaMenuCategory | null>(megaMenu[0] ?? null);
+const MegaMenu = ({ megaMenu, isLoading }: { megaMenu: MegaMenuCategory[], isLoading: boolean }) => {
+    const [activeCategory, setActiveCategory] = React.useState<MegaMenuCategory | null>(null);
 
+    React.useEffect(() => {
+        if (!isLoading && megaMenu.length > 0) {
+            setActiveCategory(megaMenu[0]);
+        }
+    }, [isLoading, megaMenu]);
+
+    if (isLoading) {
+        return (
+            <div className="flex items-center h-12 p-4">
+                <Skeleton className="h-6 w-64 bg-white/20" />
+            </div>
+        );
+    }
+    
     return (
         <NavigationMenu>
             <NavigationMenuList>
@@ -242,7 +278,7 @@ const DesktopNavigation = () => (
 );
 
 
-const MobileMenu = ({ setOpen }: { setOpen: (open: boolean) => void }) => {
+const MobileMenu = ({ setOpen, megaMenu, isLoading }: { setOpen: (open: boolean) => void, megaMenu: MegaMenuCategory[], isLoading: boolean }) => {
   const { isAuthenticated, logout } = useAuth();
   return (
     <div className="h-full flex flex-col">
@@ -251,7 +287,13 @@ const MobileMenu = ({ setOpen }: { setOpen: (open: boolean) => void }) => {
        </div>
         <div className="p-4 flex-1 overflow-y-auto">
             <nav className="flex flex-col space-y-1">
-                 {megaMenu.map((item) =>
+                 {isLoading ? (
+                    <div className="space-y-4">
+                        <Skeleton className="h-8 w-3/4" />
+                        <Skeleton className="h-8 w-1/2" />
+                        <Skeleton className="h-8 w-2/3" />
+                    </div>
+                 ) : megaMenu.map((item) =>
                   item.children ? (
                     <MobileSubMenu key={item.title} item={item} setOpen={setOpen} level={0} />
                   ) : (
@@ -316,27 +358,21 @@ const MobileSubMenu = ({ item, setOpen, level }: { item: MegaMenuCategory, setOp
     setOpen(false);
   }
 
-  if (!item.children || item.children.length === 0) {
-      return (
-        <Link href={item.href} className="py-2 font-medium" style={{ paddingLeft }} onClick={handleLinkClick}>
-            {item.title}
-        </Link>
-      )
-  }
+  const hasChildren = item.children && item.children.length > 0;
 
   return (
     <div className="flex flex-col">
       <div
         className="flex justify-between items-center py-2 font-medium"
-        onClick={() => setIsSubMenuOpen(!isSubMenuOpen)}
+        onClick={() => hasChildren && setIsSubMenuOpen(!isSubMenuOpen)}
         style={{ paddingLeft: level > 0 ? paddingLeft : '0' }}
       >
         <Link href={item.href} onClick={handleLinkClick}>{item.title}</Link>
-        <ChevronDown className={cn("h-5 w-5 transition-transform", isSubMenuOpen && "rotate-180")} />
+        {hasChildren && <ChevronDown className={cn("h-5 w-5 transition-transform", isSubMenuOpen && "rotate-180")} />}
       </div>
-      {isSubMenuOpen && item.children && (
+      {isSubMenuOpen && hasChildren && (
         <div className="flex flex-col space-y-1 mt-1">
-          {item.children.map((child) => (
+          {item.children?.map((child) => (
              <MobileSubMenu key={child.title} item={child} setOpen={setOpen} level={level + 1} />
           ))}
         </div>
