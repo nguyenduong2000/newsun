@@ -20,6 +20,13 @@ const ZaloIcon = (props: React.SVGProps<SVGSVGElement>) => (
     </svg>
 );
 
+const FacebookMessengerIcon = (props: React.SVGProps<SVGSVGElement>) => (
+    <svg viewBox="0 0 24 24" fill="currentColor" {...props}>
+        <path d="M12 0C5.373 0 0 5.373 0 12c0 5.105 3.163 9.422 7.592 11.232.417.108.417-.234 0-.342-3.176-1.423-5.35-4.47-5.35-7.89 0-4.97 4.03-9 9-9s9 4.03 9 9c0 3.42-2.174 6.467-5.35 7.89-.417.108-.417.342 0 .342C20.837 21.422 24 17.105 24 12c0-6.627-5.373-12-12-12z"></path>
+        <path d="M7.75 14.164l2.502-2.502 3.253 1.948 4.32-4.32-10.222 4.07 1.63 1.63 2.518-1.5z" fill="#fff"></path>
+    </svg>
+)
+
 const contactLinks = [
     {
       href: 'tel:0961997355',
@@ -29,21 +36,21 @@ const contactLinks = [
     },
     {
       href: 'https://m.me/your-facebook-page-id', // Thay đổi thành link m.me của bạn
-      icon: <MessageCircle className="h-6 w-6 text-white" />,
+      icon: <FacebookMessengerIcon className="h-6 w-6 text-white" />,
       label: 'Chat Facebook',
       bgColor: 'bg-blue-600 hover:bg-blue-700',
     },
     {
       href: 'https://zalo.me/0961997355', // Thay đổi thành link Zalo của bạn
-      icon: <ZaloIcon className="h-6 w-6" />,
+      icon: <ZaloIcon className="h-7 w-7" />,
       label: 'Chat Zalo',
-      bgColor: 'bg-sky-500 hover:bg-sky-600',
+      bgColor: 'bg-transparent hover:bg-transparent',
     },
 ];
 
 export function FloatingContact() {
     return (
-        <div className="fixed right-4 bottom-4 z-50 flex flex-col gap-3">
+        <div className="fixed right-4 bottom-4 z-50 flex flex-col gap-3 items-center">
             <TooltipProvider>
                 {contactLinks.map((link) => (
                     <Tooltip key={link.label}>
