@@ -28,13 +28,13 @@ const contactLinks = [
     },
     {
       href: 'https://m.me/your-facebook-page-id', // Thay đổi thành link m.me của bạn
-      icon: <FacebookMessengerIcon className="h-7 w-7" />,
+      icon: <FacebookMessengerIcon className="h-8 w-8" />,
       label: 'Chat Facebook',
       bgColor: 'bg-transparent hover:bg-transparent',
     },
     {
       href: 'https://zalo.me/0961997355', // Thay đổi thành link Zalo của bạn
-      icon: <ZaloIcon className="h-7 w-7" />,
+      icon: <ZaloIcon className="h-8 w-8" />,
       label: 'Chat Zalo',
       bgColor: 'bg-transparent hover:bg-transparent',
     },
