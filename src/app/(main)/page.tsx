@@ -1,9 +1,8 @@
 
 import { HeroSection } from "@/components/sections/hero-section";
-import { ProductGrid } from "@/components/sections/product-grid";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { products, categories } from "@/lib/mock-data";
+import { getProducts, getCategories, getBanners } from "@/services/api";
 import { ArrowRight, Newspaper, Flame, ShoppingCart } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -18,14 +17,18 @@ import { DealProductCard } from "@/components/deal-product-card";
 import { ProductCard } from "@/components/product-card";
 
 
-export default function Home() {
+export default async function Home() {
+  const products = await getProducts();
+  const categories = await getCategories();
+  const banners = await getBanners();
+
   const featuredProducts = products.slice(0, 8);
   const featuredCategories = categories.slice(0, 4);
   const dealProducts = products.slice(0, 5);
 
   return (
     <div className="space-y-12 md:space-y-16 lg:space-y-20 mb-8">
-      <HeroSection />
+      <HeroSection banners={banners} />
 
       <div className="container-fluid mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl space-y-12 md:space-y-16 lg:space-y-20">
         <section>

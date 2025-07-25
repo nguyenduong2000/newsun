@@ -10,26 +10,13 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 import Autoplay from "embla-carousel-autoplay";
+import { Banner } from "@/types";
 
-const heroBanners = [
-  {
-    src: "https://dienmaynewsun.com/wp-content/uploads/2025/01/banner-tet-may-vat-long.jpg",
-    alt: "Banner 1",
-    aiHint: "kitchen equipment",
-  },
-  {
-    src: "https://dienmaynewsun.com/wp-content/uploads/2025/01/banner-tet-may-vat-long.jpg",
-    alt: "Banner 2",
-    aiHint: "food processing",
-  },
-  {
-    src: "https://dienmaynewsun.com/wp-content/uploads/2025/01/banner-tet-may-vat-long.jpg",
-    alt: "Banner 3",
-    aiHint: "industrial appliances",
-  },
-];
+interface HeroSectionProps {
+    banners: Banner[];
+}
 
-export function HeroSection() {
+export function HeroSection({ banners }: HeroSectionProps) {
   const plugin = React.useRef(
     Autoplay({ delay: 5000, stopOnInteraction: true })
   );
@@ -46,7 +33,7 @@ export function HeroSection() {
         }}
       >
         <CarouselContent>
-          {heroBanners.map((banner, index) => (
+          {banners.map((banner, index) => (
             <CarouselItem key={index}>
               <div className="w-full aspect-[12/3] relative">
                 <Image

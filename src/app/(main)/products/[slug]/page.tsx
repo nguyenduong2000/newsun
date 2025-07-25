@@ -4,7 +4,8 @@
 import { useState } from "react";
 import { notFound, useParams } from "next/navigation";
 import Image from "next/image";
-import { products } from "@/lib/mock-data";
+import { getProductBySlug, getProducts } from "@/services/api";
+import type { Product } from "@/types";
 import {
   Table,
   TableBody,
@@ -116,12 +117,11 @@ function ConsultationForm({ setOpen }: { setOpen: (open: boolean) => void }) {
   );
 }
 
-function ProductDetailView({ product }: { product: NonNullable<ReturnType<typeof getProduct>> }) {
+function ProductDetailView({ product, relatedProducts }: { product: Product, relatedProducts: Product[] }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedImage, setSelectedImage] = useState(product.pathMainImage);
   const [selectedModel, setSelectedModel] = useState(product.models?.[1] || null);
 
-  const relatedProducts = products.filter(p => p.typeCode === product.typeCode && p.id !== product.id).slice(0, 4);
 
   const formatPrice = (price: number) => {
     return new Intl.NumberFormat("vi-VN").format(price);
@@ -311,18 +311,17 @@ function ProductDetailView({ product }: { product: NonNullable<ReturnType<typeof
   );
 }
 
-const getProduct = (slug: string) => {
-    return products.find((p) => p.slug === slug);
-}
 
-export default function ProductDetailPage() {
-  const params = useParams();
-  const slug = params.slug as string;
-  const product = getProduct(slug);
+export default async function ProductDetailPage({ params }: { params: { slug: string } }) {
+  const slug = params.slug;
+  const product = await getProductBySlug(slug);
 
   if (!product) {
     notFound();
   }
 
-  return <ProductDetailView product={product} />;
+  const allProducts = await getProducts();
+  const relatedProducts = allProducts.filter(p => p.typeCode === product.typeCode && p.id !== product.id).slice(0, 4);
+
+  return <ProductDetailView product={product} relatedProducts={relatedProducts} />;
 }
