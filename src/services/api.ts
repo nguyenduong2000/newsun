@@ -29,23 +29,24 @@ const heroBanners: Banner[] = [
 ];
 
 
-const MOCK_API_DELAY = 500; // ms
+const MOCK_API_DELAY = 100; // ms
 
+// This function now returns a flattened list of products from the new API structure
 export const getProducts = async (): Promise<Product[]> => {
   console.log('API call: getProducts');
-  // Example of what a real API call would look like:
-  // const response = await axios.get('/api/products');
-  // return response.data;
+  // In a real app, you might fetch all grouped products and flatten them.
+  // const response = await axios.get('/api/products-grouped'); 
+  // const groupedData = response.data;
+  // const allProducts = groupedData.flatMap(group => group.listProduct.map(p => mapApiProductToProduct(p)));
+  // return allProducts;
   
-  // Returning mock data for now
   await new Promise(resolve => setTimeout(resolve, MOCK_API_DELAY));
-  return products;
+  return products; // Returning the already mapped mock data for now
 };
 
 export const getProductBySlug = async (slug: string): Promise<Product | undefined> => {
     console.log(`API call: getProductBySlug with slug: ${slug}`);
-    // const response = await axios.get(`/api/products/${slug}`);
-    // return response.data;
+    // This would also need to fetch all products and then find by slug.
     await new Promise(resolve => setTimeout(resolve, MOCK_API_DELAY));
     return products.find(p => p.slug === slug);
 }

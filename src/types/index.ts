@@ -4,7 +4,7 @@ export interface Product {
   id: string;
   typeCode: string;
   typeName: string;
-  categoryId: string; // This might be deprecated with new structure
+  categoryId: string; 
   productName: string;
   slug: string;
   productCode: string;
@@ -16,11 +16,12 @@ export interface Product {
   quantity: number;
   purchaseCount: number;
   isSale: boolean;
-  description: string;
+  description: string; // This might come from listProductSection
   specs: Record<string, string>;
   reviews?: number;
   featuresImage?: string;
   models?: string[];
+  sections?: ApiProductSection[];
 }
 
 export interface CartItem extends Product {
@@ -68,6 +69,20 @@ export interface Banner {
 
 // --- New API DTO based types ---
 
+export interface ApiProductProperty {
+    name: string;
+    value: string;
+}
+
+export interface ApiProductSection {
+    id: string;
+    title: string;
+    displayOrder: number;
+    description: string;
+    pathImage: string;
+    positionImage: string;
+}
+
 export interface ApiProduct {
   id: string;
   typeCode: string;
@@ -81,9 +96,9 @@ export interface ApiProduct {
   quantity: number;
   purchaseCount: number;
   isSale: boolean;
-  listProductSection: any[]; // Define more strictly if needed
+  listProductSection: ApiProductSection[];
   lisProductSubImage: { id: string; pathImage: string }[];
-  listProductProperties: { name: string; value: string }[];
+  listProductProperties: ApiProductProperty[];
 }
 
 export interface ApiProductType {
@@ -102,10 +117,10 @@ export interface ApiCategoryType {
 }
 
 export interface ApiCategory {
-  id: string;
-  categoryCode: string;
-  categoryName: string;
-  description: string;
+  id: "string";
+  categoryCode: "string";
+  categoryName: "string";
+  description: "string";
   listCategoryType: ApiCategoryType[];
 }
 
