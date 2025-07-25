@@ -13,17 +13,17 @@ import Autoplay from "embla-carousel-autoplay";
 
 const heroBanners = [
   {
-    src: "https://placehold.co/1200x500.png",
+    src: "https://dienmaynewsun.com/wp-content/uploads/2025/01/banner-tet-may-vat-long.jpg",
     alt: "Banner 1",
     aiHint: "kitchen equipment",
   },
   {
-    src: "https://placehold.co/1200x500.png",
+    src: "https://dienmaynewsun.com/wp-content/uploads/2025/01/banner-tet-may-vat-long.jpg",
     alt: "Banner 2",
     aiHint: "food processing",
   },
   {
-    src: "https://placehold.co/1200x500.png",
+    src: "https://dienmaynewsun.com/wp-content/uploads/2025/01/banner-tet-may-vat-long.jpg",
     alt: "Banner 3",
     aiHint: "industrial appliances",
   },
@@ -48,7 +48,7 @@ export function HeroSection() {
         <CarouselContent>
           {heroBanners.map((banner, index) => (
             <CarouselItem key={index}>
-              <div className="w-full aspect-[12/5] relative">
+              <div className="w-full aspect-[12/3] relative">
                 <Image
                   src={banner.src}
                   alt={banner.alt}

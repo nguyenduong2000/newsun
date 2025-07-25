@@ -44,7 +44,7 @@ export function ProductCard({ product }: ProductCardProps) {
               src={product.pathMainImage}
               alt={product.productName}
               fill
-              className="object-contain group-hover:scale-105 transition-transform duration-300"
+              className="object-contain transition-transform duration-300"
               data-ai-hint="kitchen appliance"
             />
              {product.isSale && (

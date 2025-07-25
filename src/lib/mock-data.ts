@@ -2,14 +2,14 @@
 import type { Product, Category, NavItem, MegaMenuCategory } from "@/types";
 
 export const categories: Category[] = [
-  { id: "1", name: "Thiết bị bếp", slug: "thiet-bi-bep", image: "https://placehold.co/80x80.png", parentId: null, level: 1 },
-  { id: "2", name: "Máy chế biến", slug: "may-che-bien", image: "https://placehold.co/80x80.png", parentId: null, level: 1 },
-  { id: "3", name: "Nồi nấu phở", slug: "noi-nau-pho", image: "https://placehold.co/80x80.png", parentId: "1", level: 2 },
-  { id: "4", name: "Tủ nấu cơm", slug: "tu-nau-com", image: "https://placehold.co/80x80.png", parentId: "1", level: 2 },
-  { id: "5", name: "Máy thái thịt", slug: "may-thai-thit", image: "https://placehold.co/80x80.png", parentId: "2", level: 2 },
-  { id: "6", name: "Máy xay giò chả", slug: "may-xay-gio-cha", image: "https://placehold.co/80x80.png", parentId: "2", level: 2 },
-  { id: "7", name: "Nồi điện 20L", slug: "noi-dien-20l", image: "https://placehold.co/80x80.png", parentId: "3", level: 3 },
-  { id: "8", name: "Nồi điện 50L", slug: "noi-dien-50l", image: "https://placehold.co/80x80.png", parentId: "3", level: 3 },
+  { id: "1", name: "Thiết bị bếp", slug: "thiet-bi-bep", image: "https://dienmaynewsun.com/wp-content/uploads/2023/05/may-thai-thit.jpg", parentId: null, level: 1 },
+  { id: "2", name: "Máy chế biến", slug: "may-che-bien", image: "https://dienmaynewsun.com/wp-content/uploads/2023/05/may-thai-thit.jpg", parentId: null, level: 1 },
+  { id: "3", name: "Nồi nấu phở", slug: "noi-nau-pho", image: "https://dienmaynewsun.com/wp-content/uploads/2023/05/may-thai-thit.jpg", parentId: "1", level: 2 },
+  { id: "4", name: "Tủ nấu cơm", slug: "tu-nau-com", image: "https://dienmaynewsun.com/wp-content/uploads/2023/05/may-thai-thit.jpg", parentId: "1", level: 2 },
+  { id: "5", name: "Máy thái thịt", slug: "may-thai-thit", image: "https://dienmaynewsun.com/wp-content/uploads/2023/05/may-thai-thit.jpg", parentId: "2", level: 2 },
+  { id: "6", name: "Máy xay giò chả", slug: "may-xay-gio-cha", image: "https://dienmaynewsun.com/wp-content/uploads/2023/05/may-thai-thit.jpg", parentId: "2", level: 2 },
+  { id: "7", name: "Nồi điện 20L", slug: "noi-dien-20l", image: "https://dienmaynewsun.com/wp-content/uploads/2023/05/may-thai-thit.jpg", parentId: "3", level: 3 },
+  { id: "8", name: "Nồi điện 50L", slug: "noi-dien-50l", image: "https://dienmaynewsun.com/wp-content/uploads/2023/05/may-thai-thit.jpg", parentId: "3", level: 3 },
 ];
 
 export const products: Product[] = [
@@ -23,8 +23,8 @@ export const products: Product[] = [
     typeCode: "noi-nau-pho",
     categoryId: "7",
     typeName: "Nồi nấu phở",
-    pathMainImage: "https://placehold.co/400x400.png",
-    images: ["https://placehold.co/400x400.png?1", "https://placehold.co/400x400.png?2", "https://placehold.co/400x400.png?3", "https://placehold.co/400x400.png?4", "https://placehold.co/400x400.png?5"],
+    pathMainImage: "https://dienmaynewsun.com/wp-content/uploads/2024/01/may-hut-chan-khong-sat-da-hvt-320ts-ava.jpg",
+    images: ["https://dienmaynewsun.com/wp-content/uploads/2024/01/may-hut-chan-khong-sat-da-hvt-320ts-ava.jpg?1", "https://dienmaynewsun.com/wp-content/uploads/2024/01/may-hut-chan-khong-sat-da-hvt-320ts-ava.jpg?2", "https://dienmaynewsun.com/wp-content/uploads/2024/01/may-hut-chan-khong-sat-da-hvt-320ts-ava.jpg?3", "https://dienmaynewsun.com/wp-content/uploads/2024/01/may-hut-chan-khong-sat-da-hvt-320ts-ava.jpg?4", "https://dienmaynewsun.com/wp-content/uploads/2024/01/may-hut-chan-khong-sat-da-hvt-320ts-ava.jpg?5"],
     specs: {
       "Dung tích": "20 Lít",
       "Chất liệu": "Inox 304",
@@ -37,7 +37,7 @@ export const products: Product[] = [
     quantity: 100,
     isSale: true,
     productCode: "NNP-D20L",
-    featuresImage: "https://placehold.co/300x300.png",
+    featuresImage: "https://dienmaynewsun.com/wp-content/uploads/2023/04/lu-quay-80cm-than-1.jpg",
     models: ["20L", "30L", "50L", "80L", "100L", "120L"]
   },
   {
@@ -50,8 +50,8 @@ export const products: Product[] = [
     typeCode: "may-xay-gio-cha",
     categoryId: "6",
     typeName: "Máy xay giò chả",
-    pathMainImage: "https://placehold.co/400x400.png",
-    images: ["https://placehold.co/400x400.png", "https://placehold.co/400x400.png"],
+    pathMainImage: "https://dienmaynewsun.com/wp-content/uploads/2024/01/may-hut-chan-khong-sat-da-hvt-320ts-ava.jpg",
+    images: ["https://dienmaynewsun.com/wp-content/uploads/2024/01/may-hut-chan-khong-sat-da-hvt-320ts-ava.jpg", "https://dienmaynewsun.com/wp-content/uploads/2024/01/may-hut-chan-khong-sat-da-hvt-320ts-ava.jpg"],
     specs: {
       "Năng suất": "3 KG/mẻ",
       "Chất liệu": "Inox",
@@ -64,7 +64,7 @@ export const products: Product[] = [
     quantity: 50,
     isSale: true,
     productCode: "MXGC-3KG",
-    featuresImage: "https://placehold.co/300x300.png"
+    featuresImage: "https://dienmaynewsun.com/wp-content/uploads/2023/04/lu-quay-80cm-than-1.jpg"
   },
   {
     id: "3",
@@ -76,8 +76,8 @@ export const products: Product[] = [
     typeCode: "may-hut-chan-khong",
     categoryId: "2",
     typeName: "Máy hút chân không",
-    pathMainImage: "https://placehold.co/400x400.png",
-    images: ["https://placehold.co/400x400.png"],
+    pathMainImage: "https://dienmaynewsun.com/wp-content/uploads/2024/01/may-hut-chan-khong-sat-da-hvt-320ts-ava.jpg",
+    images: ["https://dienmaynewsun.com/wp-content/uploads/2024/01/may-hut-chan-khong-sat-da-hvt-320ts-ava.jpg"],
      specs: {
       "Model": "DZ400/2SA",
       "Loại": "2 buồng",
@@ -90,7 +90,7 @@ export const products: Product[] = [
     quantity: 20,
     isSale: false,
     productCode: "MHCK-DZ400",
-    featuresImage: "https://placehold.co/300x300.png"
+    featuresImage: "https://dienmaynewsun.com/wp-content/uploads/2023/04/lu-quay-80cm-than-1.jpg"
   },
   {
     id: "4",
@@ -102,8 +102,8 @@ export const products: Product[] = [
     typeCode: "may-che-bien-thit",
     categoryId: "6",
     typeName: "Máy chế biến thịt",
-    pathMainImage: "https://placehold.co/400x400.png",
-    images: ["https://placehold.co/400x400.png"],
+    pathMainImage: "https://dienmaynewsun.com/wp-content/uploads/2024/01/may-hut-chan-khong-sat-da-hvt-320ts-ava.jpg",
+    images: ["https://dienmaynewsun.com/wp-content/uploads/2024/01/may-hut-chan-khong-sat-da-hvt-320ts-ava.jpg"],
      specs: {
       "Dung tích": "3 Lít",
       "Chất liệu": "Inox",
@@ -116,7 +116,7 @@ export const products: Product[] = [
     quantity: 150,
     isSale: true,
     productCode: "MDXX-3LQT",
-    featuresImage: "https://placehold.co/300x300.png"
+    featuresImage: "https://dienmaynewsun.com/wp-content/uploads/2023/04/lu-quay-80cm-than-1.jpg"
   },
   {
     id: "5",
@@ -128,8 +128,8 @@ export const products: Product[] = [
     typeCode: "may-thai-thit",
     categoryId: "5",
     typeName: "Máy thái thịt",
-    pathMainImage: "https://placehold.co/400x400.png",
-    images: ["https://placehold.co/400x400.png"],
+    pathMainImage: "https://dienmaynewsun.com/wp-content/uploads/2024/01/may-hut-chan-khong-sat-da-hvt-320ts-ava.jpg",
+    images: ["https://dienmaynewsun.com/wp-content/uploads/2024/01/may-hut-chan-khong-sat-da-hvt-320ts-ava.jpg"],
      specs: {
       "Công suất": "350W",
       "Năng suất": "30-40kg/giờ",
@@ -142,7 +142,7 @@ export const products: Product[] = [
     quantity: 80,
     isSale: true,
     productCode: "MTT-SS90",
-    featuresImage: "https://placehold.co/300x300.png",
+    featuresImage: "https://dienmaynewsun.com/wp-content/uploads/2023/04/lu-quay-80cm-than-1.jpg",
     models: ["SS-70", "SS-80", "SS-90", "SS-100"]
   },
   {
@@ -155,8 +155,8 @@ export const products: Product[] = [
     typeCode: "may-vat-long-ga",
     categoryId: "2",
     typeName: "Máy vặt lông gà",
-    pathMainImage: "https://placehold.co/400x400.png",
-    images: ["https://placehold.co/400x400.png"],
+    pathMainImage: "https://dienmaynewsun.com/wp-content/uploads/2024/01/may-hut-chan-khong-sat-da-hvt-320ts-ava.jpg",
+    images: ["https://dienmaynewsun.com/wp-content/uploads/2024/01/may-hut-chan-khong-sat-da-hvt-320ts-ava.jpg"],
      specs: {
       "Đường kính lồng": "55 cm",
       "Năng suất": "2-3 con/mẻ",
@@ -180,8 +180,8 @@ export const products: Product[] = [
     typeCode: "may-hut-chan-khong",
     categoryId: "2",
     typeName: "Máy hút chân không",
-    pathMainImage: "https://placehold.co/400x400.png",
-    images: ["https://placehold.co/400x400.png"],
+    pathMainImage: "https://dienmaynewsun.com/wp-content/uploads/2024/01/may-hut-chan-khong-sat-da-hvt-320ts-ava.jpg",
+    images: ["https://dienmaynewsun.com/wp-content/uploads/2024/01/may-hut-chan-khong-sat-da-hvt-320ts-ava.jpg"],
      specs: {
       "Công suất hút": "-60-80Kpa",
       "Chất liệu": "Nhựa ABS",
@@ -194,7 +194,7 @@ export const products: Product[] = [
     quantity: 200,
     isSale: true,
     productCode: "MHCK-DZ300B",
-    featuresImage: "https://placehold.co/300x300.png"
+    featuresImage:"https://dienmaynewsun.com/wp-content/uploads/2023/04/lu-quay-80cm-than-1.jpg"
   },
   {
     id: "8",
@@ -206,8 +206,8 @@ export const products: Product[] = [
     typeCode: "may-xay-gio-cha",
     categoryId: "6",
     typeName: "Máy xay giò chả",
-    pathMainImage: "https://placehold.co/400x400.png",
-    images: ["https://placehold.co/400x400.png", "https://placehold.co/400x400.png"],
+    pathMainImage: "https://dienmaynewsun.com/wp-content/uploads/2024/01/may-hut-chan-khong-sat-da-hvt-320ts-ava.jpg",
+    images: ["https://dienmaynewsun.com/wp-content/uploads/2024/01/may-hut-chan-khong-sat-da-hvt-320ts-ava.jpg", "https://dienmaynewsun.com/wp-content/uploads/2024/01/may-hut-chan-khong-sat-da-hvt-320ts-ava.jpg"],
     specs: {
       "Năng suất": "5 KG/mẻ",
       "Chất liệu": "Inox",
@@ -219,7 +219,8 @@ export const products: Product[] = [
     purchaseCount: 650,
     quantity: 40,
     isSale: false,
-    productCode: "MXGC-5KG"
+    productCode: "MXGC-5KG",
+    
   }
 ];
 

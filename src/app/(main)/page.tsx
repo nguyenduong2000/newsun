@@ -24,7 +24,7 @@ export default function Home() {
   const dealProducts = products.slice(0, 5);
 
   return (
-    <div className="space-y-12 md:space-y-16 lg:space-y-20">
+    <div className="space-y-12 md:space-y-16 lg:space-y-20 mb-8">
       <HeroSection />
 
       <div className="container-fluid mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl space-y-12 md:space-y-16 lg:space-y-20">
@@ -86,7 +86,7 @@ export default function Home() {
         </section>
 
         <section>
-          <div className="flex justify-between items-center mb-6">
+          <div className="flex justify-between items-center mb-2">
             <h2 className="text-2xl md:text-3xl font-headline font-bold">
               Sản phẩm nổi bật
             </h2>
@@ -105,7 +105,36 @@ export default function Home() {
           >
             <CarouselContent className="-ml-4">
               {featuredProducts.map((product, index) => (
-                <CarouselItem key={index} className="pl-4 md:basis-1/3 lg:basis-1/4">
+                <CarouselItem key={index} className="pl-4 md:basis-1/3 lg:basis-1/4 my-5">
+                   <ProductCard product={product} />
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+            <CarouselPrevious className="absolute left-[-20px] top-1/2 -translate-y-1/2 hidden sm:flex" />
+            <CarouselNext className="absolute right-[-20px] top-1/2 -translate-y-1/2 hidden sm:flex" />
+          </Carousel>
+        </section>
+        <section>
+          <div className="flex justify-between items-center mb-2">
+            <h2 className="text-2xl md:text-3xl font-headline font-bold">
+              Sản phẩm hot
+            </h2>
+            <Button variant="ghost" asChild>
+              <Link href="/products">
+                Xem tất cả <ArrowRight className="ml-2 h-4 w-4" />
+              </Link>
+            </Button>
+          </div>
+          <Carousel
+            opts={{
+              align: "start",
+              loop: true,
+            }}
+            className="w-full"
+          >
+            <CarouselContent className="-ml-4">
+              {featuredProducts.map((product, index) => (
+                  <CarouselItem key={index} className="pl-4 md:basis-1/3 lg:basis-1/4 my-5">
                    <ProductCard product={product} />
                 </CarouselItem>
               ))}
