@@ -20,6 +20,7 @@ import { ProductCard } from "@/components/product-card";
 export default async function Home() {
   const products = await getProducts();
   const categories = await getCategories();
+  console.log('🚀 ~ categories:', categories)
   const banners = await getBanners();
 
   const featuredProducts = products.slice(0, 8);
