@@ -8,12 +8,14 @@ import { ProductFilterSidebar } from '@/components/sections/product-filter-sideb
 import { getProducts, getCategories } from "@/services/api";
 import type { Product, ApiCategory } from "@/types";
 import { Skeleton } from '@/components/ui/skeleton';
+import { useDebounce } from '@/hooks/use-debounce';
 
 export default function ProductsPage() {
   const searchParams = useSearchParams();
   const initialCategory = searchParams.get('category') || searchParams.get('categoryType') || 'all';
 
-  const [products, setProducts] = useState<Product[]>([]);
+  const [allProducts, setAllProducts] = useState<Product[]>([]);
+  const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
   const [categories, setCategories] = useState<ApiCategory[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -21,7 +23,10 @@ export default function ProductsPage() {
   const [priceRange, setPriceRange] = useState<[number, number]>([0, 20000000]);
   const [isSale, setIsSale] = useState<boolean>(false);
   const [searchTerm, setSearchTerm] = useState('');
+
+  const debouncedSearchTerm = useDebounce(searchTerm, 500);
   
+  // Fetch initial data (all products and categories)
   useEffect(() => {
     const fetchData = async () => {
       setIsLoading(true);
@@ -30,10 +35,11 @@ export default function ProductsPage() {
           getProducts(),
           getCategories()
         ]);
-        setProducts(productsData);
+        setAllProducts(productsData);
+        setFilteredProducts(productsData); // Initially show all products
         setCategories(categoriesData);
       } catch (error) {
-        console.error("Failed to fetch data:", error);
+        console.error("Failed to fetch initial data:", error);
       } finally {
         setIsLoading(false);
       }
@@ -41,20 +47,39 @@ export default function ProductsPage() {
     fetchData();
   }, []);
   
+  // Update selected category from URL params
   useEffect(() => {
     const categoryFromUrl = searchParams.get('category') || searchParams.get('categoryType') || 'all';
     setSelectedCategory(categoryFromUrl);
   }, [searchParams]);
 
-  const filteredProducts = useMemo(() => {
-    return products.filter(product => {
-      const categoryMatch = selectedCategory === 'all' || product.typeCode === selectedCategory;
-      const priceMatch = product.salePrice >= priceRange[0] && product.salePrice <= priceRange[1];
-      const saleMatch = !isSale || product.isSale === isSale;
-      const searchMatch = searchTerm === '' || product.productName.toLowerCase().includes(searchTerm.toLowerCase());
-      return categoryMatch && priceMatch && saleMatch && searchMatch;
-    });
-  }, [products, selectedCategory, priceRange, isSale, searchTerm]);
+  // Re-filter products when any filter changes
+  useEffect(() => {
+    const applyFilters = () => {
+      if (isLoading) return; // Don't filter until initial data is loaded
+
+      let productsToFilter = allProducts;
+
+      // Filter by search term
+      if (debouncedSearchTerm) {
+        productsToFilter = productsToFilter.filter(product =>
+          product.productName.toLowerCase().includes(debouncedSearchTerm.toLowerCase())
+        );
+      }
+      
+      // Filter by category
+      productsToFilter = productsToFilter.filter(product => {
+        const categoryMatch = selectedCategory === 'all' || product.typeCode === selectedCategory;
+        const priceMatch = product.salePrice >= priceRange[0] && product.salePrice <= priceRange[1];
+        const saleMatch = !isSale || product.isSale === isSale;
+        return categoryMatch && priceMatch && saleMatch;
+      });
+      
+      setFilteredProducts(productsToFilter);
+    };
+
+    applyFilters();
+  }, [debouncedSearchTerm, selectedCategory, priceRange, isSale, allProducts, isLoading]);
 
   const categoryOptions = useMemo(() => {
     const options = [{ value: 'all', label: 'Tất cả danh mục' }];

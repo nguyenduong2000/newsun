@@ -1,5 +1,4 @@
 
-
 'use server';
 
 import axios from '@/lib/axios';
@@ -8,7 +7,7 @@ import type { Product, Category, Banner, ApiCategory, ApiResponse, ApiProduct, A
 // In a real application, you would replace these mock API calls
 // with actual requests to your backend. The mock data is returned
 // for demonstration purposes.
-import { apiProducts, apiCategories } from '@/lib/mock-data';
+import { apiProducts, apiCategories, products as allMockProducts } from '@/lib/mock-data';
 
 const heroBanners: Banner[] = [
   {
@@ -66,42 +65,33 @@ const mapApiProductToProduct = (apiProduct: ApiProduct, categoryTypeCode: string
     }
 }
 
-// This function now returns a flattened list of products from the new API structure
-export const getProducts = async (): Promise<Product[]> => {
-  console.log('API call: getProducts');
+export const getProducts = async (searchKey?: string): Promise<Product[]> => {
+  console.log(`API call: getProducts with searchKey: "${searchKey || ''}"`);
   await new Promise(resolve => setTimeout(resolve, MOCK_API_DELAY));
-  // In a real app, you might fetch all grouped products and flatten them.
-  // const response = await axios.get<ApiResponse<ApiProductType[]>>('/api/v1/products-by-category'); 
-  // const groupedData = response.data.data;
-  const groupedData = apiProducts;
-  
-  const allProducts = groupedData.flatMap(group => 
-      group.listProduct.map(p => mapApiProductToProduct(p, group.categoryTypeCode, group.categoryTypeName))
-  );
 
-  return allProducts;
+  let products = allMockProducts;
+
+  if (searchKey) {
+    products = products.filter(p => p.productName.toLowerCase().includes(searchKey.toLowerCase()));
+  }
+
+  return products;
 };
 
 export const getProductBySlug = async (slug: string): Promise<Product | undefined> => {
     console.log(`API call: getProductBySlug with slug: ${slug}`);
-    // This would also need to fetch all products and then find by slug.
     const allProducts = await getProducts();
     return allProducts.find(p => p.slug === slug);
 }
 
 export const getCategories = async (): Promise<ApiCategory[]> => {
   console.log('API call: getCategories');
-  // const response = await axios.get<ApiResponse<ApiCategory[]>>('/api/v1/category-types');
-  // return response.data.data;
   await new Promise(resolve => setTimeout(resolve, MOCK_API_DELAY));
   return apiCategories;
 };
 
 export const getBanners = async (): Promise<Banner[]> => {
     console.log('API call: getBanners');
-    // const response = await axios.get('/api/banners');
-    // return response.data;
     await new Promise(resolve => setTimeout(resolve, MOCK_API_DELAY));
     return heroBanners;
 }
-
