@@ -289,7 +289,8 @@ export const apiProducts: Omit<ApiProductType, 'listProduct'> & { listProduct: A
         lisProductSubImage: [],
         listProductProperties: [
           {name: "Năng suất", value: "3 KG/mẻ"},
-          {name: "Công suất motor", value: "3 kW (4HP)"}
+          {name: "Công suất motor", value: "3 kW (4HP)"},
+          {name: "Bảo hành", value: "24 tháng"}
         ]
       },
       {
@@ -491,4 +492,5 @@ export const heroBanners: Banner[] = [
   },
 ];
 
+    
     
