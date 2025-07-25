@@ -6,8 +6,6 @@ import type { Product, Banner, ApiCategory, ApiProduct, ApiResponse } from '@/ty
 import { apiProducts, apiCategories, heroBanners as allMockBanners } from '@/lib/mock-data';
 import { API_ENDPOINTS } from '@/config/endpoints';
 
-const MOCK_API_DELAY = 100; // ms
-
 const createSlug = (text: string): string => {
   if (!text) return '';
   return text
@@ -25,7 +23,7 @@ const mapApiProductToProduct = (apiProduct: ApiProduct): Product => {
         typeName: apiProduct.typeName,
         categoryId: apiProduct.typeCode, // Or map to a specific category if needed
         pathMainImage: apiProduct.pathMainImage,
-        images: apiProduct.lisProductSubImage ? apiProduct.lisProductSubImage.map(img => img.pathImage) : [apiProduct.pathMainImage],
+        images: apiProduct.lisProductSubImage ? [apiProduct.pathMainImage, ...apiProduct.lisProductSubImage.map(img => img.pathImage)] : [apiProduct.pathMainImage],
         productCode: apiProduct.productCode,
         rawPrice: apiProduct.rawPrice,
         salePrice: apiProduct.salePrice,
@@ -46,17 +44,14 @@ export const getProducts = async (searchKey?: string): Promise<Product[]> => {
   try {
     console.log(`API call: getProducts with searchKey: "${searchKey || ''}"`);
     // NOTE: This now makes a real API call.
-    // If the API is not ready, this will fail. For development, you might want to switch back to mocks.
     const apiResponse = await axios.get<ApiProduct[]>(API_ENDPOINTS.GET_PRODUCTS, {
         params: { search: searchKey }
     });
 
     const allProducts: Product[] = apiResponse.map(p => mapApiProductToProduct(p));
-
     return allProducts;
   } catch (error) {
     console.error("Failed to fetch products:", error);
-    // Fallback to mock data if API fails during development
     console.log("Falling back to mock product data.");
     let mockProducts: Product[] = [];
     apiProducts.forEach(catType => {
@@ -74,9 +69,18 @@ export const getProducts = async (searchKey?: string): Promise<Product[]> => {
 export const getProductBySlug = async (slug: string): Promise<Product | undefined> => {
     try {
         console.log(`API call: getProductBySlug with slug: ${slug}`);
-        // NOTE: This is a simulated call. You would replace this with a real API endpoint.
+        // This is a simulation. In a real app, you'd likely fetch by slug/code from the API.
         const allProducts = await getProducts();
-        return allProducts.find(p => p.slug === slug);
+        const product = allProducts.find(p => p.slug === slug);
+        
+        if (product) {
+            // If you need to fetch full details not present in the list view:
+            // const detailedProductData = await axios.get<ApiProduct>(API_ENDPOINTS.GET_PRODUCT_DETAIL(product.productCode));
+            // return mapApiProductToProduct(detailedProductData);
+            return product; // Returning the found product for now
+        }
+        return undefined;
+
     } catch(error) {
         console.error(`Failed to fetch product by slug ${slug}:`, error);
         return undefined;

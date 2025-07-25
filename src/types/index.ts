@@ -1,5 +1,6 @@
 
 
+
 export interface Product {
   id: string;
   typeCode: string;
@@ -16,7 +17,7 @@ export interface Product {
   quantity: number;
   purchaseCount: number;
   isSale: boolean;
-  description: string; // This might come from listProductSection
+  description: string;
   specs: { name: string; value: string }[];
   reviews?: number;
   featuresImage?: string;
