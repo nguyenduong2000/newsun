@@ -3,12 +3,12 @@
 'use server';
 
 import axios from '@/lib/axios';
-import type { Product, Category, Banner, ApiCategory, ApiResponse } from '@/types';
+import type { Product, Category, Banner, ApiCategory, ApiResponse, ApiProduct, ApiProductType } from '@/types';
 
 // In a real application, you would replace these mock API calls
 // with actual requests to your backend. The mock data is returned
 // for demonstration purposes.
-import { products, apiCategories } from '@/lib/mock-data';
+import { apiProducts, apiCategories } from '@/lib/mock-data';
 
 const heroBanners: Banner[] = [
   {
@@ -31,24 +31,62 @@ const heroBanners: Banner[] = [
 
 const MOCK_API_DELAY = 100; // ms
 
+const createSlug = (text: string): string => {
+  return text
+    .toLowerCase()
+    .replace(/ /g, '-')
+    .replace(/[^\w-]+/g, '');
+};
+
+const mapApiProductToProduct = (apiProduct: ApiProduct, categoryTypeCode: string, categoryTypeName: string): Product => {
+    return {
+        id: apiProduct.id,
+        productName: apiProduct.productName,
+        slug: createSlug(apiProduct.productName),
+        typeCode: categoryTypeCode,
+        typeName: categoryTypeName,
+        categoryId: categoryTypeCode, // Or map to a specific category if needed
+        pathMainImage: apiProduct.pathMainImage,
+        images: apiProduct.lisProductSubImage.map(img => img.pathImage),
+        productCode: apiProduct.productCode,
+        rawPrice: apiProduct.rawPrice,
+        salePrice: apiProduct.salePrice,
+        starRating: apiProduct.starRating,
+        quantity: apiProduct.quantity,
+        purchaseCount: apiProduct.purchaseCount,
+        isSale: apiProduct.isSale,
+        description: apiProduct.listProductSection?.[0]?.description || 'Mô tả chi tiết sản phẩm đang được cập nhật.', // Example mapping
+        specs: (apiProduct.listProductProperties || []).reduce((acc, prop) => {
+            acc[prop.name] = prop.value;
+            return acc;
+        }, {} as Record<string, string>),
+        // These fields might not exist on the new DTO, provide defaults
+        reviews: Math.floor(Math.random() * 100),
+        featuresImage: apiProduct.pathMainImage,
+    }
+}
+
 // This function now returns a flattened list of products from the new API structure
 export const getProducts = async (): Promise<Product[]> => {
   console.log('API call: getProducts');
-  // In a real app, you might fetch all grouped products and flatten them.
-  // const response = await axios.get('/api/products-grouped'); 
-  // const groupedData = response.data;
-  // const allProducts = groupedData.flatMap(group => group.listProduct.map(p => mapApiProductToProduct(p)));
-  // return allProducts;
-  
   await new Promise(resolve => setTimeout(resolve, MOCK_API_DELAY));
-  return products; // Returning the already mapped mock data for now
+  // In a real app, you might fetch all grouped products and flatten them.
+  // const response = await axios.get<ApiResponse<ApiProductType[]>>('/api/v1/products-by-category'); 
+  // const groupedData = response.data.data;
+  const groupedData = apiProducts;
+  
+  const allProducts = groupedData.flatMap(group => 
+      group.listProduct.map(p => mapApiProductToProduct(p, group.categoryTypeCode, group.categoryTypeName))
+  );
+
+  return allProducts;
 };
 
 export const getProductBySlug = async (slug: string): Promise<Product | undefined> => {
     console.log(`API call: getProductBySlug with slug: ${slug}`);
     // This would also need to fetch all products and then find by slug.
-    await new Promise(resolve => setTimeout(resolve, MOCK_API_DELAY));
-    return products.find(p => p.slug === slug);
+    const allProducts = await getProducts();
+    return allProducts.find(p => p.slug === slug);
 }
 
 export const getCategories = async (): Promise<ApiCategory[]> => {
@@ -66,3 +104,4 @@ export const getBanners = async (): Promise<Banner[]> => {
     await new Promise(resolve => setTimeout(resolve, MOCK_API_DELAY));
     return heroBanners;
 }
+

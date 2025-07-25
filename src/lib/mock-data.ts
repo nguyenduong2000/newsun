@@ -1,6 +1,6 @@
 
 
-import type { Product, Category, NavItem, MegaMenuCategory, Banner, ApiCategory } from "@/types";
+import type { Product, Category, NavItem, MegaMenuCategory, Banner, ApiCategory, ApiProduct, ApiProductType } from "@/types";
 
 export const categories: Category[] = [
   { id: "1", name: "Thiết bị bếp", slug: "thiet-bi-bep", image: "https://dienmaynewsun.com/wp-content/uploads/2023/05/may-thai-thit.jpg", parentId: null, level: 1 },
@@ -225,6 +225,66 @@ export const products: Product[] = [
   }
 ];
 
+export const apiProducts: Omit<ApiProductType, 'listProduct'> & { listProduct: ApiProduct[] }[] = [
+  {
+    id: 'cat_type_1',
+    categoryTypeCode: 'noi-nau-pho',
+    categoryTypeName: 'Nồi nấu phở',
+    listProduct: [
+      {
+        id: "1",
+        typeCode: "noi-nau-pho",
+        typeName: "Nồi nấu phở",
+        productName: "Nồi nấu phở bằng điện 20L",
+        pathMainImage: "https://dienmaynewsun.com/wp-content/uploads/2024/01/may-hut-chan-khong-sat-da-hvt-320ts-ava.jpg",
+        productCode: "NNP-D20L",
+        rawPrice: 3500000,
+        salePrice: 2500000,
+        starRating: 5,
+        quantity: 100,
+        purchaseCount: 548,
+        isSale: true,
+        listProductSection: [],
+        lisProductSubImage: [
+          {id: 'sub1', pathImage: "https://dienmaynewsun.com/wp-content/uploads/2024/01/may-hut-chan-khong-sat-da-hvt-320ts-ava.jpg?1"},
+          {id: 'sub2', pathImage: "https://dienmaynewsun.com/wp-content/uploads/2024/01/may-hut-chan-khong-sat-da-hvt-320ts-ava.jpg?2"}
+        ],
+        listProductProperties: [
+          {name: "Dung tích", value: "20 Lít"},
+          {name: "Chất liệu", value: "Inox 304"}
+        ]
+      }
+    ]
+  },
+  {
+    id: 'cat_type_2',
+    categoryTypeCode: 'may-xay-gio-cha',
+    categoryTypeName: 'Máy xay giò chả',
+    listProduct: [
+       {
+        id: "2",
+        typeCode: "may-xay-gio-cha",
+        typeName: "Máy xay giò chả",
+        productName: "Máy xay giò chả 3 kg/mẻ",
+        pathMainImage: "https://dienmaynewsun.com/wp-content/uploads/2024/01/may-hut-chan-khong-sat-da-hvt-320ts-ava.jpg",
+        productCode: "MXGC-3KG",
+        rawPrice: 10500000,
+        salePrice: 7500000,
+        starRating: 5,
+        quantity: 50,
+        purchaseCount: 6220,
+        isSale: true,
+        listProductSection: [],
+        lisProductSubImage: [],
+        listProductProperties: [
+          {name: "Năng suất", value: "3 KG/mẻ"},
+          {name: "Công suất motor", value: "3 kW (4HP)"}
+        ]
+      }
+    ]
+  }
+];
+
 export const navItems: Omit<NavItem, 'children'>[] = [
   {
     title: "Trang chủ",
@@ -397,3 +457,4 @@ export const heroBanners: Banner[] = [
     aiHint: "industrial appliances",
   },
 ];
+
