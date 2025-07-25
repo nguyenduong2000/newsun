@@ -106,7 +106,7 @@ export interface ApiProductType {
   id: string;
   productTypeCode: string;
   productTypeName: string;
-  description: string;
+  description?: string; // Made optional as it's not in the DTO
   listProduct: ApiProduct[];
 }
 

@@ -39,7 +39,11 @@ export const products: Product[] = [
     isSale: true,
     productCode: "NNP-D20L",
     featuresImage: "https://dienmaynewsun.com/wp-content/uploads/2023/04/lu-quay-80cm-than-1.jpg",
-    models: ["20L", "30L", "50L", "80L", "100L", "120L"]
+    models: ["20L", "30L", "50L", "80L", "100L", "120L"],
+    sections: [
+        { id: 'sec1', title: 'Thiết kế tối ưu, chất liệu cao cấp', description: 'Lò quay gà vịt bằng than 80 được thiết kế tối ưu với các bộ phận có thể tháo rời, giúp việc di chuyển và vệ sinh trở nên dễ dàng hơn. Toàn bộ lò được làm từ inox cao cấp, chống gỉ sét, đảm bảo an toàn vệ sinh thực phẩm và có độ bền cao.', pathImage: 'https://placehold.co/800x450.png', displayOrder: 1, positionImage: 'center' },
+        { id: 'sec2', title: 'Năng suất cao, tiết kiệm thời gian', description: 'Với thiết kế lồng quay lớn, lò có thể quay từ 6-8 con gà/vịt cùng lúc, đáp ứng nhu cầu của các quán ăn, nhà hàng. Thời gian quay nhanh chóng, chỉ từ 45-60 phút/mẻ, giúp tiết kiệm thời gian và công sức.', pathImage: 'https://placehold.co/800x450.png', displayOrder: 2, positionImage: 'center' }
+    ]
   },
   {
     id: "2",
@@ -244,7 +248,10 @@ export const apiProducts: Omit<ApiProductType, 'listProduct'> & { listProduct: A
         quantity: 100,
         purchaseCount: 548,
         isSale: true,
-        listProductSection: [],
+        listProductSection: [
+            { id: 'sec1-1', title: 'Thiết kế tối ưu, chất liệu cao cấp', description: 'Lò quay gà vịt bằng than 80 được thiết kế tối ưu với các bộ phận có thể tháo rời, giúp việc di chuyển và vệ sinh trở nên dễ dàng hơn. Toàn bộ lò được làm từ inox cao cấp, chống gỉ sét, đảm bảo an toàn vệ sinh thực phẩm và có độ bền cao.', pathImage: 'https://placehold.co/800x450.png', displayOrder: 1, positionImage: 'center' },
+            { id: 'sec1-2', title: 'Năng suất cao, tiết kiệm thời gian', description: 'Với thiết kế lồng quay lớn, lò có thể quay từ 6-8 con gà/vịt cùng lúc, đáp ứng nhu cầu của các quán ăn, nhà hàng. Thời gian quay nhanh chóng, chỉ từ 45-60 phút/mẻ, giúp tiết kiệm thời gian và công sức.', pathImage: 'https://placehold.co/800x450.png', displayOrder: 2, positionImage: 'center' }
+        ],
         lisProductSubImage: [
           {id: 'sub1', pathImage: "https://dienmaynewsun.com/wp-content/uploads/2024/01/may-hut-chan-khong-sat-da-hvt-320ts-ava.jpg?1"},
           {id: 'sub2', pathImage: "https://dienmaynewsun.com/wp-content/uploads/2024/01/may-hut-chan-khong-sat-da-hvt-320ts-ava.jpg?2"}
@@ -457,4 +464,3 @@ export const heroBanners: Banner[] = [
     aiHint: "industrial appliances",
   },
 ];
-

@@ -2,7 +2,7 @@
 'use server';
 
 import axios from '@/lib/axios';
-import type { Product, Banner, ApiCategory, ApiProduct, ApiProductType } from '@/types';
+import type { Product, Banner, ApiCategory, ApiProduct, ApiProductType, ApiProductSection } from '@/types';
 import { apiProducts, apiCategories, heroBanners as allMockBanners } from '@/lib/mock-data';
 
 const MOCK_API_DELAY = 100; // ms
@@ -39,6 +39,7 @@ const mapApiProductToProduct = (apiProduct: ApiProduct, categoryTypeCode: string
         }, {} as Record<string, string>),
         reviews: Math.floor(Math.random() * 100), // Mocking reviews
         featuresImage: apiProduct.pathMainImage, // Example mapping
+        sections: apiProduct.listProductSection || []
     }
 }
 
