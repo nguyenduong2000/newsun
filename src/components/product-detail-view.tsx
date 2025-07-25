@@ -178,7 +178,7 @@ export function ProductDetailView({ product, relatedProducts }: { product: Produ
           <h1 className="text-3xl lg:text-4xl font-headline font-bold mb-4">{product.productName}</h1>
           <div className="flex items-center gap-4 mb-4">
              <span className="text-3xl font-bold text-primary">{displayPrice}</span>
-             {product.rawPrice && product.salePrice > 0 && (
+             {product.rawPrice > 0 && product.salePrice > 0 && (
                 <span className="text-muted-foreground line-through text-lg">
                     {formatPrice(product.rawPrice)}đ
                 </span>
@@ -301,3 +301,5 @@ export function ProductDetailView({ product, relatedProducts }: { product: Produ
     </div>
   );
 }
+
+    

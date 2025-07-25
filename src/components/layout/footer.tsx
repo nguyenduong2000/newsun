@@ -87,7 +87,7 @@ export function Footer() {
                     </li>
                 ))}
             </ul>
-             <Link href="#" className="text-sm hover:underline mt-4 inline-block">Xem tất cả 17 chi nhánh</Link>
+             <Link href="/stores" className="text-sm hover:underline mt-4 inline-block">Xem tất cả 17 chi nhánh</Link>
           </div>
 
           <div>
@@ -143,3 +143,5 @@ export function Footer() {
     </footer>
   );
 }
+
+    

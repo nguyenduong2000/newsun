@@ -24,8 +24,8 @@ export const products: Product[] = [
     typeCode: "noi-nau-pho",
     categoryId: "7",
     typeName: "Nồi nấu phở",
-    pathMainImage: "https://dienmaynewsun.com/wp-content/uploads/2024/01/may-hut-chan-khong-sat-da-hvt-320ts-ava.jpg",
-    images: ["https://dienmaynewsun.com/wp-content/uploads/2024/01/may-hut-chan-khong-sat-da-hvt-320ts-ava.jpg?1", "https://dienmaynewsun.com/wp-content/uploads/2024/01/may-hut-chan-khong-sat-da-hvt-320ts-ava.jpg?2", "https://dienmaynewsun.com/wp-content/uploads/2024/01/may-hut-chan-khong-sat-da-hvt-320ts-ava.jpg?3", "https://dienmaynewsun.com/wp-content/uploads/2024/01/may-hut-chan-khong-sat-da-hvt-320ts-ava.jpg?4", "https://dienmaynewsun.com/wp-content/uploads/2024/01/may-hut-chan-khong-sat-da-hvt-320ts-ava.jpg?5"],
+    pathMainImage: "https://dienmaynewsun.com/wp-content/uploads/2024/01/noi-nau-pho-dien-20l-ava.jpg",
+    images: ["https://dienmaynewsun.com/wp-content/uploads/2024/01/noi-nau-pho-dien-20l-ava.jpg", "https://dienmaynewsun.com/wp-content/uploads/2024/01/noi-nau-pho-dien-20l-1.jpg", "https://dienmaynewsun.com/wp-content/uploads/2024/01/noi-nau-pho-dien-20l-2.jpg", "https://dienmaynewsun.com/wp-content/uploads/2024/01/noi-nau-pho-dien-20l-3.jpg", "https://dienmaynewsun.com/wp-content/uploads/2024/01/noi-nau-pho-dien-20l-4.jpg"],
     specs: {
       "Dung tích": "20 Lít",
       "Chất liệu": "Inox 304",
@@ -41,7 +41,7 @@ export const products: Product[] = [
     featuresImage: "https://dienmaynewsun.com/wp-content/uploads/2023/04/lu-quay-80cm-than-1.jpg",
     models: ["20L", "30L", "50L", "80L", "100L", "120L"],
     sections: [
-        { id: 'sec1', title: 'Thiết kế tối ưu, chất liệu cao cấp', description: 'Lò quay gà vịt bằng than 80 được thiết kế tối ưu với các bộ phận có thể tháo rời, giúp việc di chuyển và vệ sinh trở nên dễ dàng hơn. Toàn bộ lò được làm từ inox cao cấp, chống gỉ sét, đảm bảo an toàn vệ sinh thực phẩm và có độ bền cao.', pathImage: 'https://placehold.co/800x450.png', displayOrder: 1, positionImage: 'center' },
+        { id: 'sec1', title: 'Thiết kế tối ưu, chất liệu cao cấp', description: 'Nồi nấu phở bằng điện 20L được thiết kế tối ưu với các bộ phận có thể tháo rời, giúp việc di chuyển và vệ sinh trở nên dễ dàng hơn. Toàn bộ lò được làm từ inox cao cấp, chống gỉ sét, đảm bảo an toàn vệ sinh thực phẩm và có độ bền cao.', pathImage: 'https://placehold.co/800x450.png', displayOrder: 1, positionImage: 'center' },
         { id: 'sec2', title: 'Năng suất cao, tiết kiệm thời gian', description: 'Với thiết kế lồng quay lớn, lò có thể quay từ 6-8 con gà/vịt cùng lúc, đáp ứng nhu cầu của các quán ăn, nhà hàng. Thời gian quay nhanh chóng, chỉ từ 45-60 phút/mẻ, giúp tiết kiệm thời gian và công sức.', pathImage: 'https://placehold.co/800x450.png', displayOrder: 2, positionImage: 'center' }
     ]
   },
@@ -55,8 +55,8 @@ export const products: Product[] = [
     typeCode: "may-xay-gio-cha",
     categoryId: "6",
     typeName: "Máy xay giò chả",
-    pathMainImage: "https://dienmaynewsun.com/wp-content/uploads/2024/01/may-hut-chan-khong-sat-da-hvt-320ts-ava.jpg",
-    images: ["https://dienmaynewsun.com/wp-content/uploads/2024/01/may-hut-chan-khong-sat-da-hvt-320ts-ava.jpg", "https://dienmaynewsun.com/wp-content/uploads/2024/01/may-hut-chan-khong-sat-da-hvt-320ts-ava.jpg"],
+    pathMainImage: "https://dienmaynewsun.com/wp-content/uploads/2024/01/may-xay-gio-cha-3kg-ava.jpg",
+    images: ["https://dienmaynewsun.com/wp-content/uploads/2024/01/may-xay-gio-cha-3kg-ava.jpg", "https://dienmaynewsun.com/wp-content/uploads/2024/01/may-xay-gio-cha-3kg-1.jpg"],
     specs: {
       "Năng suất": "3 KG/mẻ",
       "Chất liệu": "Inox",
@@ -81,8 +81,8 @@ export const products: Product[] = [
     typeCode: "may-hut-chan-khong",
     categoryId: "2",
     typeName: "Máy hút chân không",
-    pathMainImage: "https://dienmaynewsun.com/wp-content/uploads/2024/01/may-hut-chan-khong-sat-da-hvt-320ts-ava.jpg",
-    images: ["https://dienmaynewsun.com/wp-content/uploads/2024/01/may-hut-chan-khong-sat-da-hvt-320ts-ava.jpg"],
+    pathMainImage: "https://dienmaynewsun.com/wp-content/uploads/2024/01/may-hut-chan-khong-kunba-dz400-ava.jpg",
+    images: ["https://dienmaynewsun.com/wp-content/uploads/2024/01/may-hut-chan-khong-kunba-dz400-ava.jpg"],
      specs: {
       "Model": "DZ400/2SA",
       "Loại": "2 buồng",
@@ -107,8 +107,8 @@ export const products: Product[] = [
     typeCode: "may-che-bien-thit",
     categoryId: "6",
     typeName: "Máy chế biến thịt",
-    pathMainImage: "https://dienmaynewsun.com/wp-content/uploads/2024/01/may-hut-chan-khong-sat-da-hvt-320ts-ava.jpg",
-    images: ["https://dienmaynewsun.com/wp-content/uploads/2024/01/may-hut-chan-khong-sat-da-hvt-320ts-ava.jpg"],
+    pathMainImage: "https://dienmaynewsun.com/wp-content/uploads/2024/01/may-dun-xuc-xich-3l-ava.jpg",
+    images: ["https://dienmaynewsun.com/wp-content/uploads/2024/01/may-dun-xuc-xich-3l-ava.jpg"],
      specs: {
       "Dung tích": "3 Lít",
       "Chất liệu": "Inox",
@@ -133,8 +133,8 @@ export const products: Product[] = [
     typeCode: "may-thai-thit",
     categoryId: "5",
     typeName: "Máy thái thịt",
-    pathMainImage: "https://dienmaynewsun.com/wp-content/uploads/2024/01/may-hut-chan-khong-sat-da-hvt-320ts-ava.jpg",
-    images: ["https://dienmaynewsun.com/wp-content/uploads/2024/01/may-hut-chan-khong-sat-da-hvt-320ts-ava.jpg"],
+    pathMainImage: "https://dienmaynewsun.com/wp-content/uploads/2024/01/may-thai-thit-ss90-ava.jpg",
+    images: ["https://dienmaynewsun.com/wp-content/uploads/2024/01/may-thai-thit-ss90-ava.jpg"],
      specs: {
       "Công suất": "350W",
       "Năng suất": "30-40kg/giờ",
@@ -160,8 +160,8 @@ export const products: Product[] = [
     typeCode: "may-vat-long-ga",
     categoryId: "2",
     typeName: "Máy vặt lông gà",
-    pathMainImage: "https://dienmaynewsun.com/wp-content/uploads/2024/01/may-hut-chan-khong-sat-da-hvt-320ts-ava.jpg",
-    images: ["https://dienmaynewsun.com/wp-content/uploads/2024/01/may-hut-chan-khong-sat-da-hvt-320ts-ava.jpg"],
+    pathMainImage: "https://dienmaynewsun.com/wp-content/uploads/2024/01/may-vat-long-ga-p55-ava.jpg",
+    images: ["https://dienmaynewsun.com/wp-content/uploads/2024/01/may-vat-long-ga-p55-ava.jpg"],
      specs: {
       "Đường kính lồng": "55 cm",
       "Năng suất": "2-3 con/mẻ",
@@ -185,8 +185,8 @@ export const products: Product[] = [
     typeCode: "may-hut-chan-khong",
     categoryId: "2",
     typeName: "Máy hút chân không",
-    pathMainImage: "https://dienmaynewsun.com/wp-content/uploads/2024/01/may-hut-chan-khong-sat-da-hvt-320ts-ava.jpg",
-    images: ["https://dienmaynewsun.com/wp-content/uploads/2024/01/may-hut-chan-khong-sat-da-hvt-320ts-ava.jpg"],
+    pathMainImage: "https://dienmaynewsun.com/wp-content/uploads/2024/01/may-hut-chan-khong-dz300b-ava.jpg",
+    images: ["https://dienmaynewsun.com/wp-content/uploads/2024/01/may-hut-chan-khong-dz300b-ava.jpg"],
      specs: {
       "Công suất hút": "-60-80Kpa",
       "Chất liệu": "Nhựa ABS",
@@ -211,8 +211,8 @@ export const products: Product[] = [
     typeCode: "may-xay-gio-cha",
     categoryId: "6",
     typeName: "Máy xay giò chả",
-    pathMainImage: "https://dienmaynewsun.com/wp-content/uploads/2024/01/may-hut-chan-khong-sat-da-hvt-320ts-ava.jpg",
-    images: ["https://dienmaynewsun.com/wp-content/uploads/2024/01/may-hut-chan-khong-sat-da-hvt-320ts-ava.jpg", "https://dienmaynewsun.com/wp-content/uploads/2024/01/may-hut-chan-khong-sat-da-hvt-320ts-ava.jpg"],
+    pathMainImage: "https://dienmaynewsun.com/wp-content/uploads/2024/01/may-xay-gio-cha-5kg-ava.jpg",
+    images: ["https://dienmaynewsun.com/wp-content/uploads/2024/01/may-xay-gio-cha-5kg-ava.jpg", "https://dienmaynewsun.com/wp-content/uploads/2024/01/may-xay-gio-cha-5kg-1.jpg"],
     specs: {
       "Năng suất": "5 KG/mẻ",
       "Chất liệu": "Inox",
@@ -240,7 +240,7 @@ export const apiProducts: Omit<ApiProductType, 'listProduct'> & { listProduct: A
         typeCode: "noi-nau-pho",
         typeName: "Nồi nấu phở",
         productName: "Nồi nấu phở bằng điện 20L",
-        pathMainImage: "https://dienmaynewsun.com/wp-content/uploads/2024/01/may-hut-chan-khong-sat-da-hvt-320ts-ava.jpg",
+        pathMainImage: "https://dienmaynewsun.com/wp-content/uploads/2024/01/noi-nau-pho-dien-20l-ava.jpg",
         productCode: "NNP-D20L",
         rawPrice: 3500000,
         salePrice: 2500000,
@@ -249,16 +249,20 @@ export const apiProducts: Omit<ApiProductType, 'listProduct'> & { listProduct: A
         purchaseCount: 548,
         isSale: true,
         listProductSection: [
-            { id: 'sec1-1', title: 'Thiết kế tối ưu, chất liệu cao cấp', description: 'Lò quay gà vịt bằng than 80 được thiết kế tối ưu với các bộ phận có thể tháo rời, giúp việc di chuyển và vệ sinh trở nên dễ dàng hơn. Toàn bộ lò được làm từ inox cao cấp, chống gỉ sét, đảm bảo an toàn vệ sinh thực phẩm và có độ bền cao.', pathImage: 'https://placehold.co/800x450.png', displayOrder: 1, positionImage: 'center' },
-            { id: 'sec1-2', title: 'Năng suất cao, tiết kiệm thời gian', description: 'Với thiết kế lồng quay lớn, lò có thể quay từ 6-8 con gà/vịt cùng lúc, đáp ứng nhu cầu của các quán ăn, nhà hàng. Thời gian quay nhanh chóng, chỉ từ 45-60 phút/mẻ, giúp tiết kiệm thời gian và công sức.', pathImage: 'https://placehold.co/800x450.png', displayOrder: 2, positionImage: 'center' }
+            { id: 'sec1-1', title: 'Thiết kế hiện đại, tối ưu cho người dùng', description: 'Nồi nấu phở bằng điện 20L NEWSUN được thiết kế với kiểu dáng công nghiệp hiện đại, tối ưu hóa sự tiện lợi cho người sử dụng. Kích thước nhỏ gọn giúp tiết kiệm không gian bếp, phù hợp cho cả những quán có quy mô nhỏ.', pathImage: 'https://placehold.co/800x450.png', displayOrder: 1, positionImage: 'center' },
+            { id: 'sec1-2', title: 'Chất liệu Inox 304 cao cấp, bền bỉ và an toàn', description: 'Toàn bộ nồi được làm từ Inox 304 cao cấp, chất liệu tốt nhất hiện nay cho thiết bị bếp. Chất liệu này không chỉ mang lại vẻ ngoài sáng bóng, sạch sẽ mà còn chống gỉ sét tuyệt đối, đảm bảo an toàn vệ sinh thực phẩm và có độ bền vượt trội theo thời gian.', pathImage: 'https://placehold.co/800x450.png', displayOrder: 2, positionImage: 'center' },
+            { id: 'sec1-3', title: 'Tiết kiệm điện năng hiệu quả', description: 'Nồi được trang bị lớp cách nhiệt dày dặn và hệ thống điều khiển thông minh, giúp giữ nhiệt tốt và tự động ngắt khi đủ nhiệt. Nhờ đó, nồi giúp tiết kiệm đến 30% điện năng so với các loại nồi thông thường.', pathImage: 'https://placehold.co/800x450.png', displayOrder: 3, positionImage: 'center' }
         ],
         lisProductSubImage: [
-          {id: 'sub1', pathImage: "https://dienmaynewsun.com/wp-content/uploads/2024/01/may-hut-chan-khong-sat-da-hvt-320ts-ava.jpg?1"},
-          {id: 'sub2', pathImage: "https://dienmaynewsun.com/wp-content/uploads/2024/01/may-hut-chan-khong-sat-da-hvt-320ts-ava.jpg?2"}
+          {id: 'sub1', pathImage: "https://dienmaynewsun.com/wp-content/uploads/2024/01/noi-nau-pho-dien-20l-1.jpg"},
+          {id: 'sub2', pathImage: "https://dienmaynewsun.com/wp-content/uploads/2024/01/noi-nau-pho-dien-20l-2.jpg"}
         ],
         listProductProperties: [
           {name: "Dung tích", value: "20 Lít"},
-          {name: "Chất liệu", value: "Inox 304"}
+          {name: "Chất liệu", value: "Inox 304"},
+          {name: "Điện áp", value: "220V/50Hz"},
+          {name: "Công suất", value: "3 kW"},
+          {name: "Bảo hành", value: "12 tháng"}
         ]
       }
     ]
@@ -273,7 +277,7 @@ export const apiProducts: Omit<ApiProductType, 'listProduct'> & { listProduct: A
         typeCode: "may-xay-gio-cha",
         typeName: "Máy xay giò chả",
         productName: "Máy xay giò chả 3 kg/mẻ",
-        pathMainImage: "https://dienmaynewsun.com/wp-content/uploads/2024/01/may-hut-chan-khong-sat-da-hvt-320ts-ava.jpg",
+        pathMainImage: "https://dienmaynewsun.com/wp-content/uploads/2024/01/may-xay-gio-cha-3kg-ava.jpg",
         productCode: "MXGC-3KG",
         rawPrice: 10500000,
         salePrice: 7500000,
@@ -286,6 +290,28 @@ export const apiProducts: Omit<ApiProductType, 'listProduct'> & { listProduct: A
         listProductProperties: [
           {name: "Năng suất", value: "3 KG/mẻ"},
           {name: "Công suất motor", value: "3 kW (4HP)"}
+        ]
+      },
+      {
+        id: "8",
+        typeCode: "may-xay-gio-cha",
+        typeName: "Máy xay giò chả",
+        productName: "Máy xay giò chả 5KG",
+        pathMainImage: "https://dienmaynewsun.com/wp-content/uploads/2024/01/may-xay-gio-cha-5kg-ava.jpg",
+        productCode: "MXGC-5KG",
+        rawPrice: 8500000,
+        salePrice: 7800000,
+        starRating: 5,
+        quantity: 40,
+        purchaseCount: 650,
+        isSale: false,
+        listProductSection: [],
+        lisProductSubImage: [],
+        listProductProperties: [
+           {name: "Năng suất", value: "5 KG/mẻ"},
+          {name: "Chất liệu", value: "Inox"},
+          {name: "Công suất motor", value: "3 kW"},
+          {name: "Bảo hành", value: "24 tháng"}
         ]
       }
     ]
@@ -464,3 +490,5 @@ export const heroBanners: Banner[] = [
     aiHint: "industrial appliances",
   },
 ];
+
+    

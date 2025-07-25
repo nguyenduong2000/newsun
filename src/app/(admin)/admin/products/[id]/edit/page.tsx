@@ -218,10 +218,8 @@ export default function EditProductPage() {
             <Card>
                 <CardHeader>
                     <div className="flex items-center justify-between">
-                        <div>
-                            <CardTitle>Thư viện ảnh</CardTitle>
-                            <CardDescription>Quản lý các hình ảnh phụ của sản phẩm.</CardDescription>
-                        </div>
+                        <CardTitle>Thư viện ảnh</CardTitle>
+                        <CardDescription>Quản lý các hình ảnh phụ của sản phẩm.</CardDescription>
                     </div>
                 </CardHeader>
                 <CardContent>
@@ -311,3 +309,5 @@ export default function EditProductPage() {
     </Form>
   );
 }
+
+    

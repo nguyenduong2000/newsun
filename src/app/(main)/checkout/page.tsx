@@ -195,9 +195,9 @@ export default function CheckoutPage() {
               <div className="space-y-4 max-h-60 overflow-y-auto pr-2">
                  {cartItems.map(item => (
                     <div key={item.id} className="flex items-center gap-4 text-sm">
-                        <Image src={item.image} alt={item.name} width={64} height={64} className="rounded-md border p-1" data-ai-hint="kitchen appliance" />
+                        <Image src={item.pathMainImage} alt={item.productName} width={64} height={64} className="rounded-md border p-1" data-ai-hint="kitchen appliance" />
                         <div className="flex-grow">
-                            <p className="font-medium line-clamp-2">{item.name}</p>
+                            <p className="font-medium line-clamp-2">{item.productName}</p>
                             <p className="text-xs text-muted-foreground">{item.models?.[1] || 'Standard'}</p>
                         </div>
                         <div className="text-right">
@@ -241,3 +241,5 @@ export default function CheckoutPage() {
     </div>
   );
 }
+
+    
