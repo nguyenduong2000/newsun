@@ -26,12 +26,12 @@ export const products: Product[] = [
     typeName: "Nồi nấu phở",
     pathMainImage: "https://dienmaynewsun.com/wp-content/uploads/2024/01/noi-nau-pho-dien-20l-ava.jpg",
     images: ["https://dienmaynewsun.com/wp-content/uploads/2024/01/noi-nau-pho-dien-20l-ava.jpg", "https://dienmaynewsun.com/wp-content/uploads/2024/01/noi-nau-pho-dien-20l-1.jpg", "https://dienmaynewsun.com/wp-content/uploads/2024/01/noi-nau-pho-dien-20l-2.jpg", "https://dienmaynewsun.com/wp-content/uploads/2024/01/noi-nau-pho-dien-20l-3.jpg", "https://dienmaynewsun.com/wp-content/uploads/2024/01/noi-nau-pho-dien-20l-4.jpg"],
-    specs: {
-      "Dung tích": "20 Lít",
-      "Chất liệu": "Inox 304",
-      "Công suất": "3 kW",
-      "Bảo hành": "12 tháng"
-    },
+    specs: [
+      {name: "Dung tích", value: "20 Lít"},
+      {name: "Chất liệu", value: "Inox 304"},
+      {name: "Công suất", value: "3 kW"},
+      {name: "Bảo hành", value: "12 tháng"}
+    ],
     starRating: 5,
     reviews: 85,
     purchaseCount: 548,
@@ -57,12 +57,12 @@ export const products: Product[] = [
     typeName: "Máy xay giò chả",
     pathMainImage: "https://dienmaynewsun.com/wp-content/uploads/2024/01/may-xay-gio-cha-3kg-ava.jpg",
     images: ["https://dienmaynewsun.com/wp-content/uploads/2024/01/may-xay-gio-cha-3kg-ava.jpg", "https://dienmaynewsun.com/wp-content/uploads/2024/01/may-xay-gio-cha-3kg-1.jpg"],
-    specs: {
-      "Năng suất": "3 KG/mẻ",
-      "Chất liệu": "Inox",
-      "Công suất motor": "3 kW (4HP)",
-      "Bảo hành": "24 tháng"
-    },
+    specs: [
+      {name: "Năng suất", value: "3 KG/mẻ"},
+      {name: "Chất liệu", value: "Inox"},
+      {name: "Công suất motor", value: "3 kW (4HP)"},
+      {name: "Bảo hành", value: "24 tháng"}
+    ],
     starRating: 5,
     reviews: 2663,
     purchaseCount: 6220,
@@ -83,12 +83,12 @@ export const products: Product[] = [
     typeName: "Máy hút chân không",
     pathMainImage: "https://dienmaynewsun.com/wp-content/uploads/2024/01/may-hut-chan-khong-kunba-dz400-ava.jpg",
     images: ["https://dienmaynewsun.com/wp-content/uploads/2024/01/may-hut-chan-khong-kunba-dz400-ava.jpg"],
-     specs: {
-      "Model": "DZ400/2SA",
-      "Loại": "2 buồng",
-      "Chất liệu": "Inox",
-      "Bảo hành": "12 tháng"
-    },
+     specs: [
+      {name: "Model", value: "DZ400/2SA"},
+      {name: "Loại", value: "2 buồng"},
+      {name: "Chất liệu", value: "Inox"},
+      {name: "Bảo hành", value: "12 tháng"}
+    ],
     starRating: 5,
     reviews: 866,
     purchaseCount: 1200,
@@ -109,12 +109,12 @@ export const products: Product[] = [
     typeName: "Máy chế biến thịt",
     pathMainImage: "https://dienmaynewsun.com/wp-content/uploads/2024/01/may-dun-xuc-xich-3l-ava.jpg",
     images: ["https://dienmaynewsun.com/wp-content/uploads/2024/01/may-dun-xuc-xich-3l-ava.jpg"],
-     specs: {
-      "Dung tích": "3 Lít",
-      "Chất liệu": "Inox",
-      "Loại": "Quay tay",
-      "Bảo hành": "6 tháng"
-    },
+     specs: [
+      {name: "Dung tích", value: "3 Lít"},
+      {name: "Chất liệu", value: "Inox"},
+      {name: "Loại", value: "Quay tay"},
+      {name: "Bảo hành", value: "6 tháng"}
+    ],
     starRating: 5,
     reviews: 5526,
     purchaseCount: 6235,
@@ -135,12 +135,12 @@ export const products: Product[] = [
     typeName: "Máy thái thịt",
     pathMainImage: "https://dienmaynewsun.com/wp-content/uploads/2024/01/may-thai-thit-ss90-ava.jpg",
     images: ["https://dienmaynewsun.com/wp-content/uploads/2024/01/may-thai-thit-ss90-ava.jpg"],
-     specs: {
-      "Công suất": "350W",
-      "Năng suất": "30-40kg/giờ",
-      "Độ dày lát cắt": "2mm",
-      "Bảo hành": "12 tháng"
-    },
+     specs: [
+      {name: "Công suất", value: "350W"},
+      {name: "Năng suất", value: "30-40kg/giờ"},
+      {name: "Độ dày lát cắt", value: "2mm"},
+      {name: "Bảo hành", value: "12 tháng"}
+    ],
     starRating: 5,
     reviews: 734,
     purchaseCount: 978,
@@ -162,12 +162,12 @@ export const products: Product[] = [
     typeName: "Máy vặt lông gà",
     pathMainImage: "https://dienmaynewsun.com/wp-content/uploads/2024/01/may-vat-long-ga-p55-ava.jpg",
     images: ["https://dienmaynewsun.com/wp-content/uploads/2024/01/may-vat-long-ga-p55-ava.jpg"],
-     specs: {
-      "Đường kính lồng": "55 cm",
-      "Năng suất": "2-3 con/mẻ",
-      "Tỷ lệ sạch": "95%",
-      "Bảo hành": "12 tháng"
-    },
+     specs: [
+      {name: "Đường kính lồng", value: "55 cm"},
+      {name: "Năng suất", value: "2-3 con/mẻ"},
+      {name: "Tỷ lệ sạch", value: "95%"},
+      {name: "Bảo hành", value: "12 tháng"}
+    ],
     starRating: 4,
     reviews: 12,
     purchaseCount: 45,
@@ -187,12 +187,12 @@ export const products: Product[] = [
     typeName: "Máy hút chân không",
     pathMainImage: "https://dienmaynewsun.com/wp-content/uploads/2024/01/may-hut-chan-khong-dz300b-ava.jpg",
     images: ["https://dienmaynewsun.com/wp-content/uploads/2024/01/may-hut-chan-khong-dz300b-ava.jpg"],
-     specs: {
-      "Công suất hút": "-60-80Kpa",
-      "Chất liệu": "Nhựa ABS",
-      "Nguồn điện": "220V",
-      "Bảo hành": "12 tháng"
-    },
+     specs: [
+      {name: "Công suất hút", value: "-60-80Kpa"},
+      {name: "Chất liệu", value: "Nhựa ABS"},
+      {name: "Nguồn điện", value: "220V"},
+      {name: "Bảo hành", value: "12 tháng"}
+    ],
     starRating: 5,
     reviews: 124,
     purchaseCount: 241,
@@ -213,12 +213,12 @@ export const products: Product[] = [
     typeName: "Máy xay giò chả",
     pathMainImage: "https://dienmaynewsun.com/wp-content/uploads/2024/01/may-xay-gio-cha-5kg-ava.jpg",
     images: ["https://dienmaynewsun.com/wp-content/uploads/2024/01/may-xay-gio-cha-5kg-ava.jpg", "https://dienmaynewsun.com/wp-content/uploads/2024/01/may-xay-gio-cha-5kg-1.jpg"],
-    specs: {
-      "Năng suất": "5 KG/mẻ",
-      "Chất liệu": "Inox",
-      "Công suất motor": "3 kW",
-      "Bảo hành": "24 tháng"
-    },
+    specs: [
+      {name: "Năng suất", value: "5 KG/mẻ"},
+      {name: "Chất liệu", value: "Inox"},
+      {name: "Công suất motor", value: "3 kW"},
+      {name: "Bảo hành", value: "24 tháng"}
+    ],
     starRating: 5,
     reviews: 320,
     purchaseCount: 650,
