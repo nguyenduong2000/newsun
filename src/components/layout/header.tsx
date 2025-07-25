@@ -192,12 +192,12 @@ const MegaMenu = () => {
                                 {megaMenu.map(category => (
                                     <li key={category.title} onMouseEnter={() => setActiveCategory(category)}>
                                         <NavigationMenuLink asChild>
-                                             <a href={category.href} className={cn("flex items-center justify-between p-2 text-sm font-medium rounded-md hover:bg-accent focus:outline-none focus:bg-accent transition-colors group",
+                                             <Link href={category.href} className={cn("flex items-center justify-between p-2 text-sm font-medium rounded-md hover:bg-accent focus:outline-none focus:bg-accent transition-colors group",
                                                 activeCategory?.title === category.title ? "bg-accent" : ""
                                              )}>
                                                 <span>{category.title}</span>
                                                 <ChevronRight className="h-4 w-4 text-muted-foreground group-hover:text-foreground" />
-                                            </a>
+                                            </Link>
                                         </NavigationMenuLink>
                                     </li>
                                 ))}
@@ -331,7 +331,7 @@ const MobileSubMenu = ({ item, setOpen, level }: { item: MegaMenuCategory, setOp
         onClick={() => setIsSubMenuOpen(!isSubMenuOpen)}
         style={{ paddingLeft: level > 0 ? paddingLeft : '0' }}
       >
-        <span>{item.title}</span>
+        <Link href={item.href} onClick={handleLinkClick}>{item.title}</Link>
         <ChevronDown className={cn("h-5 w-5 transition-transform", isSubMenuOpen && "rotate-180")} />
       </div>
       {isSubMenuOpen && item.children && (

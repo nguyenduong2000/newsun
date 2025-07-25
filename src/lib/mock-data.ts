@@ -1,5 +1,5 @@
 
-import type { Product, Category, NavItem, MegaMenuCategory } from "@/types";
+import type { Product, Category, NavItem, MegaMenuCategory, Banner } from "@/types";
 
 export const categories: Category[] = [
   { id: "1", name: "Thiết bị bếp", slug: "thiet-bi-bep", image: "https://dienmaynewsun.com/wp-content/uploads/2023/05/may-thai-thit.jpg", parentId: null, level: 1 },
@@ -250,60 +250,95 @@ export const navItems: Omit<NavItem, 'children'>[] = [
 export const megaMenu: MegaMenuCategory[] = [
     {
         title: 'Thiết bị bếp nhà hàng',
-        href: '/products/restaurant-kitchen-equipment',
+        href: '/products?category=thiet-bi-bep',
         children: [
             {
                 title: 'Nồi nấu phở',
-                href: '/products/category/noi-nau-pho',
+                href: '/products?category=noi-nau-pho',
                 children: [
-                    { title: 'Bộ nồi nấu phở bằng điện', href: '/products/product/bo-noi-nau-pho-bang-dien' },
-                    { title: 'Nồi nấu phở điện Việt Nam', href: '/products/product/noi-nau-pho-dien-viet-nam' },
-                    { title: 'Nồi nấu phở điện nhập khẩu', href: '/products/product/noi-nau-pho-dien-nhap-khau' },
-                    { title: 'Phụ kiện nồi nấu phở', href: '/products/product/phu-kien-noi-nau-pho' },
+                    { title: 'Bộ nồi nấu phở bằng điện', href: '/products/noi-nau-pho-dien-20l' },
+                    { title: 'Nồi nấu phở điện Việt Nam', href: '/products/noi-nau-pho-dien-20l' },
+                    { title: 'Nồi nấu phở điện nhập khẩu', href: '/products/noi-nau-pho-dien-20l' },
+                    { title: 'Phụ kiện nồi nấu phở', href: '/products/phu-kien-noi-nau-pho' },
                 ]
             },
             {
                 title: 'Tủ nấu cơm công nghiệp',
-                href: '/products/category/tu-nau-com-cong-nghiep',
+                href: '/products?category=tu-nau-com',
                 children: [
-                    { title: 'Tủ nấu cơm bằng điện', href: '/products/product/tu-nau-com-bang-dien' },
-                    { title: 'Tủ nấu cơm bằng gas', href: '/products/product/tu-nau-com-bang-gas' },
-                    { title: 'Tủ nấu cơm bằng điện và gas', href: '/products/product/tu-nau-com-bang-dien-va-gas' },
-                    { title: 'Phụ kiện tủ nấu cơm', href: '/products/product/phu-kien-tu-nau-com' },
+                    { title: 'Tủ nấu cơm bằng điện', href: '/products/tu-nau-com-dien' },
+                    { title: 'Tủ nấu cơm bằng gas', href: '/products/tu-nau-com-gas' },
+                    { title: 'Tủ nấu cơm bằng điện và gas', href: '/products/tu-nau-com-dien-gas' },
+                    { title: 'Phụ kiện tủ nấu cơm', href: '/products/phu-kien-tu-nau-com' },
                 ]
             },
         ]
     },
     {
         title: 'Máy chế biến thực phẩm',
-        href: '/products/food-processing-machine',
+        href: '/products?category=may-che-bien',
         children: [
             {
                 title: 'Máy thái rau củ quả',
-                href: '/products/category/may-thai-rau-cu-qua',
+                href: '/products?category=may-thai-rau-cu-qua',
                 children: [
-                    { title: 'Máy thái rau củ quả đa năng', href: '/products/product/may-thai-rau-cu-qua-da-nang' },
-                    { title: 'Máy thái lát củ quả', href: '/products/product/may-thai-lat-cu-qua' },
+                    { title: 'Máy thái rau củ quả đa năng', href: '/products/may-thai-rau-cu-qua-da-nang' },
+                    { title: 'Máy thái lát củ quả', href: '/products/may-thai-lat-cu-qua' },
                 ]
             },
              {
                 title: 'Bếp chiên điện',
-                href: '/products/category/bep-chien-dien',
+                href: '/products?category=bep-chien-dien',
                 children: [
-                    { title: 'Bếp chiên công nghiệp', href: '/products/product/bep-chien-cong-nghiep' },
-                    { title: 'Bếp chiên tách dầu', href: '/products/product/bep-chien-tach-dau' },
+                    { title: 'Bếp chiên công nghiệp', href: '/products/bep-chien-cong-nghiep' },
+                    { title: 'Bếp chiên tách dầu', href: '/products/bep-chien-tach-dau' },
                 ]
             },
         ]
     },
      {
         title: 'Máy chế biến thịt',
-        href: '/products/meat-processing-machine',
-        children: []
+        href: '/products?category=may-che-bien-thit',
+        children: [
+             {
+                title: 'Máy thái thịt',
+                href: '/products?category=may-thai-thit',
+                children: [
+                    { title: 'Máy thái thịt tươi sống', href: '/products/may-thai-thit-tuoi-song-mini-ss-90' },
+                    { title: 'Máy thái thịt đông lạnh', href: '/products/may-thai-thit-dong-lanh' },
+                ]
+            },
+            {
+                title: 'Máy xay giò chả',
+                href: '/products?category=may-xay-gio-cha',
+                children: [
+                    { title: 'Máy xay giò chả gia đình', href: '/products/may-xay-gio-cha-3kg' },
+                    { title: 'Máy xay giò chả công nghiệp', href: '/products/may-xay-gio-cha-5kg' },
+                ]
+            }
+        ]
     },
     {
         title: 'Thiết bị làm bánh',
-        href: '/products/bakery-equipment',
+        href: '/products?category=thiet-bi-lam-banh',
         children: []
     }
 ]
+
+export const heroBanners: Banner[] = [
+  {
+    src: "https://dienmaynewsun.com/wp-content/uploads/2025/01/banner-tet-may-vat-long.jpg",
+    alt: "Banner 1",
+    aiHint: "kitchen equipment",
+  },
+  {
+    src: "https://dienmaynewsun.com/wp-content/uploads/2025/01/banner-tet-may-vat-long.jpg",
+    alt: "Banner 2",
+    aiHint: "food processing",
+  },
+  {
+    src: "https://dienmaynewsun.com/wp-content/uploads/2025/01/banner-tet-may-vat-long.jpg",
+    alt: "Banner 3",
+    aiHint: "industrial appliances",
+  },
+];
