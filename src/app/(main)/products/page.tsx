@@ -11,7 +11,7 @@ import { Skeleton } from '@/components/ui/skeleton';
 
 export default function ProductsPage() {
   const searchParams = useSearchParams();
-  const initialCategory = searchParams.get('category') || 'all';
+  const initialCategory = searchParams.get('category') || searchParams.get('categoryType') || 'all';
 
   const [products, setProducts] = useState<Product[]>([]);
   const [categories, setCategories] = useState<ApiCategory[]>([]);
@@ -20,6 +20,7 @@ export default function ProductsPage() {
   const [selectedCategory, setSelectedCategory] = useState<string>(initialCategory);
   const [priceRange, setPriceRange] = useState<[number, number]>([0, 20000000]);
   const [isSale, setIsSale] = useState<boolean>(false);
+  const [searchTerm, setSearchTerm] = useState('');
   
   useEffect(() => {
     const fetchData = async () => {
@@ -41,8 +42,7 @@ export default function ProductsPage() {
   }, []);
   
   useEffect(() => {
-    // Update category from URL search params
-    const categoryFromUrl = searchParams.get('category') || 'all';
+    const categoryFromUrl = searchParams.get('category') || searchParams.get('categoryType') || 'all';
     setSelectedCategory(categoryFromUrl);
   }, [searchParams]);
 
@@ -51,19 +51,22 @@ export default function ProductsPage() {
       const categoryMatch = selectedCategory === 'all' || product.typeCode === selectedCategory;
       const priceMatch = product.salePrice >= priceRange[0] && product.salePrice <= priceRange[1];
       const saleMatch = !isSale || product.isSale === isSale;
-      return categoryMatch && priceMatch && saleMatch;
+      const searchMatch = searchTerm === '' || product.productName.toLowerCase().includes(searchTerm.toLowerCase());
+      return categoryMatch && priceMatch && saleMatch && searchMatch;
     });
-  }, [products, selectedCategory, priceRange, isSale]);
+  }, [products, selectedCategory, priceRange, isSale, searchTerm]);
 
   const categoryOptions = useMemo(() => {
     const options = [{ value: 'all', label: 'Tất cả danh mục' }];
     categories.forEach(cat => {
-      cat.listCategoryType.forEach(catType => {
-        options.push({ value: catType.categoryTypeCode, label: catType.categoryTypeName });
-      });
+        options.push({ value: cat.categoryCode, label: cat.categoryName });
+        cat.listCategoryType.forEach(catType => {
+            options.push({ value: catType.categoryTypeCode, label: `-- ${catType.categoryTypeName}` });
+        });
     });
     return options;
-  }, [categories]);
+}, [categories]);
+
 
   const LoadingSkeleton = () => (
      <div className="grid grid-cols-1 md:grid-cols-[280px_1fr] gap-8">
@@ -100,6 +103,8 @@ export default function ProductsPage() {
                 onPriceChange={setPriceRange}
                 isSale={isSale}
                 onSaleChange={setIsSale}
+                searchTerm={searchTerm}
+                onSearchChange={setSearchTerm}
                 productCount={filteredProducts.length}
             />
             <div>

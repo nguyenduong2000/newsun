@@ -7,6 +7,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Slider } from "@/components/ui/slider";
 import { Switch } from "@/components/ui/switch";
 import { Badge } from "../ui/badge";
+import { Input } from "../ui/input";
 
 interface ProductFilterSidebarProps {
   categoryOptions: { value: string; label: string }[];
@@ -16,6 +17,8 @@ interface ProductFilterSidebarProps {
   onPriceChange: (value: [number, number]) => void;
   isSale: boolean;
   onSaleChange: (checked: boolean) => void;
+  searchTerm: string;
+  onSearchChange: (value: string) => void;
   productCount: number;
 }
 
@@ -31,6 +34,8 @@ export function ProductFilterSidebar({
   onPriceChange,
   isSale,
   onSaleChange,
+  searchTerm,
+  onSearchChange,
   productCount,
 }: ProductFilterSidebarProps) {
   return (
@@ -40,6 +45,15 @@ export function ProductFilterSidebar({
         <Badge variant="secondary">{productCount} sản phẩm</Badge>
       </CardHeader>
       <CardContent className="space-y-6">
+        <div className="space-y-2">
+            <Label htmlFor="search">Tìm kiếm</Label>
+            <Input 
+                id="search"
+                placeholder="Nhập tên sản phẩm..."
+                value={searchTerm}
+                onChange={(e) => onSearchChange(e.target.value)}
+            />
+        </div>
         <div className="space-y-2">
           <Label htmlFor="category">Danh mục</Label>
           <Select value={selectedCategory} onValueChange={onCategoryChange}>
