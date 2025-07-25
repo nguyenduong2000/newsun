@@ -56,3 +56,9 @@ export interface User {
     email: string;
     role: 'admin' | 'customer';
 }
+
+export interface Banner {
+  src: string;
+  alt: string;
+  aiHint: string;
+}
