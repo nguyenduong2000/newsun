@@ -274,10 +274,10 @@ export function ProductDetailView({ product, relatedProducts }: { product: Produ
                   <div className="p-4">
                     <Table className="specs-table">
                       <TableBody>
-                        {Object.entries(product.specs).map(([key, value]) => (
-                          <TableRow key={key}>
-                            <TableCell className="font-semibold">{key}</TableCell>
-                            <TableCell>{value}</TableCell>
+                        {product.specs.map((spec) => (
+                          <TableRow key={spec.name}>
+                            <TableCell className="font-semibold">{spec.name}</TableCell>
+                            <TableCell>{spec.value}</TableCell>
                           </TableRow>
                         ))}
                       </TableBody>
@@ -301,5 +301,3 @@ export function ProductDetailView({ product, relatedProducts }: { product: Produ
     </div>
   );
 }
-
-    

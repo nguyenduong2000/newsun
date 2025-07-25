@@ -17,7 +17,7 @@ export interface Product {
   purchaseCount: number;
   isSale: boolean;
   description: string; // This might come from listProductSection
-  specs: Record<string, string>;
+  specs: { name: string; value: string }[];
   reviews?: number;
   featuresImage?: string;
   models?: string[];

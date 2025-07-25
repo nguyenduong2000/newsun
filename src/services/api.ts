@@ -33,10 +33,7 @@ const mapApiProductToProduct = (apiProduct: ApiProduct, categoryTypeCode: string
         purchaseCount: apiProduct.purchaseCount,
         isSale: apiProduct.isSale,
         description: apiProduct.listProductSection?.[0]?.description || 'Mô tả chi tiết sản phẩm đang được cập nhật.', // Example mapping
-        specs: (apiProduct.listProductProperties || []).reduce((acc, prop) => {
-            acc[prop.name] = prop.value;
-            return acc;
-        }, {} as Record<string, string>),
+        specs: apiProduct.listProductProperties || [],
         reviews: Math.floor(Math.random() * 100), // Mocking reviews
         featuresImage: apiProduct.pathMainImage, // Example mapping
         sections: apiProduct.listProductSection || []
