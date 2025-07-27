@@ -1,8 +1,8 @@
 import { ProductCard } from "@/components/product-card";
-import type { Product } from "@/types";
+import type { ApiProduct } from "@/types";
 
 interface ProductGridProps {
-  products: Product[];
+  products: ApiProduct[];
 }
 
 export function ProductGrid({ products }: ProductGridProps) {

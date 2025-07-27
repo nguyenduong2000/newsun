@@ -21,20 +21,20 @@ const FacebookMessengerIcon = (props: React.SVGProps<SVGSVGElement>) => (
 
 const contactLinks = [
     {
-      href: 'tel:0961997355',
-      icon: <Phone className="h-6 w-6 text-white" />,
-      label: 'Hotline: 0961.997.355',
-      bgColor: 'bg-red-500 hover:bg-red-600',
+      href: 'tel:0366635562',
+      icon: <Phone className="h-6 w-6 text-black" />,
+      label: 'Hotline: 0366635562',
+      bgColor: 'bg-transparent hover:bg-transparent',
     },
     {
-      href: 'https://m.me/your-facebook-page-id', // Thay đổi thành link m.me của bạn
-      icon: <FacebookMessengerIcon className="h-8 w-8" />,
+      href: 'https://www.facebook.com/profile.php?id=61578020506104&mibextid=wwXIfr&rdid=njTyrKorgeu7PPwO&share_url=https%3A%2F%2Fwww.facebook.com%2Fshare%2F1HkoYWxYp5%2F%3Fmibextid%3DwwXIfr#',
+      icon: <FacebookMessengerIcon className="h-8 w-8"  style={{width:"2rem",height: "2rem"}}/>,
       label: 'Chat Facebook',
       bgColor: 'bg-transparent hover:bg-transparent',
     },
     {
-      href: 'https://zalo.me/0961997355', // Thay đổi thành link Zalo của bạn
-      icon: <ZaloIcon className="h-8 w-8" />,
+      href: 'tel:0366635562',
+      icon: <ZaloIcon className="h-8 w-8" style={{width:"2rem",height: "2rem"}} />,
       label: 'Chat Zalo',
       bgColor: 'bg-transparent hover:bg-transparent',
     },
@@ -52,13 +52,13 @@ export function FloatingContact() {
                                 size="icon"
                                 className={`rounded-full shadow-lg h-12 w-12 transition-all duration-300 ${link.bgColor}`}
                             >
-                                <Link href={link.href} target="_blank" rel="noopener noreferrer">
+                                <Link href={link.href} target="_blank" rel="noopener noreferrer" className='bg-white'>
                                     {link.icon}
                                     <span className="sr-only">{link.label}</span>
                                 </Link>
                             </Button>
                         </TooltipTrigger>
-                        <TooltipContent side="left">
+                        <TooltipContent side="left" >
                             <p>{link.label}</p>
                         </TooltipContent>
                     </Tooltip>

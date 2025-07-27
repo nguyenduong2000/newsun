@@ -5,7 +5,7 @@ export interface Product {
   id: string;
   typeCode: string;
   typeName: string;
-  categoryId: string; 
+  categoryId: string;
   productName: string;
   slug: string;
   productCode: string;
@@ -25,7 +25,8 @@ export interface Product {
   sections?: ApiProductSection[];
 }
 
-export interface CartItem extends Omit<Product, 'salePrice'> {
+
+export interface CartItem extends Omit<ApiProduct, 'salePrice'> {
   quantity: number;
   price: number;
 }
@@ -56,33 +57,32 @@ export interface MegaMenuCategory {
 }
 
 export interface User {
-    id: string;
-    name: string;
-    email: string;
-    role: 'admin' | 'customer';
+  id: string;
+  name: string;
+  email: string;
+  role: 'admin' | 'customer';
 }
 
 export interface Banner {
-  src: string;
-  alt: string;
-  aiHint: string;
+  pathImage: string;
+  bannerCode: string;
 }
 
 
 // --- New API DTO based types ---
 
 export interface ApiProductProperty {
-    name: string;
-    value: string;
+  name: string;
+  value: string;
 }
 
 export interface ApiProductSection {
-    id: string;
-    title: string;
-    displayOrder: number;
-    description: string;
-    pathImage: string;
-    positionImage: string;
+  id: string;
+  title: string;
+  displayOrder: number;
+  description: string;
+  pathImage: string;
+  positionImage: string;
 }
 
 export interface ApiProduct {
@@ -105,8 +105,8 @@ export interface ApiProduct {
 
 export interface ApiProductType {
   id: string;
-  productTypeCode: string;
-  productTypeName: string;
+  categoryTypeCode: string;
+  categoryTypeName: string;
   description?: string; // Made optional as it's not in the DTO
   listProduct: ApiProduct[];
 }
@@ -115,15 +115,19 @@ export interface ApiCategoryType {
   id: string;
   categoryTypeCode: string;
   categoryTypeName: string;
-  listProductType: ApiProductType[];
+  listProductType: ApiProductCategory[];
 }
 
 export interface ApiCategory {
-  id: "string";
-  categoryCode: "string";
-  categoryName: "string";
-  description: "string";
+  id: string;
+  categoryCode: string;
+  categoryName: string;
+  description: string;
   listCategoryType: ApiCategoryType[];
+}
+export interface ApiProductCategory {
+  productTypeName: string;
+  productTypeCode: string;
 }
 
 export interface ApiResponse<T> {
@@ -136,4 +140,17 @@ export interface ApiResponse<T> {
     totalErrors: number;
     message: string;
   };
+}
+export interface ApiResponseAction {
+  meta: {
+    code: string;
+    message: string;
+  };
+}
+export interface Consultations  {
+    fullName: string;
+    phoneNumber: string;
+    productCode: string;
+    productName: string;
+    content: string;
 }

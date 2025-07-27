@@ -25,7 +25,7 @@ import { AuthProvider } from "@/context/auth-context";
 
 export const metadata: Metadata = {
   title: "Admin Dashboard",
-  description: "Admin dashboard for Newsun Reimagined.",
+  description: "Admin dashboard for maythucpham365 Reimagined.",
 };
 
 export default function AdminLayout({

@@ -162,7 +162,7 @@ export function Header() {
               <MessageSquare className="w-8 h-8 text-primary"/>
               <div>
                 <p className="text-sm font-semibold">Tư vấn bán hàng</p>
-                <p className="text-lg font-bold text-primary">0963.997.355</p>
+                <p className="text-lg font-bold text-primary">0366635562</p>
               </div>
             </div>
             <AuthNav />
@@ -340,7 +340,7 @@ const MobileMenu = ({ setOpen, megaMenu, isLoading }: { setOpen: (open: boolean)
                  <Phone className="w-5 h-5 text-primary"/>
                 <div>
                   <p className="text-xs">Tư vấn bán hàng</p>
-                  <p className="text-sm font-bold text-primary">0963.997.355</p>
+                  <p className="text-sm font-bold text-primary">0366635562</p>
                 </div>
             </div>
          </div>

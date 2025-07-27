@@ -5,7 +5,7 @@ import { Mail, MapPin, Phone } from "lucide-react";
 
 export const metadata: Metadata = {
   title: "Hòm thư góp ý",
-  description: "Gửi góp ý, khiếu nại hoặc yêu cầu hỗ trợ tới Điện máy Newsun. Chúng tôi luôn lắng nghe ý kiến của bạn.",
+  description: "Gửi góp ý, khiếu nại hoặc yêu cầu hỗ trợ tới Điện máy maythucpham365. Chúng tôi luôn lắng nghe ý kiến của bạn.",
 };
 
 export default function ContactPage() {
@@ -16,7 +16,7 @@ export default function ContactPage() {
           Hòm thư góp ý khách hàng
         </h1>
         <p className="text-muted-foreground max-w-3xl mx-auto mb-12">
-          Cảm ơn Quý khách hàng đã tin tưởng và sử dụng sản phẩm, dịch vụ của NEWSUN. Để nâng cao chất lượng dịch vụ, chúng tôi rất mong nhận được những ý kiến đóng góp, phản hồi của Quý khách.
+          Cảm ơn Quý khách hàng đã tin tưởng và sử dụng sản phẩm, dịch vụ của maythucpham365. Để nâng cao chất lượng dịch vụ, chúng tôi rất mong nhận được những ý kiến đóng góp, phản hồi của Quý khách.
         </p>
       </div>
 
@@ -27,7 +27,7 @@ export default function ContactPage() {
         </div>
         
         <div className="mt-16 w-full max-w-3xl">
-           <h2 className="text-2xl font-headline font-bold text-center mb-8">Thông tin liên hệ NEWSUN</h2>
+           <h2 className="text-2xl font-headline font-bold text-center mb-8">Thông tin liên hệ maythucpham365</h2>
            <div className="grid md:grid-cols-3 gap-8 text-center md:text-left">
             <div className="flex flex-col md:flex-row items-center gap-4">
               <div className="flex-shrink-0 w-12 h-12 bg-primary/10 text-primary rounded-full flex items-center justify-center">

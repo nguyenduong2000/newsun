@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 
 export const metadata: Metadata = {
   title: "Hệ thống chi nhánh",
-  description: "Hệ thống chi nhánh và đại lý của Điện máy Newsun trên toàn quốc. Tìm cửa hàng gần bạn nhất.",
+  description: "Hệ thống chi nhánh và đại lý của Điện máy maythucpham365 trên toàn quốc. Tìm cửa hàng gần bạn nhất.",
 };
 
 const storesByRegion = [
@@ -16,39 +16,17 @@ const storesByRegion = [
     branches: [
       {
         name: "Showroom Hà Nội",
-        address: "Số 28, ngõ 168 Nguyễn Xiển, P. Hạ Đình, Q.Thanh Xuân, Hà Nội",
-        phone: ["0961.997.355", "0766.555.155"],
-        workingHours: "8:00 - 17:30 (Thứ 2 - Thứ 7)",
+        address: "1067 Đ. Giải Phóng, Thịnh Liệt, Hoàng Mai, Hà Nội",
+        phone: ["0366635562", "0869611128"],
+        workingHours: "7:00 - 23:30 (24/7)",
       },
       {
-        name: "Showroom Hải Phòng",
-        address: "168 Nguyễn Văn Linh, Q. Lê Chân, TP. Hải Phòng",
-        phone: ["0961.556.033", "0946.546.033"],
-        workingHours: "8:00 - 17:30 (Thứ 2 - Thứ 7)",
+        name: "Showroom Ninh Bình",
+        address: "Xã Gia Vân, Tỉnh Ninh Bình",
+        phone: ["0366635562", "0869611128"],
+        workingHours: "7:00 - 23:30 (24/7)",
       },
-      {
-        name: "Showroom Quảng Ninh",
-        address: "Số 132, đường Cái Lân, P. Bãi Cháy, TP. Hạ Long, Quảng Ninh",
-        phone: ["0961.556.033", "0946.546.033"],
-        workingHours: "8:00 - 17:30 (Thứ 2 - Thứ 7)",
-      },
-    ],
-  },
-  {
-    region: "Miền Trung",
-    branches: [
-      {
-        name: "Showroom Đà Nẵng",
-        address: "Số 102 Tôn Đức Thắng, Q. Liên Chiểu, TP. Đà Nẵng",
-        phone: ["0963.997.355", "0788.555.155"],
-        workingHours: "8:00 - 17:30 (Thứ 2 - Thứ 7)",
-      },
-      {
-        name: "Showroom Nghệ An",
-        address: "186B Nguyễn Trường Tộ, Hưng Đông, TP. Vinh, Nghệ An",
-        phone: ["0961.391.233", "0982.391.233"],
-        workingHours: "8:00 - 17:30 (Thứ 2 - Thứ 7)",
-      },
+   
     ],
   },
   {
@@ -76,10 +54,10 @@ export default function StoresPage() {
       <div className="container-fluid mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16 max-w-6xl">
         <section className="text-center">
           <h1 className="text-3xl md:text-4xl lg:text-5xl font-headline font-bold text-primary">
-            Hệ thống chi nhánh & đại lý NEWSUN
+            Hệ thống chi nhánh & đại lý maythucpham365
           </h1>
           <p className="mt-4 text-lg text-muted-foreground max-w-4xl mx-auto">
-            Hiện tại, NEWSUN đã có mặt trên khắp cả nước với hệ thống 17+ chi nhánh, đáp ứng mọi nhu cầu của khách hàng một cách nhanh chóng và thuận tiện nhất.
+            Hiện tại, maythucpham365 đã có mặt trên khắp cả nước với hệ thống 17+ chi nhánh, đáp ứng mọi nhu cầu của khách hàng một cách nhanh chóng và thuận tiện nhất.
           </p>
         </section>
 
@@ -124,16 +102,7 @@ export default function StoresPage() {
         <section className="mt-16">
             <h2 className="text-3xl font-headline font-bold text-center mb-8">Bản đồ hệ thống</h2>
             <div className="aspect-video w-full border rounded-lg overflow-hidden shadow-xl">
-                <Link href="#">
-                    <Image 
-                        src="https://placehold.co/1200x600.png"
-                        alt="Bản đồ hệ thống chi nhánh Newsun"
-                        width={1200}
-                        height={600}
-                        className="w-full h-full object-cover"
-                        data-ai-hint="world map"
-                    />
-                </Link>
+               <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3725.4250210631926!2d105.83857797685569!3d20.975593389599396!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3135ac453186d2df%3A0xf9c2f58354b1304f!2zMTA2NyDEkC4gR2nhuqNpIFBow7NuZywgVGjhu4tuaCBMaeG7h3QsIEhvw6BuZyBNYWksIEjDoCBO4buZaSwgVmnhu4d0IE5hbQ!5e0!3m2!1svi!2s!4v1753605069717!5m2!1svi!2s" width="100%" height="100%" style={{border:0}} allowFullScreen={true} loading="lazy" referrerPolicy="no-referrer-when-downgrade"></iframe>
             </div>
         </section>
 

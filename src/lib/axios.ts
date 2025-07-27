@@ -28,7 +28,7 @@ axiosInstance.interceptors.response.use(
     // The API response is nested under a `data` key.
     // We can extract it here to simplify data access in the services.
     if (response.data && response.data.data) {
-        return response.data.data;
+        return response.data;
     }
     return response.data;
   },

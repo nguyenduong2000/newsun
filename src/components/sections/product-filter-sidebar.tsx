@@ -48,6 +48,7 @@ export function ProductFilterSidebar({
         <div className="space-y-2">
             <Label htmlFor="search">Tìm kiếm</Label>
             <Input 
+                autoFocus
                 id="search"
                 placeholder="Nhập tên sản phẩm..."
                 value={searchTerm}
@@ -70,7 +71,7 @@ export function ProductFilterSidebar({
           </Select>
         </div>
 
-        <div className="space-y-2">
+        {/* <div className="space-y-2">
             <div className="flex justify-between items-center">
                 <Label>Khoảng giá</Label>
                 <span className="text-sm font-medium text-primary">
@@ -84,7 +85,7 @@ export function ProductFilterSidebar({
                 step={500000}
                 minStepsBetweenThumbs={1}
             />
-        </div>
+        </div> */}
         
         <div className="flex items-center justify-between">
             <Label htmlFor="sale-only">Chỉ hiển thị sản phẩm giảm giá</Label>

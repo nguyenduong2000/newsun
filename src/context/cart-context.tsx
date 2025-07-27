@@ -2,7 +2,7 @@
 'use client';
 
 import React, { createContext, useReducer, useContext, useEffect, ReactNode } from 'react';
-import type { Product, CartItem } from '@/types';
+import type { Product, CartItem, ApiProduct } from '@/types';
 
 type CartState = {
   cartItems: CartItem[];
@@ -21,7 +21,7 @@ const initialState: CartState = {
 
 const CartContext = createContext<{
   cartItems: CartItem[];
-  addToCart: (product: Product, quantity: number) => void;
+  addToCart: (product: ApiProduct, quantity: number) => void;
   removeFromCart: (productId: string) => void;
   updateQuantity: (productId: string, quantity: number) => void;
   clearCart: () => void;
@@ -105,7 +105,7 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
     }
   }, [state.cartItems]);
 
-  const addToCart = (product: Product, quantity: number) => {
+  const addToCart = (product: ApiProduct, quantity: number) => {
     const itemToAdd: CartItem = {
       ...product,
       quantity,

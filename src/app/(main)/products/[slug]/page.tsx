@@ -1,6 +1,6 @@
 
 import { notFound } from "next/navigation";
-import { getProductBySlug, getProducts } from "@/services/api";
+import { filterProducts, getProductBySlug, getProductModelBySlug, getProducts } from "@/services/api";
 import { ProductDetailView } from "@/components/product-detail-view";
 import type { Metadata, ResolvingMetadata } from 'next'
 
@@ -12,10 +12,8 @@ export async function generateMetadata(
   { params }: Props,
   parent: ResolvingMetadata
 ): Promise<Metadata> {
-  // read route params
   const slug = params.slug
  
-  // fetch data
   const product = await getProductBySlug(slug)
  
   if (!product) {
@@ -24,16 +22,14 @@ export async function generateMetadata(
         description: "Sản phẩm bạn tìm kiếm không có sẵn hoặc đã bị xóa."
     }
   }
-
-  // optionally access and extend (rather than replace) parent metadata
   const previousImages = (await parent).openGraph?.images || []
- 
+  const [firstDescription] = product.listProductSection
   return {
     title: product.productName,
-    description: product.description.substring(0, 160), // Truncate for meta description
+    description: firstDescription?.description?.substring(0, 160) || "", // Truncate for meta description
     openGraph: {
       title: product.productName,
-      description: product.description.substring(0, 160),
+      description: firstDescription?.description?.substring(0, 160)|| "",
       images: [
         {
           url: product.pathMainImage,
@@ -50,13 +46,13 @@ export async function generateMetadata(
 export default async function ProductDetailPage({ params }: { params: { slug: string } }) {
   const slug = params.slug;
   const product = await getProductBySlug(slug);
+  const models = await getProductModelBySlug(slug);
 
   if (!product) {
     notFound();
   }
+const firstFour = product?.productName.slice(0, 4);
+  const allProducts = await filterProducts({categoryTypeCode:"",productName:firstFour});
 
-  const allProducts = await getProducts();
-  const relatedProducts = allProducts.filter(p => p.typeCode === product.typeCode && p.id !== product.id).slice(0, 4);
-
-  return <ProductDetailView product={product} relatedProducts={relatedProducts} />;
+  return <ProductDetailView product={product} relatedProducts={allProducts} models={models} slug={slug}/>;
 }

@@ -9,13 +9,13 @@ import {
   CardFooter,
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import type { Product } from "@/types";
+import type { ApiProduct, Product } from "@/types";
 import { Star, ShoppingCart } from "lucide-react";
 import { useCart } from "@/context/cart-context";
 import { useToast } from "@/hooks/use-toast";
 
 interface DealProductCardProps {
-  product: Product;
+  product: ApiProduct;
 }
 
 const formatPrice = (price: number) => {
@@ -36,10 +36,10 @@ export function DealProductCard({ product }: DealProductCardProps) {
 
   return (
     <Card className="flex flex-col h-full overflow-hidden transition-all duration-300 hover:shadow-xl border rounded-lg">
-       <Link href={`/products/${product.slug}`}>
+       <Link href={`/products/${product.productCode}`}>
           <div className="aspect-[4/3] relative w-full bg-white p-2">
             <Image
-              src={product.featuresImage || product.pathMainImage}
+              src={product.pathMainImage }
               alt={product.productName}
               fill
               className="object-contain"
@@ -48,9 +48,9 @@ export function DealProductCard({ product }: DealProductCardProps) {
           </div>
         </Link>
       <CardContent className="p-3 flex-grow bg-white">
-        <h3 className="font-semibold text-sm leading-snug h-10 line-clamp-2">
+        <h3 className="font-semibold text-sm leading-snug h-6 line-clamp-2">
           <Link
-            href={`/products/${product.slug}`}
+            href={`/products/${product.productCode}`}
             className="hover:text-primary"
           >
             {product.productName}
@@ -64,7 +64,7 @@ export function DealProductCard({ product }: DealProductCardProps) {
                         <Star key={i} className={`h-3 w-3 ${i < product.starRating! ? 'fill-current' : 'fill-gray-300'}`} />
                     ))}
                 </div>
-                <span className="text-muted-foreground ml-1">({product.reviews})</span>
+                <span className="text-muted-foreground ml-1">({product.starRating})</span>
             </>
            )}
            {product.purchaseCount && <span className="text-muted-foreground ml-2">{product.purchaseCount} <ShoppingCart className="inline h-3 w-3"/></span>}

@@ -2,7 +2,7 @@
 import { HeroSection } from "@/components/sections/hero-section";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { getProducts, getCategories, getBanners } from "@/services/api";
+import { getProducts, getCategories, getBanners, getDealProducts } from "@/services/api";
 import { ArrowRight, Newspaper, Flame, ShoppingCart } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -18,14 +18,13 @@ import { ProductCard } from "@/components/product-card";
 
 
 export default async function Home() {
-  const products = await getProducts();
   const categories = await getCategories();
-  console.log('🚀 ~ categories:', categories)
   const banners = await getBanners();
+  const products = await getProducts();
+  console.log('🚀 ~ products:', products)
+  const dealProducts = await getDealProducts();
 
-  const featuredProducts = products.slice(0, 8);
   const featuredCategories = categories.slice(0, 4);
-  const dealProducts = products.slice(0, 5);
 
   return (
     <div className="space-y-12 md:space-y-16 lg:space-y-20 mb-8">
@@ -46,16 +45,16 @@ export default async function Home() {
                     <div className="flex items-center gap-4">
                       <div className="relative w-20 h-20 flex-shrink-0">
                         <Image
-                            src="https://dienmaynewsun.com/wp-content/uploads/2023/05/may-thai-thit.jpg"
-                            alt={category.categoryName}
-                            width={80}
-                            height={80}
-                            className="object-contain rounded-full bg-gray-100 p-2"
-                            data-ai-hint="kitchen appliance"
-                          />
+                          src="https://dienmaynewsun.com/wp-content/uploads/2023/05/may-thai-thit.jpg"
+                          alt={category.categoryName}
+                          width={80}
+                          height={80}
+                          className="object-contain rounded-full bg-gray-100 p-2"
+                          data-ai-hint="kitchen appliance"
+                        />
                       </div>
                       <h3 className="font-semibold text-gray-800 group-hover:text-primary transition-colors">
-                          {category.categoryName}
+                        {category.categoryName}
                       </h3>
                     </div>
                   </CardContent>
@@ -64,7 +63,7 @@ export default async function Home() {
             ))}
           </div>
         </section>
-
+        
         <section className="bg-primary rounded-lg shadow-lg overflow-hidden border p-6">
           <h2 className="text-2xl font-headline font-bold flex items-center text-primary-foreground mb-4">
             <Flame className="mr-2 h-6 w-6"/>
@@ -89,64 +88,42 @@ export default async function Home() {
           </Carousel>
         </section>
 
-        <section>
-          <div className="flex justify-between items-center mb-2">
-            <h2 className="text-2xl md:text-3xl font-headline font-bold">
-              Sản phẩm nổi bật
-            </h2>
-            <Button variant="ghost" asChild>
-              <Link href="/products">
-                Xem tất cả <ArrowRight className="ml-2 h-4 w-4" />
-              </Link>
-            </Button>
-          </div>
-          <Carousel
-            opts={{
-              align: "start",
-              loop: true,
-            }}
-            className="w-full"
-          >
-            <CarouselContent className="-ml-4">
-              {featuredProducts.map((product, index) => (
-                <CarouselItem key={index} className="pl-4 md:basis-1/3 lg:basis-1/4 my-5">
-                   <ProductCard product={product} />
-                </CarouselItem>
-              ))}
-            </CarouselContent>
-            <CarouselPrevious className="absolute left-[-20px] top-1/2 -translate-y-1/2 hidden sm:flex" />
-            <CarouselNext className="absolute right-[-20px] top-1/2 -translate-y-1/2 hidden sm:flex" />
-          </Carousel>
-        </section>
-        <section>
-          <div className="flex justify-between items-center mb-2">
-            <h2 className="text-2xl md:text-3xl font-headline font-bold">
-              Sản phẩm hot
-            </h2>
-            <Button variant="ghost" asChild>
-              <Link href="/products">
-                Xem tất cả <ArrowRight className="ml-2 h-4 w-4" />
-              </Link>
-            </Button>
-          </div>
-          <Carousel
-            opts={{
-              align: "start",
-              loop: true,
-            }}
-            className="w-full"
-          >
-            <CarouselContent className="-ml-4">
-              {featuredProducts.map((product, index) => (
-                  <CarouselItem key={index} className="pl-4 md:basis-1/3 lg:basis-1/4 my-5">
-                   <ProductCard product={product} />
-                </CarouselItem>
-              ))}
-            </CarouselContent>
-            <CarouselPrevious className="absolute left-[-20px] top-1/2 -translate-y-1/2 hidden sm:flex" />
-            <CarouselNext className="absolute right-[-20px] top-1/2 -translate-y-1/2 hidden sm:flex" />
-          </Carousel>
-        </section>
+        {
+          products.map(prod => {
+            return (
+              <section key={prod.id}>
+                <div className="flex justify-between items-center mb-2">
+                  <h2 className="text-2xl md:text-3xl font-headline font-semibold capitalize">
+                    {prod.categoryTypeName}
+                  </h2>
+                  <Button variant="ghost" asChild>
+                    <Link href={`/products?category=${prod.categoryTypeCode}`}>
+                      Xem tất cả <ArrowRight className="ml-2 h-4 w-4" />
+                    </Link>
+                  </Button>
+                </div>
+                <Carousel
+                  opts={{
+                    align: "start",
+                    loop: true,
+                  }}
+                  className="w-full"
+                >
+                  <CarouselContent className="-ml-4">
+                    {prod.listProduct.map((product, index) => (
+                      <CarouselItem key={index} className="pl-4 md:basis-1/3 lg:basis-1/4 my-5">
+                        <ProductCard product={product} />
+                      </CarouselItem>
+                    ))}
+                  </CarouselContent>
+                  <CarouselPrevious className="absolute left-[-20px] top-1/2 -translate-y-1/2 hidden sm:flex" />
+                  <CarouselNext className="absolute right-[-20px] top-1/2 -translate-y-1/2 hidden sm:flex" />
+                </Carousel>
+              </section>
+            )
+          })
+        }
+
 
         <section>
           <div className="flex justify-between items-center mb-6">

@@ -37,12 +37,12 @@ export function HeroSection({ banners }: HeroSectionProps) {
             <CarouselItem key={index}>
               <div className="w-full aspect-[12/3] relative">
                 <Image
-                  src={banner.src}
-                  alt={banner.alt}
+                  src={banner.pathImage}
+                  alt={banner.bannerCode}
                   fill
                   priority={index === 0}
                   className="object-cover"
-                  data-ai-hint={banner.aiHint}
+                  data-ai-hint={banner.bannerCode}
                 />
               </div>
             </CarouselItem>

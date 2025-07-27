@@ -333,12 +333,8 @@ export const navItems: Omit<NavItem, 'children'>[] = [
     href: "/stores",
   },
   {
-    title: "Hòm thư góp ý",
+    title: "Tư vấn kỹ thuật",
     href: "/contact",
-  },
-    {
-    title: "Tin tức nổi bật",
-    href: "/blog",
   },
 ];
 

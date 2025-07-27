@@ -1,9 +1,9 @@
 
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
-import type { Product } from "@/types";
+import type { ApiProduct, Product } from "@/types";
 import {
   Table,
   TableBody,
@@ -36,40 +36,54 @@ import { Form } from "@/components/ui/form";
 import { ControlledInput } from "@/components/form/controlled-input";
 import { ControlledTextarea } from "@/components/form/controlled-textarea";
 import { useToast } from "@/hooks/use-toast";
+import { sendConsultations } from "@/services/api";
+import { useRouter } from 'next/navigation';
 
 const consultationFormSchema = z.object({
-  name: z.string().min(2, "Họ tên phải có ít nhất 2 ký tự."),
-  phone: z.string().regex(/^[0-9]{10}$/, "Số điện thoại không hợp lệ."),
-  message: z.string().min(10, "Nội dung phải có ít nhất 10 ký tự."),
+  fullName: z.string().min(2, "Họ tên phải có ít nhất 2 ký tự."),
+  phoneNumber: z.string().regex(/^[0-9]{10}$/, "Số điện thoại không hợp lệ."),
+  content: z.string().min(10, "Nội dung phải có ít nhất 10 ký tự."),
+  productCode: z.string(),
+  productName: z.string(),
 });
 
-type ConsultationFormValues = z.infer<typeof consultationFormSchema>;
+export type ConsultationFormValues = z.infer<typeof consultationFormSchema>;
 
-function ConsultationForm({ setOpen }: { setOpen: (open: boolean) => void }) {
+function ConsultationForm({ setOpen, product }: { setOpen: (open: boolean) => void, product: ApiProduct }) {
   const { toast } = useToast();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const form = useForm<ConsultationFormValues>({
     resolver: zodResolver(consultationFormSchema),
     defaultValues: {
-      name: "",
-      phone: "",
-      message: "Tôi đang quan tâm đến sản phẩm này, vui lòng tư vấn cho tôi.",
+      fullName: "",
+      phoneNumber: "",
+      content: "Tôi đang quan tâm đến sản phẩm này, vui lòng tư vấn cho tôi.",
+      productCode: product.productCode,
+      productName: product.productName,
     },
   });
 
   async function onSubmit(values: ConsultationFormValues) {
-    setIsSubmitting(true);
-    // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 1500));
-    console.log(values);
-    setIsSubmitting(false);
+    try {
+      setIsSubmitting(true);
+      console.log(values);
+      await sendConsultations(values)
 
-    toast({
-      title: "Gửi yêu cầu thành công!",
-      description: "Chúng tôi sẽ liên hệ với bạn trong thời gian sớm nhất.",
-    });
-    setOpen(false);
-    form.reset();
+      toast({
+        title: "Gửi yêu cầu thành công!",
+        description: "Chúng tôi sẽ liên hệ với bạn trong thời gian sớm nhất.",
+      });
+
+    } catch (error) {
+
+    } finally {
+      setIsSubmitting(false);
+
+      setOpen(false);
+      form.setValue("fullName", "");
+      form.setValue("phoneNumber", "");
+      form.setValue("content", "");
+    }
   }
 
   return (
@@ -83,19 +97,19 @@ function ConsultationForm({ setOpen }: { setOpen: (open: boolean) => void }) {
         </DialogHeader>
         <ControlledInput
           control={form.control}
-          name="name"
+          name="fullName"
           placeholder="Họ tên"
           autoComplete="name"
         />
         <ControlledInput
           control={form.control}
-          name="phone"
+          name="phoneNumber"
           placeholder="Số điện thoại"
           autoComplete="tel"
         />
         <ControlledTextarea
           control={form.control}
-          name="message"
+          name="content"
           placeholder="Nội dung yêu cầu"
           rows={4}
         />
@@ -114,10 +128,23 @@ function ConsultationForm({ setOpen }: { setOpen: (open: boolean) => void }) {
   );
 }
 
-export function ProductDetailView({ product, relatedProducts }: { product: Product, relatedProducts: Product[] }) {
+interface IProductDetail {
+  product: ApiProduct
+   relatedProducts: ApiProduct[]
+   models: ApiProduct[] | undefined
+   slug: string
+
+}
+
+export function ProductDetailView({ product, relatedProducts, models,slug}: IProductDetail) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedImage, setSelectedImage] = useState(product.pathMainImage);
-  const [selectedModel, setSelectedModel] = useState(product.models?.[0] || null);
+  const [selectedModel, setSelectedModel] = useState(null);
+  const router = useRouter();
+
+  const handleSelectModel = (slug:string)=>{
+    router.push(`/products/${slug}`);
+  }
 
   const formatPrice = (price: number) => {
     return new Intl.NumberFormat("vi-VN").format(price);
@@ -127,7 +154,6 @@ export function ProductDetailView({ product, relatedProducts }: { product: Produ
   return (
     <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 max-w-6xl">
       <div className="grid lg:grid-cols-2 gap-8 lg:gap-12">
-        {/* Left Column: Image Gallery */}
         <div>
           <div className="aspect-square relative w-full border rounded-lg overflow-hidden mb-4">
             <Image
@@ -141,7 +167,7 @@ export function ProductDetailView({ product, relatedProducts }: { product: Produ
             />
           </div>
           <div className="relative">
-             <Carousel
+            <Carousel
               opts={{
                 align: "start",
                 loop: false,
@@ -149,14 +175,29 @@ export function ProductDetailView({ product, relatedProducts }: { product: Produ
               className="w-full"
             >
               <CarouselContent className="-ml-2">
-                {product.images.map((img, index) => (
-                  <CarouselItem key={index} className="basis-1/5 pl-2">
-                     <div
-                      className={`aspect-square relative w-full border rounded-md overflow-hidden cursor-pointer hover:border-primary ${selectedImage === img ? 'border-primary border-2' : ''}`}
-                      onClick={() => setSelectedImage(img)}
+                <CarouselItem className="basis-1/5 pl-2">
+                  <div
+                    className={`aspect-square relative w-full border rounded-md overflow-hidden cursor-pointer hover:border-primary ${selectedImage === product.pathMainImage ? 'border-primary border-2' : ''}`}
+                    onClick={() => setSelectedImage(product.pathMainImage)}
+                  >
+                    <Image
+                      src={product.pathMainImage}
+                      alt={`${product.productName} thumbnail path main image`}
+                      fill
+                      className="object-contain"
+                      sizes="20vw"
+                      data-ai-hint="kitchen appliance"
+                    />
+                  </div>
+                </CarouselItem>
+                {product.lisProductSubImage.map((img, index) => (
+                  <CarouselItem key={img.id} className="basis-1/5 pl-2">
+                    <div
+                      className={`aspect-square relative w-full border rounded-md overflow-hidden cursor-pointer hover:border-primary ${selectedImage === img.pathImage ? 'border-primary border-2' : ''}`}
+                      onClick={() => setSelectedImage(img.pathImage)}
                     >
                       <Image
-                        src={img}
+                        src={img.pathImage}
                         alt={`${product.productName} thumbnail ${index + 1}`}
                         fill
                         className="object-contain"
@@ -173,122 +214,119 @@ export function ProductDetailView({ product, relatedProducts }: { product: Produ
           </div>
         </div>
 
-        {/* Right Column: Product Info */}
         <div>
           <h1 className="text-3xl lg:text-4xl font-headline font-bold mb-4">{product.productName}</h1>
           <div className="flex items-center gap-4 mb-4">
-             <span className="text-3xl font-bold text-primary">{displayPrice}</span>
-             {product.rawPrice > 0 && product.salePrice > 0 && (
-                <span className="text-muted-foreground line-through text-lg">
-                    {formatPrice(product.rawPrice)}đ
-                </span>
+            <span className="text-3xl font-bold text-primary">{displayPrice}</span>
+            {product.rawPrice > 0 && product.salePrice > 0 && (
+              <span className="text-muted-foreground line-through text-lg">
+                {formatPrice(product.rawPrice)}đ
+              </span>
             )}
           </div>
 
-          {product.models && product.models.length > 0 && (
-             <div className="mb-6">
-                <div className="text-sm text-muted-foreground mb-2">Bạn đang chọn: <span className="font-bold text-foreground">{selectedModel}</span></div>
-                <div className="flex flex-wrap gap-2">
-                    {product.models.map(model => (
-                        <Button key={model} variant={selectedModel === model ? 'default': 'outline'} size="sm" onClick={() => setSelectedModel(model)}>
-                            {model}
-                        </Button>
-                    ))}
-                </div>
-                 <p className="text-xs text-muted-foreground mt-1">Tổng cộng có {product.models.length} model cho bạn lựa chọn</p>
+          {models && models.length > 0 && (
+            <div className="mb-6">
+              {/* <div className="text-sm text-muted-foreground mb-2">Bạn đang chọn: <span className="font-bold text-foreground">{product.productName}</span></div> */}
+              <div className="flex flex-wrap gap-2">
+                {models.map((model,index) => (
+                  <Button key={index} variant={slug === model.productCode ? 'default' : 'outline'} size="sm" onClick={() => handleSelectModel(model.productCode)}>
+                    {model.typeName}
+                  </Button>
+                ))}
+              </div>
+              <p className="text-xs text-muted-foreground mt-1">Tổng cộng có {models.length} model cho bạn lựa chọn</p>
             </div>
           )}
 
           <div className="border-t border-b py-4 mb-6">
-             <div className="bg-red-50 border border-red-200 rounded-lg p-4">
-                <h3 className="font-bold text-lg text-primary mb-2 flex items-center"><Gift className="mr-2"/>Khuyến mãi tại Newsun</h3>
-                <ul className="space-y-2 text-sm text-gray-700 list-disc list-inside">
-                    <li>Tặng ngay 1 phiếu mua hàng trị giá 500.000 VNĐ.</li>
-                    <li>Giảm giá 20% khi mua kèm phụ kiện.</li>
-                    <li>Miễn phí vận chuyển toàn quốc.</li>
-                </ul>
+            <div className="bg-red-50 border border-red-200 rounded-lg p-4">
+              <h3 className="font-bold text-lg text-primary mb-2 flex items-center"><Gift className="mr-2" />Khuyến mãi tại maythucpham365</h3>
+              <ul className="space-y-2 text-sm text-gray-700 list-disc list-inside">
+                <li>Tặng ngay 1 phiếu mua hàng trị giá 500.000 VNĐ.</li>
+                <li>Giảm giá 20% khi mua kèm phụ kiện.</li>
+                <li>Miễn phí vận chuyển toàn quốc.</li>
+              </ul>
             </div>
           </div>
-          
+
           <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
             <Button size="lg" className="w-full text-lg h-14 font-bold" onClick={() => setIsModalOpen(true)}>
-              <MessageSquare className="mr-2"/> Tư vấn miễn phí
+              <MessageSquare className="mr-2" /> Tư vấn miễn phí
             </Button>
             <DialogContent className="sm:max-w-[425px]">
-              <ConsultationForm setOpen={setIsModalOpen} />
+              <ConsultationForm setOpen={setIsModalOpen} product={product} />
             </DialogContent>
           </Dialog>
 
           <div className="grid grid-cols-3 gap-4 text-center mt-4 text-sm">
             <div className="flex flex-col items-center">
-                <Truck className="w-8 h-8 text-primary mb-1"/>
-                <span>Giao hàng toàn quốc</span>
+              <Truck className="w-8 h-8 text-primary mb-1" />
+              <span>Giao hàng toàn quốc</span>
             </div>
             <div className="flex flex-col items-center">
-                <ShieldCheck className="w-8 h-8 text-primary mb-1"/>
-                <span>Bảo hành 12 tháng</span>
+              <ShieldCheck className="w-8 h-8 text-primary mb-1" />
+              <span>Bảo hành 12 tháng</span>
             </div>
-             <div className="flex flex-col items-center">
-                <Gift className="w-8 h-8 text-primary mb-1"/>
-                <span>Nhiều quà tặng</span>
+            <div className="flex flex-col items-center">
+              <Gift className="w-8 h-8 text-primary mb-1" />
+              <span>Nhiều quà tặng</span>
             </div>
           </div>
         </div>
       </div>
-      
-      {/* Detailed Description Section */}
+
       <div className="mt-16">
         <div className="grid lg:grid-cols-3 gap-8 lg:gap-12">
-            {/* Left Column: Main Content */}
-            <div className="lg:col-span-2">
-               <h2 className="text-3xl lg:text-4xl font-headline font-bold mb-6">Mô tả sản phẩm</h2>
-               <article className="prose prose-lg max-w-none">
-                  {product.sections?.sort((a, b) => a.displayOrder - b.displayOrder).map(section => (
-                    <div key={section.id} className="mb-8">
-                        <h2 className="font-headline font-bold text-2xl">{section.title}</h2>
-                        {section.pathImage && (
-                          <figure className="my-6">
-                            <Image
-                                src={section.pathImage}
-                                alt={`Hình ảnh cho ${section.title}`}
-                                width={800}
-                                height={450}
-                                className="rounded-lg shadow-md mx-auto"
-                                data-ai-hint="product feature"
-                            />
-                          </figure>
-                        )}
-                        <p>{section.description}</p>
-                    </div>
-                  ))}
-               </article>
-            </div>
 
-            {/* Right Column: Sidebar */}
-            <div className="lg:col-span-1">
-              <div>
-                <div className="border rounded-lg bg-card sticky top-24">
-                  <h2 className="text-xl font-headline font-bold p-4 bg-muted rounded-t-lg">
-                    Thông số kỹ thuật
-                  </h2>
-                  <div className="p-4">
-                    <Table className="specs-table">
-                      <TableBody>
-                        {product.specs.map((spec) => (
-                          <TableRow key={spec.name}>
-                            <TableCell className="font-semibold">{spec.name}</TableCell>
-                            <TableCell>{spec.value}</TableCell>
-                          </TableRow>
-                        ))}
-                      </TableBody>
-                    </Table>
-                  </div>
-                   <div className="p-4 border-t">
-                      <Button variant="outline" className="w-full">Bài viết hướng dẫn</Button>
-                   </div>
+          <div className="lg:col-span-2">
+            <h2 className="text-3xl lg:text-4xl font-headline font-bold mb-6">Mô tả sản phẩm</h2>
+            <article className="prose prose-lg max-w-none">
+              {product.listProductSection?.sort((a, b) => a.displayOrder - b.displayOrder).map(section => (
+                <div key={section.id} className="mb-8">
+                  <h2 className="font-headline font-bold text-2xl">{section.title}</h2>
+                  {section.pathImage && (
+                    <figure className="my-6">
+                      <Image
+                        src={section.pathImage}
+                        alt={`Hình ảnh cho ${section.title}`}
+                        width={800}
+                        height={450}
+                        className="rounded-lg shadow-md mx-auto"
+                        data-ai-hint="product feature"
+                      />
+                    </figure>
+                  )}
+                  <p>{section.description}</p>
+                </div>
+              ))}
+            </article>
+          </div>
+
+          <div className="lg:col-span-1">
+            <div>
+              <div className="border rounded-lg bg-card sticky top-24">
+                <h2 className="text-xl font-headline font-bold p-4 bg-muted rounded-t-lg">
+                  Thông số kỹ thuật
+                </h2>
+                <div className="p-4">
+                  <Table className="specs-table">
+                    <TableBody>
+                      {product.listProductProperties.map((spec, index) => (
+                        <TableRow key={index}>
+                          <TableCell className="font-semibold">{spec.name}</TableCell>
+                          <TableCell>{spec.value}</TableCell>
+                        </TableRow>
+                      ))}
+                    </TableBody>
+                  </Table>
+                </div>
+                <div className="p-4 border-t">
+                  <Button variant="outline" className="w-full">Bài viết hướng dẫn</Button>
                 </div>
               </div>
             </div>
+          </div>
         </div>
       </div>
 

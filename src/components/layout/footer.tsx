@@ -11,7 +11,7 @@ const servicePromises = [
   {
     icon: ShieldCheck,
     title: "BẢO HÀNH 12 THÁNG",
-    description: "Mọi sản phẩm của NEWSUN được bảo hành 12 tháng, bảo trì trọn đời"
+    description: "Mọi sản phẩm của maythucpham365 được bảo hành 12 tháng, bảo trì trọn đời"
   },
   {
     icon: Truck,
@@ -26,10 +26,8 @@ const servicePromises = [
 ]
 
 const locations = [
-    { name: "Hà Nội", address: "Số 28 ngõ 168 Nguyễn Xiển, Thanh Xuân, Hà Nội" },
-    { name: "Đà Nẵng", address: "Số 102 Tôn Đức Thắng, Q. Liên Chiểu, Đà Nẵng" },
-    { name: "Hồ Chí Minh", address: "Số 719 Lạc Long Quân, Phường 10, Q. Tân Bình, TP. HCM" },
-    { name: "Kho hàng tổng", address: "Cụm công nghiệp Ngọc Hồi, Thanh Trì, Hà Nội" }
+    { name: "Hà Nội", address: "1067 Đ. Giải Phóng, Thịnh Liệt, Hoàng Mai, Hà Nội" },
+    { name: "Ninh Bình", address: "Xã Gia Vân, Tỉnh Ninh Bình" },
 ]
 
 const infoLinks = [
@@ -45,11 +43,10 @@ const infoLinks = [
 ]
 
 const supportContacts = [
-    { title: "Tư vấn Miền Bắc", phone1: "0961.997.355", phone2: "0766.555.155" },
-    { title: "Tư vấn Miền Trung", phone1: "0963.997.355", phone2: "0788.555.155" },
-    { title: "Tư vấn Miền Nam", phone1: "0965.997.355", phone2: "0777.555.155" },
-    { title: "Kỹ thuật & Bảo hành", phone1: "096.139.1551", phone2: "096.239.1551" },
-    { title: "Góp ý & Khiếu nại", phone1: "038.871.8871", phone2: "093.466.8811" },
+    { title: "Tư vấn Miền Bắc", phone1: "0366635562", phone2: "0869611128" },
+    { title: "Tư vấn Miền Nam", phone1: "0366635562", phone2: "0869611128" },
+    { title: "Kỹ thuật & Bảo hành", phone1: "0366635562", phone2: "0869611128" },
+    { title: "Góp ý & Khiếu nại", phone1: "0366635562", phone2: "0869611128" },
 ]
 
 export function Footer() {
@@ -127,7 +124,7 @@ export function Footer() {
             </div>
             <h3 className="font-headline font-bold text-lg mb-2 mt-4">Website cùng hệ thống</h3>
             <div className="flex flex-wrap gap-2">
-                 <Image src="https://placehold.co/110x30.png" width={110} height={30} alt="Dienmaynewsun" data-ai-hint="logo" />
+                 <Image src="https://placehold.co/110x30.png" width={110} height={30} alt="maythucpham365" data-ai-hint="logo" />
                  <Image src="https://placehold.co/110x30.png" width={110} height={30} alt="Chomay" data-ai-hint="logo" />
             </div>
              <div className="flex flex-wrap gap-2 mt-4">
@@ -137,7 +134,7 @@ export function Footer() {
           </div>
         </div>
         <div className="mt-8 border-t border-white/20 pt-6 text-center text-sm text-white/80">
-          <p>&copy; {new Date().getFullYear()} Newsun Reimagined. All Rights Reserved.</p>
+          <p>&copy; {new Date().getFullYear()} maythucpham365 Reimagined. All Rights Reserved.</p>
         </div>
       </div>
     </footer>

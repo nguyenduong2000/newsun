@@ -7,11 +7,11 @@ import { AuthProvider } from "@/context/auth-context";
 
 export const metadata: Metadata = {
   title: {
-    default: "Newsun Reimagined - Điện máy công nghiệp",
-    template: "%s | Newsun Reimagined",
+    default: "maythucpham365 Reimagined - Điện máy công nghiệp",
+    template: "%s | maythucpham365",
   },
-  description: "Tái tạo website dienmaynewsun.com với Next.js và ShadCN UI. Chuyên cung cấp thiết bị bếp công nghiệp, máy chế biến thực phẩm uy tín, chất lượng.",
-  keywords: ["thiết bị bếp công nghiệp", "máy chế biến thực phẩm", "điện máy newsun"],
+  description: "Tái tạo website maythucpham365.com Chuyên cung cấp thiết bị bếp công nghiệp, máy chế biến thực phẩm uy tín, chất lượng.",
+  keywords: ["thiết bị bếp công nghiệp", "máy chế biến thực phẩm", "điện máy maythucpham365"],
 };
 
 export default function RootLayout({

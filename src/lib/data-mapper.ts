@@ -1,5 +1,5 @@
 
-import type { ApiCategory, ApiCategoryType, ApiProductType, ApiProduct, MegaMenuCategory } from '@/types';
+import type { ApiCategory, ApiCategoryType, ApiProductCategory, ApiProduct, MegaMenuCategory } from '@/types';
 
 function createSlug(text: string): string {
   return text
@@ -18,19 +18,12 @@ export function mapCategoriesToMegaMenu(apiCategories: ApiCategory[]): MegaMenuC
       children: category.listCategoryType?.map((catType: ApiCategoryType) => {
         return {
           title: catType.categoryTypeName,
-          href: `/products?categoryType=${catType.categoryTypeCode}`,
-          children: catType.listProductType?.map((prodType: ApiProductType) => {
+          href: `/products?category=${catType.categoryTypeCode}`,
+          children: catType.listProductType?.map((prodType) => {
             return {
               title: prodType.productTypeName,
-              href: `/products?productType=${prodType.productTypeCode}`,
-              children: prodType.listProduct?.map((prod: ApiProduct) => {
-                const productSlug = createSlug(prod.productName);
-                return {
-                  title: prod.productName,
-                  href: `/products/${productSlug}`,
-                  children: []
-                }
-              })
+              href: `/products?productTypeCode=${prodType.productTypeCode}`,
+            
             };
           })
         };
