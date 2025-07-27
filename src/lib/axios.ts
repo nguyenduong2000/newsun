@@ -25,9 +25,7 @@ axiosInstance.interceptors.request.use(
 
 axiosInstance.interceptors.response.use(
   (response) => {
-    // The API response is nested under a `data` key.
-    // We can extract it here to simplify data access in the services.
-    if (response.data && response.data.data) {
+    if (response.data && response.data.data !== undefined) {
         return response.data;
     }
     return response.data;
@@ -42,10 +40,11 @@ axiosInstance.interceptors.response.use(
     }
     console.error('API Call Error:', {
         message: error.message,
-        url: error.config.url,
-        method: error.config.method,
+        url: error.config?.url,
+        method: error.config?.method,
         response: error.response?.data,
     });
+    // Ensure the promise is always rejected on error
     return Promise.reject(error);
   }
 );
