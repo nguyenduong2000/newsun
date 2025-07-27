@@ -13,7 +13,7 @@ export const getProducts = async (searchKey?: string): Promise<ApiProductType[]>
     });
     return apiResponse.data;
   } catch (error) {
-  
+    console.error("Failed to fetch products:", error);
     return [];
   }
 };
@@ -25,7 +25,7 @@ export const filterProducts = async (body:{productName?:string,categoryTypeCode?
     );
     return apiResponse.data;
   } catch (error) {
-  
+    console.error("Failed to filter products:", error);
     return [];
   }
 };
@@ -35,7 +35,7 @@ export const getProductByProdCode = async (productTypeCode?:string): Promise<Api
     const apiResponse = await axios.get<ApiProduct[]>(API_ENDPOINTS.GET_PRODUCTS_BY_PROD_CODE(productTypeCode) );
     return apiResponse.data;
   } catch (error) {
-  
+    console.error("Failed to get product by product code:", error);
     return [];
   }
 };
@@ -45,7 +45,7 @@ export const getDealProducts = async (searchKey?: string): Promise<ApiProduct[]>
     const apiResponse = await axios.get<ApiProduct[]>(API_ENDPOINTS.GET_PRODUCT_PROMOTION);
     return apiResponse.data;
   } catch (error) {
-  
+    console.error("Failed to fetch deal products:", error);
     return [];
   }
 };
@@ -75,7 +75,7 @@ export const getCategories = async (): Promise<ApiCategory[]> => {
     return categories.data;
   } catch (error) {
     console.error("Failed to fetch categories:", error);
-    return apiCategories;
+    return [];
   }
 };
 
@@ -85,7 +85,7 @@ export const getBanners = async (): Promise<Banner[]> => {
         return banners.data;
     } catch (error) {
         console.error("Failed to fetch banners:", error);
-        return allMockBanners;
+        return [];
     }
 }
 
@@ -113,4 +113,3 @@ export const sendOrder = async (body:any): Promise<ApiResponseAction | null> => 
     return null
   }
 };
-

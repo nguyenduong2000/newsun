@@ -24,7 +24,7 @@ export default async function Home() {
   console.log('🚀 ~ products:', products)
   const dealProducts = await getDealProducts();
 
-  const featuredCategories = categories.slice(0, 4);
+  const featuredCategories = Array.isArray(categories) ? categories.slice(0, 4) : [];
 
   return (
     <div className="space-y-12 md:space-y-16 lg:space-y-20 mb-8">
@@ -77,7 +77,7 @@ export default async function Home() {
             className="w-full"
           >
             <CarouselContent className="-ml-4">
-              {dealProducts.map((product, index) => (
+              {Array.isArray(dealProducts) && dealProducts.map((product, index) => (
                 <CarouselItem key={index} className="pl-4 md:basis-1/3 lg:basis-1/4 xl:basis-1/5">
                   <DealProductCard product={product} />
                 </CarouselItem>
@@ -89,7 +89,7 @@ export default async function Home() {
         </section>
 
         {
-          products.map(prod => {
+          Array.isArray(products) && products.map(prod => {
             return (
               <section key={prod.id}>
                 <div className="flex justify-between items-center mb-2">
